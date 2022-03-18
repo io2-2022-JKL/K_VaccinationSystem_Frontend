@@ -16,6 +16,16 @@ class Patient extends User
         this._active = active;
     }
 
+    constructor(patient)
+    {
+        super(patient.id,patient.pesel,patient.firstName,patient.lastName,patient.dateOfBirth,patient.mail,patient.password,patient.phoneNumber);
+        this._vaccinationCount = patient.vaccinationCount;
+        this._vaccinationHistory = patient.vaccinationHistory;
+        this._futureVaccinations = patient.futureVaccinations;
+        this._certificates = patient.certificates;
+        this._active = patient.active;
+    }
+
     get getVaccinationCount() { return this._vaccinationCount; }
     set setVaccinationCount(vaccinationCount) { this._vaccinationCount = vaccinationCount; }
 

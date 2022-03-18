@@ -17,6 +17,16 @@ class Appointment
         this._vaccineBatchNumber = vaccineBatchNumber;
     }
 
+    constructor(appointment)
+    {
+        this._whichDose = appointment.whichDose;
+        this._timeSlot = appointment.timeSlot;
+        this._patient = appointment.patient;
+        this._vaccine = appointment.vaccine;
+        this._completed = appointment.completed;
+        this._vaccineBatchNumber = appointment.vaccineBatchNumber;
+    }
+
     get getWhichDose() { return this._whichDose; }
     set setWhichDose(whichDose) { this._whichDose = whichDose; }
 

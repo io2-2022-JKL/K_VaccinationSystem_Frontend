@@ -15,6 +15,15 @@ class TimeSlot
         this._active = active;
     }
 
+    constructor(timeSlot)
+    {
+        this._from = timeSlot.from;
+        this._to = timeSlot.to;
+        this._doctor = timeSlot.doctor;
+        this._isFree = timeSlot.isFree;
+        this._active = timeSlot.active;
+    }
+
     get getFrom() { return this._from; }
     set setFrom(from) { this._from = from; }
 

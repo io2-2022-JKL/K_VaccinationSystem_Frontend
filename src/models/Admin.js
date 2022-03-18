@@ -4,4 +4,9 @@ class Admin extends User
     {
         super(id,pesel,firstName,lastName,dateOfBirth,mail,password,phoneNumber);
     }
+
+    constructor(user)
+    {
+        super(user);
+    }
 }

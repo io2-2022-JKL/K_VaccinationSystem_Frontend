@@ -25,6 +25,20 @@ class Vaccine
         this._used = used;
     }
 
+    constructor(vaccine)
+    {
+        this._id = vaccine.id;
+        this._company = vaccine.company;
+        this._name = vaccine.name;
+        this._number = vaccine.number;
+        this._minDaysBetweenDoses = vaccine.minDaysBetweenDoses;
+        this._maxDaysBetweenDoses = vaccine.maxDaysBetweenDoses;
+        this._virus = vaccine.virus;
+        this._minPatientAge = vaccine.minPatientAge;
+        this._maxPatientAge = vaccine.maxPatientAge;
+        this._used = vaccine.used;
+    }
+
     get getId() { return this._id; }
     set setId(id) { this._id = id; }
 

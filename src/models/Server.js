@@ -13,6 +13,14 @@ class Server
         this._vaccines = vaccines;
     }
 
+    constructor(server)
+    {
+        this._patients = server.patients;
+        this._vaccinationCenters = server.vaccinationCenters;
+        this._doctors = server.doctors;
+        this._vaccines = server.vaccines; 
+    }
+
     get getPatients() { return this._patients; }
     set setPatients(patients) { this._patients = patients; }
 

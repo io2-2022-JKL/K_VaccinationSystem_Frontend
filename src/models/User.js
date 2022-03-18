@@ -20,6 +20,18 @@ class User {
         this._phoneNumber = phoneNumber;
     }
 
+    constructor(user)
+    {
+        this._id = user.id;
+        this._pesel = user.pesel;
+        this._firstName = user.firstName;
+        this._lastName = user.lastName;
+        this._dateOfBirth = user.dateOfBirth;
+        this._mail = user.mail;
+        this._password = user.password;
+        this._phoneNumber = user.phoneNumber; 
+    }
+
     get getId() { return this._id; }
     set setId(id) { this._id = id; }
 

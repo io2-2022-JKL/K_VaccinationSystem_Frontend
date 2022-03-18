@@ -22,6 +22,19 @@ class VaccintationCenter
         this._doctors = doctors;
         this._active = active;
     }
+
+    constructor(vaccintationCenter)
+    {
+        this._id = vaccintationCenter.id; 
+        this._name = vaccintationCenter.name;
+        this._city = vaccintationCenter.city;
+        this._address = vaccintationCenter.address;
+        this._availableVaccines = vaccintationCenter.availableVaccines;
+        this._openingHours = vaccintationCenter.openingHours;
+        this._closingHours = vaccintationCenter.closingHours;
+        this._doctors = vaccintationCenter.doctors;
+        this._active = vaccintationCenter.active;
+    }
     
     get getId() { return this._id; }
     set setId(id) { this._id = id; }

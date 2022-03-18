@@ -14,6 +14,15 @@ class Doctor extends User
         this._active = active;
     }
 
+    constructor(doctor)
+    {
+        super(doctor.id,doctor.pesel,doctor.firstName,doctor.lastName,doctor.dateOfBirth,doctor.mail,doctor.password,doctor.phoneNumber);
+        this._vaccinationCenter = doctor.vaccinationCenter;
+        this._futureVaccinations = doctor.futureVaccinations;
+        this._vaccinationArchieve = doctor.vaccinationArchieve;
+        this._active = doctor.active;
+    }
+
     get getVaccinationCenter() { return this._vaccinationCenter; }
     set setVaccinationCenter(vaccinationCenter) { this._vaccinationCenter = vaccinationCenter; }
 
