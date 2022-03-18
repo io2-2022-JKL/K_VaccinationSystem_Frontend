@@ -5,9 +5,9 @@ class Doctor extends User
     _vaccinationArchieve;
     _active;
 
-    constructor(id,pesel,firstName,lastName,dateOfBirth,mail,password,phoneNumber,vaccinationCenter,futureVaccinations,vaccinationArchieve,active)
+    constructor(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber,vaccinationCenter,futureVaccinations,vaccinationArchieve,active)
     {
-        super(id,pesel,firstName,lastName,dateOfBirth,mail,password,phoneNumber);
+        super(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber);
         this._vaccinationCenter = vaccinationCenter;
         this._futureVaccinations = futureVaccinations;
         this._vaccinationArchieve = vaccinationArchieve;
@@ -16,7 +16,7 @@ class Doctor extends User
 
     constructor(doctor)
     {
-        super(doctor.id,doctor.pesel,doctor.firstName,doctor.lastName,doctor.dateOfBirth,doctor.mail,doctor.password,doctor.phoneNumber);
+        super(doctor.id,doctor.pesel,doctor.firstName,doctor.lastName,doctor.dateOfBirth,doctor.mail,doctor.phoneNumber);
         this._vaccinationCenter = doctor.vaccinationCenter;
         this._futureVaccinations = doctor.futureVaccinations;
         this._vaccinationArchieve = doctor.vaccinationArchieve;

@@ -5,10 +5,9 @@ class User {
     _lastName;
     _dateOfBirth;
     _mail;
-    _password;
     _phoneNumber;
 
-    constructor(id,pesel,firstName,lastName,dateOfBirth,mail,password,phoneNumber)
+    constructor(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber)
     {
         this._id = id;
         this._pesel = pesel;
@@ -16,7 +15,6 @@ class User {
         this._lastName = lastName;
         this._dateOfBirth = dateOfBirth;
         this._mail = mail;
-        this._password = password;
         this._phoneNumber = phoneNumber;
     }
 
@@ -28,7 +26,6 @@ class User {
         this._lastName = user.lastName;
         this._dateOfBirth = user.dateOfBirth;
         this._mail = user.mail;
-        this._password = user.password;
         this._phoneNumber = user.phoneNumber; 
     }
 

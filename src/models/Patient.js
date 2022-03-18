@@ -6,9 +6,9 @@ class Patient extends User
     _certificates;
     _active;
 
-    constructor(id,pesel,firstName,lastName,dateOfBirth,mail,password,phoneNumber,vaccinationCount,vaccinationHistory,futureVaccinations,certificates,active)
+    constructor(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber,vaccinationCount,vaccinationHistory,futureVaccinations,certificates,active)
     {
-        super(id,pesel,firstName,lastName,dateOfBirth,mail,password,phoneNumber);
+        super(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber);
         this._vaccinationCount = vaccinationCount;
         this._vaccinationHistory = vaccinationHistory;
         this._futureVaccinations = futureVaccinations;
@@ -18,7 +18,7 @@ class Patient extends User
 
     constructor(patient)
     {
-        super(patient.id,patient.pesel,patient.firstName,patient.lastName,patient.dateOfBirth,patient.mail,patient.password,patient.phoneNumber);
+        super(patient.id,patient.pesel,patient.firstName,patient.lastName,patient.dateOfBirth,patient.mail,patient.phoneNumber);
         this._vaccinationCount = patient.vaccinationCount;
         this._vaccinationHistory = patient.vaccinationHistory;
         this._futureVaccinations = patient.futureVaccinations;
