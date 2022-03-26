@@ -40,7 +40,7 @@ class Patient extends User
     set setActive(active) { this._active = active; }
 }
 
-function createPatinet(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber,vaccinationCount,vaccinationHistory,futureVaccinations,certificates,active)
+function createPatient(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber,vaccinationCount,vaccinationHistory,futureVaccinations,certificates,active)
 {
     patient = new Object();
     patient.id = id;
