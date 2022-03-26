@@ -5,14 +5,6 @@ class Server
     _doctors;
     _vaccines;
 
-    constructor(patients,vaccinationCenters,doctors,vaccines)
-    {
-        this._patients = patients;
-        this._vaccinationCenters = vaccinationCenters;
-        this._doctors = doctors;
-        this._vaccines = vaccines;
-    }
-
     constructor(server)
     {
         this._patients = server.patients;

@@ -31,7 +31,6 @@ class TimeSlot
     set setActive(active) { this._active = active; }
 }
 
-
 function createTimeSlot(from,to,doctor,isFree,active)
 {
     timeSlot = new Object();

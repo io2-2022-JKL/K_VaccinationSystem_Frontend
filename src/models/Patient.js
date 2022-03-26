@@ -6,16 +6,6 @@ class Patient extends User
     _certificates;
     _active;
 
-    constructor(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber,vaccinationCount,vaccinationHistory,futureVaccinations,certificates,active)
-    {
-        super(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber);
-        this._vaccinationCount = vaccinationCount;
-        this._vaccinationHistory = vaccinationHistory;
-        this._futureVaccinations = futureVaccinations;
-        this._certificates = certificates;
-        this._active = active;
-    }
-
     constructor(patient)
     {
         user = new Object();

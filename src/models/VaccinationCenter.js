@@ -9,7 +9,7 @@ class VaccintationCenter
     _closingHours;
     _doctors;
     _active;
-
+  
     constructor(vaccintationCenter)
     {
         this._id = vaccintationCenter.id; 

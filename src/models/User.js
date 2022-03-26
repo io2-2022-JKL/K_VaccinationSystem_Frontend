@@ -6,7 +6,7 @@ class User {
     _dateOfBirth;
     _mail;
     _phoneNumber;
-
+  
     constructor(user)
     {
         this._id = user.id;
@@ -54,4 +54,5 @@ function createUser(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber)
     user.mail = mail;
     user.phoneNumber = phoneNumber;
     return new User(user);
+}
 }
