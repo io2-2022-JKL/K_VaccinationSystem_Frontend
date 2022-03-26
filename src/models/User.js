@@ -7,17 +7,6 @@ class User {
     _mail;
     _phoneNumber;
 
-    constructor(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber)
-    {
-        this._id = id;
-        this._pesel = pesel;
-        this._firstName = firstName;
-        this._lastName = lastName;
-        this._dateOfBirth = dateOfBirth;
-        this._mail = mail;
-        this._phoneNumber = phoneNumber;
-    }
-
     constructor(user)
     {
         this._id = user.id;
@@ -52,4 +41,17 @@ class User {
 
     get getPhoneNumber() { return this._phoneNumber; }
     set setPhoneNumber(phoneNumber) { this._phoneNumber = phoneNumber; }
+}
+
+function createUser(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber)
+{
+    user = new Object();
+    user.id = id;
+    user.pesel = pesel;
+    user.firstName = firstName;
+    user.lastName = lastName;
+    user.dateOfBirth = dateOfBirth;
+    user.mail = mail;
+    user.phoneNumber = phoneNumber;
+    return new User(user);
 }

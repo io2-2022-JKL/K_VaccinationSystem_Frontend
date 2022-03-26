@@ -11,20 +11,6 @@ class Vaccine
     _maxPatientAge;
     _used;
 
-    constructor(id,company,name,number,minDaysBetweenDoses,maxDaysBetweenDoses,virus,minPatientAge,maxPatientAge,used)
-    {
-        this._id = id;
-        this._company = company;
-        this._name = name;
-        this._number = number;
-        this._minDaysBetweenDoses = minDaysBetweenDoses;
-        this._maxDaysBetweenDoses = maxDaysBetweenDoses;
-        this._virus = virus;
-        this._minPatientAge = minPatientAge;
-        this._maxPatientAge = maxPatientAge;
-        this._used = used;
-    }
-
     constructor(vaccine)
     {
         this._id = vaccine.id;
@@ -68,4 +54,20 @@ class Vaccine
 
     get getUsed() { return this._used; }
     set setUsed(used) { this._used = used; }
+}
+
+function createVaccine(id,company,name,number,minDaysBetweenDoses,maxDaysBetweenDoses,virus,minPatientAge,maxPatientAge,used)
+{
+    vaccine = new Object();
+    vaccine.id = id;
+    vaccine.company = company;
+    vaccine.name = name;
+    vaccine.number = number;
+    vaccine.minDaysBetweenDoses = minDaysBetweenDoses;
+    vaccine.maxDaysBetweenDoses = maxDaysBetweenDoses;
+    vaccine.virus = virus;
+    vaccine.minPatientAge = minPatientAge;
+    vaccine.maxPatientAge = maxPatientAge;
+    vaccine.used = used;
+    return new Vaccine(vaccine);
 }

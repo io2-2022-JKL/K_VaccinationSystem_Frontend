@@ -18,7 +18,15 @@ class Patient extends User
 
     constructor(patient)
     {
-        super(patient.id,patient.pesel,patient.firstName,patient.lastName,patient.dateOfBirth,patient.mail,patient.phoneNumber);
+        user = new Object();
+        user.id = patient.id;
+        user.pesel = patient.pesel;
+        user.firstName = patient.firstName;
+        lastName = patient.lastName;
+        dateOfBirth = patient.dateOfBirth;
+        mail = patient.mail;
+        phoneNumber = patient.phoneNumber;
+        super(user);
         this._vaccinationCount = patient.vaccinationCount;
         this._vaccinationHistory = patient.vaccinationHistory;
         this._futureVaccinations = patient.futureVaccinations;
@@ -40,4 +48,22 @@ class Patient extends User
 
     get getActive() { return this._active; }
     set setActive(active) { this._active = active; }
+}
+
+function createPatinet(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber,vaccinationCount,vaccinationHistory,futureVaccinations,certificates,active)
+{
+    patient = new Object();
+    patient.id = id;
+    patient.pesel = pesel;
+    patient.firstName = firstName;
+    patient.lastName = lastName;
+    patient.dateOfBirth = dateOfBirth;
+    patient.mail = mail;
+    patient.phoneNumber = phoneNumber;
+    patient.vaccinationCount = vaccinationCount;
+    patient.vaccinationHistory = vaccinationHistory;
+    patient.futureVaccinations = futureVaccinations;
+    patient.certificates = certificates;
+    patient.active = active;
+    return new Patient(patient);
 }

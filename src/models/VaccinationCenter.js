@@ -10,19 +10,6 @@ class VaccintationCenter
     _doctors;
     _active;
 
-    constructor(id,name,city,address,availableVaccines,openingHours,closingHours,doctors,active)
-    {
-        this._id = id; 
-        this._name = name;
-        this._city = city;
-        this._address = address;
-        this._availableVaccines = availableVaccines;
-        this._openingHours = openingHours;
-        this._closingHours = closingHours;
-        this._doctors = doctors;
-        this._active = active;
-    }
-
     constructor(vaccintationCenter)
     {
         this._id = vaccintationCenter.id; 
@@ -62,4 +49,19 @@ class VaccintationCenter
 
     get getActive() { return this._active; }
     set setActive(active) { this._active = active; }
+}
+
+function createVaccinationCenter(id,name,city,address,availableVaccines,openingHours,closingHours,doctors,active)
+{
+    vaccintationCenter = new Object();
+    vaccintationCenter.id = id; 
+    vaccintationCenter.name = name;
+    vaccintationCenter.city = city;
+    vaccintationCenter.address = address;
+    vaccintationCenter.availableVaccines = availableVaccines;
+    vaccintationCenter.openingHours = openingHours;
+    vaccintationCenter.closingHours = closingHours;
+    vaccintationCenter.doctors = doctors;
+    vaccintationCenter.active = active;
+    return new VaccintationCenter(vaccintationCenter);
 }

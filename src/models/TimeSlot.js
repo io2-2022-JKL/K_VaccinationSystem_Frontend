@@ -6,15 +6,6 @@ class TimeSlot
     _isFree;
     _active;
 
-    constructor(from,to,doctor,isFree,active)
-    {
-        this._from = from;
-        this._to = to;
-        this._doctor = doctor;
-        this._isFree = isFree;
-        this._active = active;
-    }
-
     constructor(timeSlot)
     {
         this._from = timeSlot.from;
@@ -38,4 +29,16 @@ class TimeSlot
 
     get getActive() { return this._active; }
     set setActive(active) { this._active = active; }
+}
+
+
+function createTimeSlot(from,to,doctor,isFree,active)
+{
+    timeSlot = new Object();
+    timeSlot.from = from;
+    timeSlot.to = to;
+    timeSlot.doctor = doctor;
+    timeSlot.isFree = isFree;
+    timeSlot.active = active;
+    return new TimeSlot(timeSlot);
 }

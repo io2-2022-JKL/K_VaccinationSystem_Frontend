@@ -5,18 +5,17 @@ class Doctor extends User
     _vaccinationArchieve;
     _active;
 
-    constructor(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber,vaccinationCenter,futureVaccinations,vaccinationArchieve,active)
-    {
-        super(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber);
-        this._vaccinationCenter = vaccinationCenter;
-        this._futureVaccinations = futureVaccinations;
-        this._vaccinationArchieve = vaccinationArchieve;
-        this._active = active;
-    }
-
     constructor(doctor)
     {
-        super(doctor.id,doctor.pesel,doctor.firstName,doctor.lastName,doctor.dateOfBirth,doctor.mail,doctor.phoneNumber);
+        user = new Object();
+        user.id = doctor.id;
+        user.pesel = doctor.pesel;
+        user.firstName = doctor.firstName;
+        user.lastName = doctor.lastName;
+        user.dateOfBirth = doctor.dateOfBirth;
+        user.mail = doctor.mail;
+        user.phoneNumber = doctor.phoneNumber;
+        super(user);
         this._vaccinationCenter = doctor.vaccinationCenter;
         this._futureVaccinations = doctor.futureVaccinations;
         this._vaccinationArchieve = doctor.vaccinationArchieve;
@@ -34,4 +33,21 @@ class Doctor extends User
 
     get getActive() { return this._active; }
     set setActive(active) { this._active = active; }
+}
+
+function createDoctor(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber,vaccinationCenter,futureVaccinations,vaccinationArchieve,active)
+{
+    doctor = new Object(),
+    doctor.id = id;
+    doctor.pesel = pesel;
+    doctor.firstName = firstName;
+    doctor.lastName = lastName;
+    doctor.dateOfBirth = dateOfBirth;
+    doctor.mail = mail;
+    doctor.phoneNumber = phoneNumber;
+    doctor.vaccinationCenter = vaccinationCenter;
+    doctor.futureVaccinations = futureVaccinations;
+    doctor.vaccinationArchieve = vaccinationArchieve;
+    doctor.active = active;
+    return new Doctor(doctor);
 }

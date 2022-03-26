@@ -33,3 +33,14 @@ class Server
     get getVaccines() { return this._vaccines; }
     set setVaccines(vaccines) { this._vaccines = vaccines; }
 }
+
+
+function createServer(patients,vaccinationCenters,doctors,vaccines)
+{
+    server = new Object();
+    server.patients = patients;
+    server.vaccinationCenters = vaccinationCenters;
+    server.doctors = doctors;
+    server.vaccines = vaccines;
+    return new Server(server);
+}
