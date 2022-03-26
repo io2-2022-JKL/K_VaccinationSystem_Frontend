@@ -5,14 +5,6 @@ class Server
     _doctors;
     _vaccines;
 
-    constructor(patients,vaccinationCenters,doctors,vaccines)
-    {
-        this._patients = patients;
-        this._vaccinationCenters = vaccinationCenters;
-        this._doctors = doctors;
-        this._vaccines = vaccines;
-    }
-
     constructor(server)
     {
         this._patients = server.patients;
@@ -32,4 +24,15 @@ class Server
 
     get getVaccines() { return this._vaccines; }
     set setVaccines(vaccines) { this._vaccines = vaccines; }
+}
+
+
+function createServer(patients,vaccinationCenters,doctors,vaccines)
+{
+    server = new Object();
+    server.patients = patients;
+    server.vaccinationCenters = vaccinationCenters;
+    server.doctors = doctors;
+    server.vaccines = vaccines;
+    return new Server(server);
 }
