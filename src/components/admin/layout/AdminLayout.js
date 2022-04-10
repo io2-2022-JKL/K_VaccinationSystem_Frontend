@@ -3,7 +3,7 @@ import {Outlet} from "react-router-dom";
 import useLogin from "../../../logic/useLogin";
 
 
-export function AdminLayout(props) {
+export default function AdminLayout(props) {
     return (
         <>
             <main>
