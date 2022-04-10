@@ -8,19 +8,24 @@ const useLogin = () => {
     ]
 
     const isLoggedIn = (targetPath) => {
-        for (let rule in LoginRules)
-            if (rule.rule.match(targetPath) && localStorage.getItem(rule.token))
-                return localStorage.getItem(rule.token);
+        for (let i = 0; i < LoginRules.length; i++)
+        {
+            if (targetPath.match(LoginRules[i].rule) && localStorage.getItem(LoginRules[i].token))
+                return localStorage.getItem(LoginRules[i].token);
+        }
         return null;
     }
 
     const LogIn = (token, role) => {
+        console.log(token, role);
         localStorage.setItem(role + "Token", token);
     }
 
     const LogOut = () => {
         localStorage.clear();
     }
+
+    return {isLoggedIn, LogIn, LogOut};
 }
 
-export default useLogin();
+export default useLogin;
