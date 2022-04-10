@@ -10,7 +10,7 @@ import {DoctorAvailability} from "./doctor/DoctorAvalibility";
 import {DoctorPlanned} from "./doctor/DoctorPlanned";
 import {DoctorUnconfirmed} from "./doctor/DoctorUnconfirmed";
 import {DoctorHistory} from "./doctor/DoctorHistory";
-import {PatientDashboard} from "./patient/PatientDashboard";
+import PatientDashboard from "./patient/PatientDashboard";
 import {PatientCertifications} from "./patient/PatientCertifications";
 import {PatientHistory} from "./patient/PatientHistory";
 import {PatientPlanned} from "./patient/PatientPlanned";
