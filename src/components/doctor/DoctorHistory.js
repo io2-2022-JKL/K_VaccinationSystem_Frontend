@@ -1,6 +1,6 @@
 import {Table} from "./utils/Table";
 
-export function DoctorHistory() {
+export  default function DoctorHistory() {
     return (
         <>
             <h2> Historia doktora </h2>

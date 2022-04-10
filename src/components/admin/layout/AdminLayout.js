@@ -1,6 +1,6 @@
 import {AdminMenu} from "./AdminMenu";
 
-export function AdminLayout(props) {
+export default function AdminLayout(props) {
         return (
             <>
                 <main>

@@ -1,4 +1,4 @@
-export function PatientHistory() {
+export default function PatientHistory() {
     return (
         <>
             <h2> Historia pacjęta </h2>

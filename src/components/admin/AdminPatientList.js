@@ -1,4 +1,4 @@
-export function AdminPatientList() {
+export default function AdminPatientList() {
 
     return (
         <>

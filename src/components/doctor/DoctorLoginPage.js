@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 
-export function DoctorLoginPage() {
+export default function DoctorLoginPage() {
     return (
         <>
             <h2> Strona logowania lekarza </h2>

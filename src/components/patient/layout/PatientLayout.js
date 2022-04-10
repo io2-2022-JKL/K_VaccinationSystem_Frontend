@@ -1,6 +1,6 @@
 import {PatientMenu} from "./PatientMenu";
 
-export function PatientLayout(props) {
+export default function PatientLayout(props) {
     return (
         <>
             <PatientMenu/>

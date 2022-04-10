@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 
-export function AdminLoginPage() {
+export default function AdminLoginPage() {
     return (
         <>
             <h2> Strona logowania admina </h2>

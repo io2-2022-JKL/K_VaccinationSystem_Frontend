@@ -1,22 +1,22 @@
 import { Link, Route, Routes } from "react-router-dom";
-import {AdminDoctorList, AdminPage} from "./admin/AdminDoctorList";
-import { AdminLoginPage } from "./admin/AdminLoginPage";
-import { DoctorLoginPage } from "./doctor/DoctorLoginPage";
-import { PatientLoginPage } from "./patient/PatientLoginPage";
-import {AdminLayout} from "./admin/layout/AdminLayout";
-import {DoctorLayout} from "./doctor/layout/DoctorLayout";
-import {DoctorDashboard} from "./doctor/DoctorDashboard";
-import {DoctorAvailability} from "./doctor/DoctorAvalibility";
-import {DoctorPlanned} from "./doctor/DoctorPlanned";
-import {DoctorUnconfirmed} from "./doctor/DoctorUnconfirmed";
-import {DoctorHistory} from "./doctor/DoctorHistory";
+import AdminDoctorList from "./admin/AdminDoctorList";
+import AdminLoginPage from "./admin/AdminLoginPage";
+import DoctorLoginPage from "./doctor/DoctorLoginPage";
+import PatientLoginPage from "./patient/PatientLoginPage";
+import AdminLayout from "./admin/layout/AdminLayout";
+import DoctorLayout from "./doctor/layout/DoctorLayout";
+import DoctorDashboard from "./doctor/DoctorDashboard";
+import DoctorAvailability from "./doctor/DoctorAvalibility";
+import DoctorPlanned from "./doctor/DoctorPlanned";
+import DoctorUnconfirmed from "./doctor/DoctorUnconfirmed";
+import DoctorHistory from "./doctor/DoctorHistory";
 import PatientDashboard from "./patient/PatientDashboard";
-import {PatientCertifications} from "./patient/PatientCertifications";
-import {PatientHistory} from "./patient/PatientHistory";
-import {PatientPlanned} from "./patient/PatientPlanned";
-import {PatientSignup} from "./patient/PatientSignup";
-import {PatientLayout} from "./patient/layout/PatientLayout";
-import {AdminPatientList} from "./admin/AdminPatientList";
+import PatientCertifications from "./patient/PatientCertifications";
+import PatientHistory from "./patient/PatientHistory";
+import PatientPlanned from "./patient/PatientPlanned";
+import PatientSignup from "./patient/PatientSignup";
+import PatientLayout from "./patient/layout/PatientLayout";
+import AdminPatientList from "./admin/AdminPatientList";
 
 
 function App() {
