@@ -18,7 +18,6 @@ import {PatientSignup} from "./patient/PatientSignup";
 import {PatientLayout} from "./patient/layout/PatientLayout";
 import {AdminPatientList} from "./admin/AdminPatientList";
 
-
 function App() {
   return (
     <>
@@ -60,7 +59,7 @@ function Home() {
       <nav>
         <Link to="/admin">Strona admina</Link>
         <br/>
-        <Link to="/patient">Strona pacjenta</Link>
+        <Link to="/patient/dashboard">Strona pacjenta</Link>
         <br/>
         <Link to="/doctor">Strona lekarza</Link>
       </nav>

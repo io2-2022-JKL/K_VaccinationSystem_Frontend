@@ -1,0 +1,45 @@
+.patientDashboard{
+    display: grid; 
+    background: antiquewhite;
+    background-size: cover;
+    height: 100%;
+}
+
+.namePageSeparator{
+    width: 100%;
+    display: inline-grid;
+    grid-template-columns: 100%;
+    background-color: antiquewhite;
+}
+
+.photoDataSeparator{
+    display: inline-grid;
+    grid-template-columns: 200px auto;
+}
+
+h2{
+    font-size: 32px;
+    color:maroon;
+}
+
+html, body, #app, #app>div{
+    background-color: antiquewhite;
+    background-size: cover;
+    margin: 0;
+    height: 100%
+}
+
+img{
+    border-radius: 50%;
+    width: 128px;
+}
+
+table{
+    border: 2px solid black;
+    width: 80%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid black;
+}
