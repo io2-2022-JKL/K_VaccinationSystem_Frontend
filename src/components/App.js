@@ -17,6 +17,8 @@ import {PatientPlanned} from "./patient/PatientPlanned";
 import {PatientSignup} from "./patient/PatientSignup";
 import {PatientLayout} from "./patient/layout/PatientLayout";
 import {AdminPatientList} from "./admin/AdminPatientList";
+import DataTable from "./DataTable";
+import { useState } from "react";
 
 
 function App() {
