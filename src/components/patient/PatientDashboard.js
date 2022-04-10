@@ -25,6 +25,11 @@ export function PatientDashboard() {
                                 Nazwisko: Nowak
                             </h3>
                         </div>
+                        <div>
+                            <h3>
+                                Pesel: 00000000000
+                            </h3>
+                        </div>
                     </div>
                 </div>
                 <div>
