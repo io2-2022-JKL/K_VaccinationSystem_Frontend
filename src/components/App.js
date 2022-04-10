@@ -1,75 +1,68 @@
-import { Link, Route, Routes } from "react-router-dom";
-import {AdminDoctorList, AdminPage} from "./admin/AdminDoctorList";
-import { AdminLoginPage } from "./admin/AdminLoginPage";
-import { DoctorLoginPage } from "./doctor/DoctorLoginPage";
-import { PatientLoginPage } from "./patient/PatientLoginPage";
-import {AdminLayout} from "./admin/layout/AdminLayout";
-import {DoctorLayout} from "./doctor/layout/DoctorLayout";
-import {DoctorDashboard} from "./doctor/DoctorDashboard";
-import {DoctorAvailability} from "./doctor/DoctorAvalibility";
-import {DoctorPlanned} from "./doctor/DoctorPlanned";
-import {DoctorUnconfirmed} from "./doctor/DoctorUnconfirmed";
-import {DoctorHistory} from "./doctor/DoctorHistory";
+import {Route, Routes, useLocation} from "react-router-dom";
+import AdminDoctorList from "./admin/AdminDoctorList";
+import DoctorLoginPage from "./doctor/DoctorLoginPage";
+import AdminLayout from "./admin/layout/AdminLayout";
+import DoctorLayout from "./doctor/layout/DoctorLayout";
+import DoctorDashboard from "./doctor/DoctorDashboard";
+import DoctorAvailability from "./doctor/DoctorAvalibility";
+import DoctorPlanned from "./doctor/DoctorPlanned";
+import DoctorUnconfirmed from "./doctor/DoctorUnconfirmed";
+import DoctorHistory from "./doctor/DoctorHistory";
+import AdminPatientList from "./admin/AdminPatientList";
+import React from "react";
+import useLogin from "../logic/useLogin";
+import AdminLoginPage from "./admin/AdminLoginPage";
+import Home from "./Home";
+import "../styles/index.css"
 import PatientDashboard from "./patient/PatientDashboard";
-import {PatientCertifications} from "./patient/PatientCertifications";
-import {PatientHistory} from "./patient/PatientHistory";
-import {PatientPlanned} from "./patient/PatientPlanned";
-import {PatientSignup} from "./patient/PatientSignup";
-import {PatientLayout} from "./patient/layout/PatientLayout";
-import {AdminPatientList} from "./admin/AdminPatientList";
-
+import PatientLayout from "./patient/layout/PatientLayout";
+import PatientCertifications from "./patient/PatientCertifications";
+import PatientHistory from "./patient/PatientHistory";
+import PatientPlanned from "./patient/PatientPlanned";
+import PatientSignup from "./patient/PatientSignup";
+import PatientLoginPage from "./patient/PatientLoginPage";
 
 function App() {
-  return (
-    <>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/admin" element={<AdminLayout content={<AdminPatientList />} />} />
-      <Route path="/admin/doctors" element={<AdminLayout content={<AdminDoctorList />} />} />
-      <Route path="/admin/patients" element={<AdminLayout content={<AdminPatientList />} />} />
-      <Route path="/admin/login" element={<AdminLoginPage />} />
 
-      {/* doctor */}
-      <Route path="/doctor" element={<DoctorLayout content={<DoctorDashboard />} />} />
-      <Route path="/doctor/dashboard" element={<DoctorLayout content={<DoctorDashboard />} />} />
-      <Route path="/doctor/availability" element={<DoctorLayout content={<DoctorAvailability />} />} />
-      <Route path="/doctor/planned" element={<DoctorLayout content={<DoctorPlanned />} />} />
-      <Route path="/doctor/annulment" element={<DoctorLayout content={<DoctorUnconfirmed />} />} />
-      <Route path="/doctor/history" element={<DoctorLayout content={<DoctorHistory />} />} />
-      <Route path="/doctor/login" element={<DoctorLoginPage />} />
+    const {isLoggedIn} = useLogin();
+    const location = useLocation();
+    return (
+        <>
+            <Routes>
+                <Route path="" element={<Home/>}/>
+                {
+                    isLoggedIn(location.pathname) ?
+                        <Route path="admin" element={<AdminLayout/>}>
+                            <Route path="" element={<AdminPatientList/>}/>
+                            <Route path="doctors" element={<AdminDoctorList/>}/>
+                            <Route path="patients" element={<AdminPatientList/>}/>
+                        </Route> :
+                        <Route path="admin" element={<AdminLoginPage/>}/>
+                }
+                {
+                    isLoggedIn(location.pathname) ?
+                        <Route path="doctor" element={<DoctorLayout/>}>
+                            <Route path="" element={<DoctorDashboard/>}/>
+                            <Route path="availability" element={<DoctorAvailability/>}/>
+                            <Route path="planned" element={<DoctorPlanned/>}/>} />
+                            <Route path="annulment" element={<DoctorUnconfirmed/>}/>
+                            <Route path="history" element={<DoctorHistory/>}/>
+                        </Route> :
+                        <Route path="doctor" element={<DoctorLoginPage/>}/>
+                }
+                {
+                    isLoggedIn(location.pathname) ?
+                        <Route path={"patient"}>
+                            <Route path="" element={<PatientLayout content={<PatientDashboard/>}/>}/>
+                            <Route path="certifications" element={<PatientLayout content={<PatientCertifications/>}/>}/>
+                            <Route path="history" element={<PatientLayout content={<PatientHistory/>}/>}/>
+                            <Route path="planned" element={<PatientLayout content={<PatientPlanned/>}/>}/>
+                            <Route path="signup" element={<PatientLayout content={<PatientSignup/>}/>}/>
+                        </Route> :
+                        <Route path="login" element={<PatientLoginPage/>}/>
+                }
 
-      {/* patient */}
-      <Route path="/patient" element={<PatientLayout content={<PatientDashboard />} />} />
-      <Route path="/patient/dashboard" element={<PatientLayout content={<PatientDashboard />} />} />
-      <Route path="/patient/certifications" element={<PatientLayout content={<PatientCertifications />} />} />
-      <Route path="/patient/history" element={<PatientLayout content={<PatientHistory />} />} />
-      <Route path="/patient/planned" element={<PatientLayout content={<PatientPlanned />} />} />
-      <Route path="/patient/signup" element={<PatientLayout content={<PatientSignup />} />} />
-      <Route path="/patient/login" element={<PatientLoginPage />} />
-    </Routes>
-    </>
-  );
 }
 
-function Home() {
-  return (
-    <>
-      <main>
-        <h2>Strona startowa</h2>
-      </main>
-      <nav>
-        <Link to="/admin">Strona admina</Link>
-        <br/>
-        <Link to="/patient">Strona pacjenta</Link>
-        <br/>
-        <Link to="/doctor">Strona lekarza</Link>
-      </nav>
-    </>
-  )
-}
-
-export function isUserLoggedIn() {
-  return true;
-}
 
 export default App;
