@@ -1,10 +1,11 @@
 export default function PatientHistory() {
     return (
-        <>
-            <h2> Historia pacjęta </h2>
-
-        </>
-
-
+        <div className="namePageSeparator">
+            <div>
+                <h2>
+                    Historia Szczepień
+                </h2>
+            </div>
+        </div>
     )
 }

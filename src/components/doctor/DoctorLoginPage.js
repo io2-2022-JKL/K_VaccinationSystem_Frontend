@@ -1,10 +1,16 @@
 import {Link} from "react-router-dom";
+import useLogin from "../../logic/useLogin";
+
 
 export default function DoctorLoginPage() {
+    const {LogIn} = useLogin();
+    const SubmitLogIn = () => {
+        LogIn("token", "doctor")
+    }
     return (
         <>
-            <h2> Strona logowania lekarza </h2>
-            <Link to="/doctor/dashboard">Logowanie</Link>
+            <h2> Strona logowania admina </h2>
+            <button onClick={SubmitLogIn}>Log In</button>
         </>
 
     )
