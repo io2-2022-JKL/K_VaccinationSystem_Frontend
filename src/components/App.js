@@ -22,7 +22,6 @@ import {PatientPlanned} from "./patient/PatientPlanned";
 import {PatientSignup} from "./patient/PatientSignup";
 import {PatientLoginPage} from "./patient/PatientLoginPage";
 
-
 function App() {
 
     const {isLoggedIn} = useLogin();
@@ -63,10 +62,6 @@ function App() {
                         <Route path="login" element={<PatientLoginPage/>}/>
                 }
 
-
-            </Routes>
-        </>
-    );
 }
 
 
