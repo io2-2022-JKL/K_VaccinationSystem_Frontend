@@ -20,6 +20,6 @@ it("renders page", () => {
   act(() => {
     render(<PatientCertifications />, container);
   });
-  expect(container.textContent).toContain("Certyfikaty");
+  expect(container.textContent).toContain("Certyfikat");
 
 });
