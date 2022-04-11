@@ -24,7 +24,7 @@ body::before {
 
 button {
     cursor: pointer;
-    background: antiquewhite;
+    background: cornflowerblue;
     width: 100%;
     padding: 10px 15px;
     border: 0;
@@ -35,7 +35,7 @@ button {
 }
 
 button:hover {
-    background: antiquewhite;
+    background: #5485dd;
 }
 
 code {
