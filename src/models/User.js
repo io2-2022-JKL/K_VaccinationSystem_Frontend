@@ -1,4 +1,4 @@
-class User {
+export default class User {
     _id;
     _pesel;
     _firstName;
@@ -45,7 +45,7 @@ class User {
 
 function createUser(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber)
 {
-    user = new Object();
+    var user = new Object();
     user.id = id;
     user.pesel = pesel;
     user.firstName = firstName;
@@ -54,5 +54,4 @@ function createUser(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber)
     user.mail = mail;
     user.phoneNumber = phoneNumber;
     return new User(user);
-}
 }

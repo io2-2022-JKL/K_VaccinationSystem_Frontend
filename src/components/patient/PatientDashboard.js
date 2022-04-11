@@ -1,7 +1,27 @@
 import React, {Component} from 'react';
 import '../../styles/patient/patient.css';
+import Patient from '../../models/Patient'
+import '../../models/User';
 
 export default function PatientDashboard() {
+
+    var tmp = new Object();
+    tmp.id = '1';
+    tmp.pesel = '00000000001';
+    tmp.firstName = 'Jakub';
+    tmp.lastName = 'Nowak';
+    tmp.dateOfBirth = '24-03-1999';
+    tmp.mail = 'jakub.nowak@adres.mailowy.pl';
+    tmp.phoneNumber = '+48000000000';
+    tmp.vaccinationCount = '0';
+    tmp.vaccinationHistory = 'todo';
+    tmp.futureVaccinations = 'todo';
+    tmp.certificates = 'todo';
+    tmp.active = 'a';
+
+
+    const patient = new Patient(tmp);
+
     return (
         <div>
             <div className='namePageSeparator'>
@@ -17,23 +37,24 @@ export default function PatientDashboard() {
                     <div>
                         <div>
                             <h3>
-                                Imię: Jakub
+                                Imię: {patient.getFirstName}
                             </h3>
                         </div>
                         <div>
                             <h3>
-                                Nazwisko: Nowak
+                                Nazwisko: {patient.getLastName}
                             </h3>
                         </div>
                         <div>
                             <h3>
-                                Pesel: 00000000000
+                                Pesel: {patient.getPesel}
                             </h3>
                         </div>
                     </div>
                 </div>
                 <div>
                     <table>
+                        <thead>
                         <tr>
                             <th>
                                 Data
@@ -45,6 +66,7 @@ export default function PatientDashboard() {
                                 Szczepionka
                             </th>
                         </tr>
+                        </thead>
                     </table>
                 </div>
             </div>
