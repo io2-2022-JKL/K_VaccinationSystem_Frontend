@@ -5,8 +5,8 @@ import './sidebar.scss';
 const sidebarNavItems = [
     {
         display: 'Dashboard',
-        to: '/patient/dashboard',
-        section: 'dashboard'
+        to: '/patient',
+        section: ''
     },
     {
         display: 'Certifications',
@@ -22,16 +22,6 @@ const sidebarNavItems = [
         display: 'Planned',
         to: '/patient/planned',
         section: 'planned'
-    },
-    {
-        display: 'Sign Up',
-        to: '/patient/signup',
-        section: 'signup'
-    },
-    {
-        display: 'Login',
-        to: '/patient/login',
-        section: 'login'
     },
 ]
 
@@ -52,21 +42,21 @@ const Sidebar = () => {
 
     // change active index
     useEffect(() => {
-        const curPath = window.location.pathname.split('/')[1]==='patient'?window.location.pathname.split('/')[2]:window.location.pathname.split('/')[1];
+        const curPath = window.location.pathname.split('/').length==2?window.location.pathname.split('/')[1]:window.location.pathname.split('/')[2];
         const activeItem = sidebarNavItems.findIndex(item => item.section === curPath);
-        setActiveIndex(curPath.length === 0 ? 0 : activeItem);
+        setActiveIndex(curPath.length === 0 ? 1 : activeItem);
     }, [location]);
 
     return <div className='sidebar'>
         <div className="sidebar__logo">
-            Pacjent
+            Patient
         </div>
         <div ref={sidebarRef} className="sidebar__menu">
             <div
                 ref={indicatorRef}
                 className="sidebar__menu__indicator"
                 style={{
-                    transform: `translateX(-50%) translateY(${activeIndex * stepHeight}px)`
+                    transform: `translateX(-50%) translateY(${activeIndex===-1?0:activeIndex * stepHeight}px)`
                 }}
             ></div>
             {

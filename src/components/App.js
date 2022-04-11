@@ -20,7 +20,10 @@ import PatientCertifications from "./patient/PatientCertifications";
 import PatientHistory from "./patient/PatientHistory";
 import PatientPlanned from "./patient/PatientPlanned";
 import PatientSignup from "./patient/PatientSignup";
+import DataTable from "./DataTable";
+import { useState } from "react";
 import PatientLoginPage from "./patient/PatientLoginPage";
+import "../styles/global.css"
 
 function App() {
 
@@ -61,7 +64,7 @@ function App() {
                         <Route path="patient" element={<PatientLoginPage/>}/>
                 }
             </Routes>
-    )
+    );
 }
 
 

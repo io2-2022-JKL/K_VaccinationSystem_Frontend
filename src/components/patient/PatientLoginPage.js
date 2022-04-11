@@ -1,12 +1,23 @@
-import {Link} from "react-router-dom";
-import '../../styles/patient/patient.css';
+import useLogin from "../../logic/useLogin";
+import "../../styles/loginPageStyles.css";
+import {useState} from "react";
 
 export default function PatientLoginPage() {
-    return (
-        <div>
-            <h2> Strona logowania pacjenta </h2>
-            <Link to="/patient/dashboard">Zaloguj</Link>
-        </div>
+    const {LogIn} = useLogin();
+    const [login, setLogin] = useState("");
+    const [password, setPassword] = useState("");
 
+    const SubmitLogIn = () => {
+        LogIn(password, "patient")
+    }
+    return (
+        <section className="form animated flipInX">
+            <h2>Zaloguj się</h2>
+            <form className="loginbox" autoComplete="off" onSubmit={SubmitLogIn}>
+                <input placeholder="Email" type="text" id="username" onChange={(e) => {setLogin(e.target.value)}}/>
+                <input placeholder="Hasło" type="password" id="password" onChange={(e) => {setPassword(e.target.value)}}/>
+                <button id="submit">Zaloguj</button>
+            </form>
+        </section>
     )
 }

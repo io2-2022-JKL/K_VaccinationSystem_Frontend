@@ -1,7 +1,6 @@
-import {AdminMenu} from "./AdminMenu";
+import AdminMenu from "./AdminMenu";
 import {Outlet} from "react-router-dom";
 import useLogin from "../../../logic/useLogin";
-
 
 export default function AdminLayout(props) {
     return (
