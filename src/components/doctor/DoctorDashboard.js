@@ -1,6 +1,6 @@
 import {DoctorCalendar} from "./utils/DoctorCalendar";
 
-export function DoctorDashboard() {
+export default function DoctorDashboard() {
     return (
         <>
             <h2> Strona główna lekarza </h2>

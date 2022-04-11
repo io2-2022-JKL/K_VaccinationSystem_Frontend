@@ -1,4 +1,4 @@
-export function PatientHistory() {
+export default function PatientHistory() {
     return (
         <div className="namePageSeparator">
             <div>

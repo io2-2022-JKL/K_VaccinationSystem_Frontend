@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import useLogin from "../../logic/useLogin";
 
-export function DoctorLoginPage() {
+export default function DoctorLoginPage() {
     const {LogIn} = useLogin();
     const SubmitLogIn = () => {
         LogIn("token", "doctor")

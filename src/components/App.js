@@ -1,30 +1,29 @@
 import {Route, Routes, useLocation} from "react-router-dom";
-import {AdminDoctorList} from "./admin/AdminDoctorList";
-import {DoctorLoginPage} from "./doctor/DoctorLoginPage";
-import {AdminLayout} from "./admin/layout/AdminLayout";
-import {DoctorLayout} from "./doctor/layout/DoctorLayout";
-import {DoctorDashboard} from "./doctor/DoctorDashboard";
-import {DoctorAvailability} from "./doctor/DoctorAvalibility";
-import {DoctorPlanned} from "./doctor/DoctorPlanned";
-import {DoctorUnconfirmed} from "./doctor/DoctorUnconfirmed";
-import {DoctorHistory} from "./doctor/DoctorHistory";
-import {AdminPatientList} from "./admin/AdminPatientList";
+import AdminDoctorList from "./admin/AdminDoctorList";
+import DoctorLoginPage from "./doctor/DoctorLoginPage";
+import AdminLayout from "./admin/layout/AdminLayout";
+import DoctorLayout from "./doctor/layout/DoctorLayout";
+import DoctorDashboard from "./doctor/DoctorDashboard";
+import DoctorAvailability from "./doctor/DoctorAvalibility";
+import DoctorPlanned from "./doctor/DoctorPlanned";
+import DoctorUnconfirmed from "./doctor/DoctorUnconfirmed";
+import DoctorHistory from "./doctor/DoctorHistory";
+import AdminPatientList from "./admin/AdminPatientList";
 import React from "react";
 import useLogin from "../logic/useLogin";
-import {AdminLoginPage} from "./admin/AdminLoginPage";
+import AdminLoginPage from "./admin/AdminLoginPage";
 import Home from "./Home";
 import "../styles/index.css"
-import {PatientDashboard} from "./patient/PatientDashboard";
-import {PatientLayout} from "./patient/layout/PatientLayout";
-import {PatientCertifications} from "./patient/PatientCertifications";
-import {PatientHistory} from "./patient/PatientHistory";
-import {PatientPlanned} from "./patient/PatientPlanned";
-import {PatientSignup} from "./patient/PatientSignup";
-import {PatientLayout} from "./patient/layout/PatientLayout";
-import {AdminPatientList} from "./admin/AdminPatientList";
+import PatientDashboard from "./patient/PatientDashboard";
+import PatientLayout from "./patient/layout/PatientLayout";
+import PatientCertifications from "./patient/PatientCertifications";
+import PatientHistory from "./patient/PatientHistory";
+import PatientPlanned from "./patient/PatientPlanned";
+import PatientSignup from "./patient/PatientSignup";
 import DataTable from "./DataTable";
 import { useState } from "react";
-import {PatientLoginPage} from "./patient/PatientLoginPage";
+import PatientLoginPage from "./patient/PatientLoginPage";
+import "../styles/global.css"
 
 function App() {
 
