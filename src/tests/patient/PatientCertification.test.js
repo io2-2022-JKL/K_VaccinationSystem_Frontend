@@ -1,8 +1,7 @@
 import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
-
-import PatientDashboard from '../../../components/patient/PatientDashboard';
+import PatientCertifications from "../../components/patient/PatientCertifications";
 
 let container = null;
 beforeEach(() => {
@@ -19,8 +18,8 @@ afterEach(() => {
 
 it("renders page", () => {
   act(() => {
-    render(<PatientDashboard />, container);
+    render(<PatientCertifications />, container);
   });
-  expect(container.textContent).toContain("Strona");
+  expect(container.textContent).toContain("Certyfikaty");
 
 });
