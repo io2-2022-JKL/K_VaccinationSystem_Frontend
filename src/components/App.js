@@ -13,7 +13,6 @@ import React from "react";
 import useLogin from "../logic/useLogin";
 import AdminLoginPage from "./admin/AdminLoginPage";
 import Home from "./Home";
-import "../styles/index.css"
 import PatientDashboard from "./patient/PatientDashboard";
 import PatientLayout from "./patient/layout/PatientLayout";
 import PatientCertifications from "./patient/PatientCertifications";
