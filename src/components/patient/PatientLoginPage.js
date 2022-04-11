@@ -20,6 +20,5 @@ export function PatientLoginPage() {
                 <button id="submit">Zaloguj</button>
             </form>
         </section>
-
     )
 }

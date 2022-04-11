@@ -22,7 +22,6 @@ import {PatientPlanned} from "./patient/PatientPlanned";
 import {PatientSignup} from "./patient/PatientSignup";
 import {PatientLoginPage} from "./patient/PatientLoginPage";
 
-
 function App() {
 
     const {isLoggedIn} = useLogin();
@@ -60,10 +59,8 @@ function App() {
                             <Route path="planned" element={<PatientLayout content={<PatientPlanned/>}/>}/>
                             <Route path="signup" element={<PatientLayout content={<PatientSignup/>}/>}/>
                         </Route> :
-                        <Route path="login" element={<PatientLoginPage/>}/>
+                        <Route path="patient" element={<PatientLoginPage/>}/>
                 }
-
-
             </Routes>
         </>
     );
