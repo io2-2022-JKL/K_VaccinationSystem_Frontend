@@ -1,4 +1,5 @@
-export function AdminDoctorList() {
+export default function AdminDoctorList() {
+
 
     return (
         <>

@@ -1,0 +1,27 @@
+.patientDashboard{
+    display: grid; 
+    background-size: cover;
+    height: 100%;
+}
+
+.namePageSeparator{
+    width: 90%;
+    display: inline-grid;
+    grid-template-columns: 90%;
+}
+
+.photoDataSeparator{
+    display: inline-grid;
+    grid-template-columns: 200px auto;
+}
+
+.form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: #fff;
+    width: 285px;
+    margin: -140px 0 0 -182px;
+    padding: 40px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}

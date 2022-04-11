@@ -1,4 +1,6 @@
-class Admin extends User 
+import User from "./User";
+
+export default class Admin extends User 
 {
     constructor(user)
     {
@@ -6,7 +8,7 @@ class Admin extends User
     }
 }
 
-function createAdmin(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber)
+export function createAdmin(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber)
 {
     user = new Object();
     user.id = id;

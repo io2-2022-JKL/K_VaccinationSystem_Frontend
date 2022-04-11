@@ -1,4 +1,6 @@
-class Patient extends User
+import User from './User';
+
+export default class Patient extends User
 {
     _vaccinationCount;
     _vaccinationHistory;
@@ -8,14 +10,14 @@ class Patient extends User
 
     constructor(patient)
     {
-        user = new Object();
+        var user = new Object();
         user.id = patient.id;
         user.pesel = patient.pesel;
         user.firstName = patient.firstName;
-        lastName = patient.lastName;
-        dateOfBirth = patient.dateOfBirth;
-        mail = patient.mail;
-        phoneNumber = patient.phoneNumber;
+        user.lastName = patient.lastName;
+        user.dateOfBirth = patient.dateOfBirth;
+        user.mail = patient.mail;
+        user.phoneNumber = patient.phoneNumber;
         super(user);
         this._vaccinationCount = patient.vaccinationCount;
         this._vaccinationHistory = patient.vaccinationHistory;
@@ -42,7 +44,7 @@ class Patient extends User
 
 function createPatient(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber,vaccinationCount,vaccinationHistory,futureVaccinations,certificates,active)
 {
-    patient = new Object();
+    var patient = new Object();
     patient.id = id;
     patient.pesel = pesel;
     patient.firstName = firstName;

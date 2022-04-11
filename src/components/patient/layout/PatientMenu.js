@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 
-export function PatientMenu() {
+export default function PatientMenu() {
     return (
         <>
             <main>

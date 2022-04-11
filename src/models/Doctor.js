@@ -1,4 +1,4 @@
-class Doctor extends User 
+export default class Doctor extends User 
 {
     _vaccinationCenter;
     _futureVaccinations;
@@ -35,7 +35,7 @@ class Doctor extends User
     set setActive(active) { this._active = active; }
 }
 
-function createDoctor(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber,vaccinationCenter,futureVaccinations,vaccinationArchieve,active)
+export function createDoctor(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber,vaccinationCenter,futureVaccinations,vaccinationArchieve,active)
 {
     doctor = new Object(),
     doctor.id = id;
