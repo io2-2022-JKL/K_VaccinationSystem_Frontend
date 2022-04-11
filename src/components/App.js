@@ -61,7 +61,9 @@ function App() {
                         </Route> :
                         <Route path="login" element={<PatientLoginPage/>}/>
                 }
-
+            </Routes>
+        </>
+    );
 }
 
 
