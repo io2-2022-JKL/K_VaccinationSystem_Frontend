@@ -1,12 +1,17 @@
 import {Link} from "react-router-dom";
 import '../../styles/patient/patient.css';
+import useLogin from "../../logic/useLogin";
 
-export function PatientLoginPage() {
+export function AdminLoginPage() {
+    const {LogIn} = useLogin();
+    const SubmitLogIn = () => {
+        LogIn("token", "patient")
+    }
     return (
-        <div>
+        <>
             <h2> Strona logowania pacjenta </h2>
-            <Link to="/patient/dashboard">Zaloguj</Link>
-        </div>
+            <button onClick={SubmitLogIn}>Log In</button>
+        </>
 
     )
 }
