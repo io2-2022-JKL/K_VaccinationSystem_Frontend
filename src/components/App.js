@@ -19,6 +19,7 @@ import PatientCertifications from "./patient/PatientCertifications";
 import PatientHistory from "./patient/PatientHistory";
 import PatientPlanned from "./patient/PatientPlanned";
 import PatientSignup from "./patient/PatientSignup";
+import PatientVaccinationSignUp from "./patient/PatientVaccinationSignUp";
 import DataTable from "./DataTable";
 import { useState } from "react";
 import PatientLoginPage from "./patient/PatientLoginPage";
@@ -60,6 +61,7 @@ function App() {
                             <Route path="history" element={<PatientLayout content={<PatientHistory/>}/>}/>
                             <Route path="planned" element={<PatientLayout content={<PatientPlanned/>}/>}/>
                             <Route path="signup" element={<PatientLayout content={<PatientSignup/>}/>}/>
+                            <Route path="vaccination" element={<PatientLayout content={<PatientVaccinationSignUp/>}/>}/>
                         </Route> :
                         <Route path="patient" element={<PatientLoginPage/>}/>
                 }

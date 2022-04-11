@@ -1,7 +1,7 @@
 import { useState } from "react";
 import DataTable from "../DataTable";
 
-export default function PatientPlanned() {
+export default function PatientVaccinationSignUp() {
 
     const [visits, setVisits] = useState([
         {
@@ -20,7 +20,7 @@ export default function PatientPlanned() {
 
     return (
         <div className='pageNameSeparator'>
-            <h2> Zaplanowane wizyty pacjenta </h2>
+            <h2> Zapisz się </h2>
             <DataTable list={visits}/>
         </div>
     )

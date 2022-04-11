@@ -5,9 +5,9 @@
 }
 
 .namePageSeparator{
-    width: 100%;
+    width: 90%;
     display: inline-grid;
-    grid-template-columns: 100%;
+    grid-template-columns: 90%;
 }
 
 .photoDataSeparator{

@@ -22,13 +22,13 @@ export default function PatientHistory() {
     ])
 
     return (
-        <div>
+        <>
             <div className="namePageSeparator">
                 <h2>
                     Historia Szczepień
                 </h2>
+                <DataTable list={history}/>
             </div>
-            <DataTable list={history}/>
-        </div>
+        </>
     )
 }
