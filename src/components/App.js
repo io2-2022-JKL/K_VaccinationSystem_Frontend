@@ -60,7 +60,7 @@ function App() {
                             <Route path="planned" element={<PatientLayout content={<PatientPlanned/>}/>}/>
                             <Route path="signup" element={<PatientLayout content={<PatientSignup/>}/>}/>
                         </Route> :
-                        <Route path="login" element={<PatientLoginPage/>}/>
+                        <Route path="patient" element={<PatientLoginPage/>}/>
                 }
 
 
