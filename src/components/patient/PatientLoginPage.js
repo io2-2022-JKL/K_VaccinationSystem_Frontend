@@ -7,7 +7,6 @@ export default function PatientLoginPage() {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
 
-
     const SubmitLogIn = () => {
         LogIn(password, "patient")
     }

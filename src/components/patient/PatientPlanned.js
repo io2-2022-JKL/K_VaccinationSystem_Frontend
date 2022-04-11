@@ -17,7 +17,6 @@ export default function PatientPlanned() {
             Szczepionka: "losowa"
         }
     ])
-
     return (
         <div className='pageNameSeparator'>
             <h2> Zaplanowane wizyty pacjenta </h2>

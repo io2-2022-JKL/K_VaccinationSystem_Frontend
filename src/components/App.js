@@ -30,7 +30,6 @@ function App() {
     const {isLoggedIn} = useLogin();
     const location = useLocation();
     return (
-        <>
             <Routes>
                 <Route path="" element={<Home/>}/>
                 {
@@ -66,7 +65,6 @@ function App() {
                         <Route path="patient" element={<PatientLoginPage/>}/>
                 }
             </Routes>
-        </>
     );
 }
 

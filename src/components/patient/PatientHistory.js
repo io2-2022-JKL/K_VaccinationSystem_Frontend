@@ -20,7 +20,6 @@ export default function PatientHistory() {
             Odbyto: "nie"
         }
     ])
-
     return (
         <>
             <div className="namePageSeparator">
