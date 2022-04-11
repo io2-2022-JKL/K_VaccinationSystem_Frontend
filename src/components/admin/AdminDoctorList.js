@@ -1,5 +1,6 @@
 export default function AdminDoctorList() {
 
+
     return (
         <>
             <main>

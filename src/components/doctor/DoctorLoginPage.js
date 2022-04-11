@@ -20,6 +20,5 @@ export default function DoctorLoginPage() {
                 <button id="submit">Zaloguj</button>
             </form>
         </section>
-
     )
 }

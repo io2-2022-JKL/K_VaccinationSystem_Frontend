@@ -71,6 +71,5 @@ export default function PatientDashboard() {
                 </div>
             </div>
         </div>
-
     )
 }

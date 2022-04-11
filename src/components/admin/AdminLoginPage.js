@@ -20,6 +20,5 @@ export default function AdminLoginPage() {
                 <button id="submit">Zaloguj</button>
             </form>
         </section>
-
     )
 }

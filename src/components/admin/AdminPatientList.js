@@ -1,5 +1,4 @@
 export default function AdminPatientList() {
-
     return (
         <>
             <main>
