@@ -44,7 +44,7 @@ function App() {
                         <Route path="doctor" element={<DoctorLayout/>}>
                             <Route path="" element={<DoctorDashboard/>}/>
                             <Route path="availability" element={<DoctorAvailability/>}/>
-                            <Route path="planned" element={<DoctorPlanned/>}/>} />
+                            <Route path="planned" element={<DoctorPlanned/>}/>
                             <Route path="annulment" element={<DoctorUnconfirmed/>}/>
                             <Route path="history" element={<DoctorHistory/>}/>
                         </Route> :
