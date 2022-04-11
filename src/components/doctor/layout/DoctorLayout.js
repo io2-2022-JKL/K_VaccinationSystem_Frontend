@@ -1,6 +1,6 @@
-import {DoctorMenu} from "./DoctorMenu";
+import DoctorMenu from "./DoctorMenu";
 
-export function DoctorLayout(props) {
+export default function DoctorLayout(props) {
     return (
         <>
             <DoctorMenu/>

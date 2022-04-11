@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import '../../styles/patient/patient.css';
 
-export function PatientDashboard() {
+export default function PatientDashboard() {
     return (
         <div>
             <div className='namePageSeparator'>
