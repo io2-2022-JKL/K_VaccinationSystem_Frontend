@@ -9,19 +9,24 @@ const sidebarNavItems = [
         section: ''
     },
     {
-        display: 'Certifications',
+        display: 'Certyfikaty',
         to: '/patient/certifications',
         section: 'certifications'
     },
     {
-        display: 'History',
+        display: 'Historia',
         to: '/patient/history',
         section: 'history'
     },
     {
-        display: 'Planned',
+        display: 'Zaplanowane',
         to: '/patient/planned',
         section: 'planned'
+    },
+    {
+        display: 'Zaszczep się',
+        to: '/patient/vaccination',
+        section: 'vaccination'
     },
 ]
 
