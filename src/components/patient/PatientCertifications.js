@@ -1,5 +1,5 @@
 import { useState } from "react";
-import DataTable from "../DataTable";
+import DataTable from "../tableComponent/DataTable";
 
 export default function PatientCertifications() {
 
@@ -22,9 +22,9 @@ export default function PatientCertifications() {
     ]);
 
     return (
-        <>
+        <div className="namePageSeparator">
             <h2> Certyfikaty pacjenta </h2>
             <DataTable list={certs}/>
-        </>
+        </div>
     )
 }
