@@ -1,5 +1,5 @@
 import { useState } from "react";
-import DataTable from "../DataTable";
+import DataTable from "../tableComponent/DataTable";
 
 export default function PatientHistory() {
 
@@ -18,6 +18,16 @@ export default function PatientHistory() {
             Data: "1.02.2022",
             Szczepionka: "przeziębienie",
             Odbyto: "nie"
+        },
+        {
+            Data: "21.01.2022",
+            Szczepionka: "świńska grypa",
+            Odbyto: "tak"
+        },
+        {
+            Data: "1.01.2022",
+            Szczepionka: "noworoczna choroba wysokoprocentowa",
+            Odbyto: "tak"
         }
     ])
     return (

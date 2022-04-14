@@ -1,5 +1,5 @@
 import { useState } from "react";
-import DataTable from "../DataTable";
+import DataTable from "../tableComponent/DataTable";
 
 export default function PatientPlanned() {
 
@@ -18,7 +18,7 @@ export default function PatientPlanned() {
         }
     ])
     return (
-        <div className='pageNameSeparator'>
+        <div className='namePageSeparator'>
             <h2> Zaplanowane wizyty pacjenta </h2>
             <DataTable list={visits}/>
         </div>
