@@ -34,7 +34,7 @@ export default function Table(props) {
                                     <th className="searchLine">
                                         <input className="searchBar"
                                             key={`${name}-search`}
-                                            placeholder={`Search ${name}`}
+                                            placeholder={`Wyszukaj ${name}`}
                                             type="search"
                                             onChange={event => {
                                                 const value = event.target.value;
