@@ -22,7 +22,7 @@ export default function PatientHistory() {
         {
             Data: "21.01.2022",
             Szczepionka: "świńska grypa",
-            Odbyto: "tak"
+            Odbyto: "nie"
         },
         {
             Data: "1.01.2022",
