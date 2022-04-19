@@ -14,7 +14,7 @@ import DataTable from "../../examples/Tables/DataTable";
 
 export default function PatientDashboard() {
 
-    var tmp = new Object();
+    var tmp = {};
     tmp.id = '1';
     tmp.pesel = '00000000001';
     tmp.firstName = 'Jakub';

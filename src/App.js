@@ -108,16 +108,16 @@ import Configurator from "examples/Configurator";
 
 // Material Dashboard 2 React themes
 import theme from "assets/theme";
-import themeRTL from "assets/theme/theme-rtl";
+//import themeRTL from "assets/theme/theme-rtl";
 
 // Material Dashboard 2 React Dark Mode themes
-import themeDark from "assets/theme-dark";
-import themeDarkRTL from "assets/theme-dark/theme-rtl";
+//import themeDark from "assets/theme-dark";
+//import themeDarkRTL from "assets/theme-dark/theme-rtl";
 
 // RTL plugins
-import rtlPlugin from "stylis-plugin-rtl";
-import { CacheProvider } from "@emotion/react";
-import createCache from "@emotion/cache";
+//import rtlPlugin from "stylis-plugin-rtl";
+//import { CacheProvider } from "@emotion/react";
+//import createCache from "@emotion/cache";
 
 // Material Dashboard 2 React routes
 import routes from "routes";
