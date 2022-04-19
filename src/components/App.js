@@ -20,7 +20,7 @@ import PatientHistory from "./patient/PatientHistory";
 import PatientPlanned from "./patient/PatientPlanned";
 import PatientSignup from "./patient/PatientSignup";
 import PatientVaccinationSignUp from "./patient/PatientVaccinationSignUp";
-import DataTable from "./DataTable";
+import DataTable from "./tableComponent/DataTable";
 import { useState } from "react";
 import PatientLoginPage from "./patient/PatientLoginPage";
 import "../styles/global.css"

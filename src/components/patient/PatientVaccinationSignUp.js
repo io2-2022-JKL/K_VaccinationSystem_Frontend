@@ -1,5 +1,5 @@
 import { useState } from "react";
-import DataTable from "../DataTable";
+import DataTable from "../tableComponent/DataTable";
 
 export default function PatientVaccinationSignUp() {
 
@@ -21,7 +21,7 @@ export default function PatientVaccinationSignUp() {
     ])
 
     return (
-        <div className='pageNameSeparator'>
+        <div className='namePageSeparator'>
             <h2> Zapisz się </h2>
             <DataTable list={visits}/>
         </div>
