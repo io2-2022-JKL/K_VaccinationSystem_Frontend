@@ -64,7 +64,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Certyfications",
+    name: "Certyfikaty",
     key: "certyfications",
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/patient/certifications",
