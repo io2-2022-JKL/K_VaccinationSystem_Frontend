@@ -163,7 +163,7 @@ function DataTable({
                 renderInput={(params) => <MDInput {...params} />}
               />
               <MDTypography variant="caption" color="secondary">
-                &nbsp;&nbsp;entries per page
+                &nbsp;&nbsp;rekordów na stronie
               </MDTypography>
             </MDBox>
           )}
@@ -271,7 +271,7 @@ function DataTable({
 DataTable.defaultProps = {
   entriesPerPage: { defaultValue: 10, entries: [5, 10, 15, 20, 25] },
   canSearch: false,
-  showTotalEntries: true,
+  showTotalEntries: false,
   pagination: { variant: "gradient", color: "info" },
   isSorted: true,
   noEndBorder: false,
