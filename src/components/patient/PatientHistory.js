@@ -57,8 +57,6 @@ export default function PatientDashboard() {
             </Header>
             <Footer/>
         </DashboardLayout>
-
-
     )
 }
 
