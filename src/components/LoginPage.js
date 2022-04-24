@@ -42,7 +42,7 @@ function LogInComponent(props) {
             if (r.status !== 200) {
                 setFail(true);
             } else {
-                LogIn(r.data.userId, r.data.userType);
+                LogIn(r.data.jwt, r.data.userId, r.data.userType);
                 props.history.pop();
             }
         }).finally(() => {
