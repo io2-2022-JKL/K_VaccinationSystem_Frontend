@@ -121,6 +121,8 @@ import theme from "assets/theme";
 
 // Material Dashboard 2 React routes
 import routes from "routes";
+import authRoutes from "authRoutes";
+
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
@@ -204,6 +206,7 @@ export default function App() {
             )}
             {layout === "vr" && <Configurator />}
             <Routes>
+                {getRoutes(authRoutes)}
                 {getRoutes(routes)}
                 <Route path="*" element={<Navigate to="/patient" />} />
             </Routes>
