@@ -25,7 +25,16 @@ const useLogin = () => {
         localStorage.clear();
     }
 
-    return {isLoggedIn, LogIn, LogOut};
+    const GetToken = (APIPath) => {
+        for (let i = 0; i < LoginRules.length; i++)
+        {
+            if (APIPath.match(LoginRules[i].rule) && localStorage.getItem(LoginRules[i].token))
+                return localStorage.getItem(LoginRules[i].token);
+        }
+        return null;
+    }
+
+    return {isLoggedIn, LogIn, LogOut, GetToken};
 }
 
 export default useLogin;
