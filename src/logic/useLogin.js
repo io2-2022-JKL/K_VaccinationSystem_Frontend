@@ -16,9 +16,14 @@ const useLogin = () => {
         return null;
     }
 
-    const LogIn = (token, role) => {
+    const LogIn = (token, id, role) => {
         console.log(token, role);
         localStorage.setItem(role + "Token", token);
+        localStorage.setItem("id", id);
+    }
+
+    const GetId = () => {
+        return localStorage.getItem("id");
     }
 
     const LogOut = () => {
@@ -34,7 +39,7 @@ const useLogin = () => {
         return null;
     }
 
-    return {isLoggedIn, LogIn, LogOut, GetToken};
+    return {isLoggedIn, LogIn, LogOut, GetToken, GetId};
 }
 
 export default useLogin;
