@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../../styles/patient/patient.css';
 import Patient from '../../models/Patient'
 import '../../models/User';
@@ -11,26 +11,27 @@ import Divider from "@mui/material/Divider";
 import ProfileInfoCard from "../../examples/Cards/InfoCards/ProfileInfoCard";
 import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
+import useLogin from "../../logic/useLogin";
+import ApiConnection from "../../logic/api/ApiConnection";
 
 export default function PatientDashboard() {
 
-    const [history, setHistory] = useState([
-        {
-            Date: "10.02.2022",
-            Vaccine: "covid",
-            Completed: "tak"
-        },
-        {
-            Date: "2.02.2002",
-            Vaccine: "przeziębienie",
-            Completed: "tak"
-        },
-        {
-            Date: "1.02.2022",
-            Vaccine: "przeziębienie",
-            Completed: "nie"
-        }
-    ])
+    const {GetId} = useLogin();
+    const [loading, setLoading] = useState(true);
+    const [tableData, setTableData] = useState([]);
+
+    const instance = ApiConnection("/patient/appointments/formerAppointments/");
+
+    useEffect(() => {
+        instance.get(
+            "/patient/appointments/formerAppointments/" + GetId()
+        ).then(r => {
+            setTableData(r.data)
+        })
+            .finally(() => {
+                setLoading(false)
+            });
+    }, [])
 
     const [patient, setPatient] = useState({
         firstName: "Andrew",
@@ -39,9 +40,9 @@ export default function PatientDashboard() {
     })
 
     const tableColumns = [
-        {Header: "Data", accessor: "Date", width: "25%"},
-        {Header: "Szczepionka", accessor: "Vaccine", width: "50%"},
-        {Header: "Odbyto", accessor: "Completed", width: "25%"},
+        {Header: "Nazwa szczepionki", accessor: "vaccineName", width: "50%"},
+        {Header: "Wirus", accessor: "vaccineVirus", width: "25%"},
+        {Header: "Data", accessor: "windowBegin", width: "25%"},
     ]
 
 
@@ -52,7 +53,7 @@ export default function PatientDashboard() {
             <MDBox mb={10}/>
             <Header name={patient.firstName + " " + patient.lastName} position={"Pacjent"}>
                 <MDBox mt={5} mb={3}>
-                    <DataTable table={{columns: tableColumns, rows: history}}/>
+                    <DataTable table={{columns: tableColumns, rows: tableData}}/>
                 </MDBox>
             </Header>
             <Footer/>
