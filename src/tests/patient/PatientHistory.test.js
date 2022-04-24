@@ -8,16 +8,16 @@ import { act } from "react-dom/test-utils";
 import { MaterialUIControllerProvider } from "context";
 import "babel-polyfill";
 
-import PatientCertifications from "../../components/patient/PatientCertifications"
+import PatientHistory from "../../components/patient/PatientHistory"
 
-// jest.mock("react-router-dom", () => ({
-//   ...jest.requireActual("react-router-dom"),
-//   useLocation: () => ({
-//     pathname: "localhost:3000/patient/certifications"
-//   })
-// }));
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useLocation: () => ({
+    pathname: "localhost:3000/patient/history"
+  })
+}));
 
-describe("Patient Certification Testing", () =>{
+describe("Patient History Testing", () =>{
   let container = null;
   beforeEach(() => {
     container = document.createElement("div");
@@ -26,7 +26,7 @@ describe("Patient Certification Testing", () =>{
       <MemoryRouter>
         <MaterialUIControllerProvider>
           <ThemeProvider theme={theme}>
-            <PatientCertifications/>
+            <PatientHistory/>
           </ThemeProvider>
         </MaterialUIControllerProvider>
       </MemoryRouter>, 
@@ -42,18 +42,14 @@ describe("Patient Certification Testing", () =>{
   });
 
   it("renders table first column", () => {
+    expect(container.textContent.toLowerCase()).toContain("data");
+  });
+
+  it("renders table second column", () => {
     expect(container.textContent.toLowerCase()).toContain("szczepionka");
   });
 
   it("renders table second column", () => {
-    expect(container.textContent.toLowerCase()).toContain("od");
-  });
-
-  it("renders table third column", () => {
-    expect(container.textContent.toLowerCase()).toContain("do");
-  });
-
-  it("renders button in table", () => {
-    expect(container.textContent.toLowerCase()).toContain("pobierz");
+    expect(container.textContent.toLowerCase()).toContain("odbyto");
   });
 });

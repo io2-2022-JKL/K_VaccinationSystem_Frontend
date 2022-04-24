@@ -8,7 +8,7 @@ import { act } from "react-dom/test-utils";
 import { MaterialUIControllerProvider } from "context";
 import "babel-polyfill";
 
-import PatientDashboard from "../../components/patient/PatientDashboard"
+import PatientPlanned from "../../components/patient/PatientPlanned"
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -17,7 +17,7 @@ jest.mock("react-router-dom", () => ({
   })
 }));
 
-describe("PatientDashboardTesting", () =>{
+describe("Patient Planned Testing", () =>{
   let container = null;
   beforeEach(() => {
     container = document.createElement("div");
@@ -26,7 +26,7 @@ describe("PatientDashboardTesting", () =>{
       <MemoryRouter>
         <MaterialUIControllerProvider>
           <ThemeProvider theme={theme}>
-            <PatientDashboard/>
+            <PatientPlanned/>
           </ThemeProvider>
         </MaterialUIControllerProvider>
       </MemoryRouter>, 
@@ -37,7 +37,7 @@ describe("PatientDashboardTesting", () =>{
     expect(
       container.textContent.toLowerCase()
     ).toContain(
-      "informacje o pacjencie"
+      "pacjent"
     );
   });
 
@@ -45,7 +45,7 @@ describe("PatientDashboardTesting", () =>{
     expect(
       container.textContent.toLowerCase()
     ).toContain(
-      "nazwa szczepionki"
+      "data"
     );
   });
 
@@ -53,7 +53,7 @@ describe("PatientDashboardTesting", () =>{
     expect(
       container.textContent.toLowerCase()
     ).toContain(
-      "data"
+      "godzina"
     );
   });
 
@@ -61,7 +61,15 @@ describe("PatientDashboardTesting", () =>{
     expect(
       container.textContent.toLowerCase()
     ).toContain(
-      "godzina"
+      "miejsce"
+    );
+  });
+
+  it("renders table third column", () => {
+    expect(
+      container.textContent.toLowerCase()
+    ).toContain(
+      "szczepionka"
     );
   });
 
