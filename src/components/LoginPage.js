@@ -1,7 +1,7 @@
 import {useState} from "react";
 
 // react-router-dom components
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -30,7 +30,7 @@ function LogInComponent(props) {
 
     const conn = ApiConnection("/signin");
     const {LogIn} = useLogin();
-    const navigate = useNavigate();
+
     const SubmitLogIn = () => {
         setSendingData(true);
         conn.post(
@@ -42,8 +42,8 @@ function LogInComponent(props) {
             if (r.status !== 200) {
                 setFail(true);
             } else {
-                LogIn(r.data.jwt, r.data.userId, r.data.userType);
-                navigate("/patient")
+                LogIn(r.data.userId, r.data.userType);
+                props.history.pop();
             }
         }).finally(() => {
             setSendingData(false);
@@ -83,21 +83,21 @@ function LogInComponent(props) {
                                 </MDBox>
                                 <MDBox mt={4} mb={1}>
                                     <MDButton variant="gradient" color="info" onClick={SubmitLogIn} fullWidth>
-                                        Zaloguj się
+                                        sign in
                                     </MDButton>
                                 </MDBox>
                                 <MDBox mt={3} mb={1} textAlign="center">
                                     <MDTypography variant="button" color="text">
-                                        Nie masz konta?{" "}
+                                        Don&apos;t have an account?{" "}
                                         <MDTypography
                                             component={Link}
-                                            to="/register"
+                                            to="/authentication/sign-up"
                                             variant="button"
                                             color="info"
                                             fontWeight="medium"
                                             textGradient
                                         >
-                                            Zarejestruj się
+                                            Sign up
                                         </MDTypography>
                                     </MDTypography>
                                 </MDBox>
