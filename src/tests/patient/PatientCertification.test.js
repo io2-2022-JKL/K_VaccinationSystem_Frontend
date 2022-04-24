@@ -53,7 +53,7 @@ describe("Patient Certification Testing", () =>{
     expect(container.textContent.toLowerCase()).toContain("do");
   });
 
-  it("renders buttons in table", () => {
+  it("renders button in table", () => {
     expect(container.textContent.toLowerCase()).toContain("pobierz");
   });
 });
