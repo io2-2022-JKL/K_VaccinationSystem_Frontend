@@ -14,11 +14,11 @@ import DataTable from "../../examples/Tables/DataTable";
 
 export default function PatientDashboard() {
 
-    var tmp = {};
+    let tmp = {};
     tmp.id = '1';
     tmp.pesel = '00000000001';
-    tmp.firstName = 'Jakub';
-    tmp.lastName = 'Nowak';
+    tmp.firstName = 'Andrew';
+    tmp.lastName = 'Bagpipe';
     tmp.dateOfBirth = '24-03-1999';
     tmp.mail = 'jakub.nowak@adres.mailowy.pl';
     tmp.phoneNumber = '+48000000000';
@@ -92,8 +92,6 @@ export default function PatientDashboard() {
             </Header>
             <Footer/>
         </DashboardLayout>
-
-
     )
 }
 
