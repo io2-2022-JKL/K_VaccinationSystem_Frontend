@@ -64,7 +64,7 @@ export default function PatientDashboard() {
         <DashboardLayout>
             <DashboardNavbar/>
             <MDBox mb={10}/>
-            <Header name={patient.getFirstName + " " + patient.getLastName} position={"Patient"}>
+            <Header name={patient.getFirstName + " " + patient.getLastName} position={"Pacjent"}>
                 <MDBox mt={5} mb={3}>
                     <Grid container spacing={1}>
                         <Grid item xs={12} md={6} xl={4} sx={{display: "flex"}}>
