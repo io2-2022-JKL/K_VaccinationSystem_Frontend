@@ -56,4 +56,8 @@ describe("Patient Certification Testing", () =>{
   it("renders button in table", () => {
     expect(container.textContent.toLowerCase()).toContain("pobierz");
   });
+
+  it("renders creators", () => {
+    expect(container.textContent.toLowerCase()).toContain("twórcy");
+  });
 });
