@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import '../../styles/patient/patient.css';
 import Patient from '../../models/Patient'
 import '../../models/User';
@@ -11,6 +11,8 @@ import Divider from "@mui/material/Divider";
 import ProfileInfoCard from "../../examples/Cards/InfoCards/ProfileInfoCard";
 import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
+import ApiConnection from "../../logic/api/ApiConnection";
+import useLogin from "../../logic/useLogin";
 
 export default function PatientDashboard() {
 
@@ -29,33 +31,27 @@ export default function PatientDashboard() {
     tmp.active = 'a';
 
     const tableColumns = [
-        {Header: "Nazwa szczepionki", accessor: "name", width: "50%"},
-        {Header: "Data", accessor: "date", width: "25%"},
-        {Header: "Godzina", accessor: "hour", width: "25%"},
+        {Header: "Nazwa szczepionki", accessor: "vaccineName", width: "50%"},
+        {Header: "Wirus", accessor: "vaccineVirus", width: "25%"},
+        {Header: "Data", accessor: "windowBegin", width: "25%"},
     ]
 
-    const tableData = [
-        {
-            name: "Johnson&Johnson",
-            date: "20-11-2022",
-            hour: "10:40",
-        },
-        {
-            name: "Johnson&Johnson",
-            date: "20-11-2022",
-            hour: "10:40",
-        },
-        {
-            name: "Johnson&Johnson",
-            date: "20-11-2022",
-            hour: "10:40",
-        },
-        {
-            name: "Johnson&Johnson",
-            date: "20-11-2022",
-            hour: "10:40",
-        },
-    ]
+    const {GetId} = useLogin();
+    const [loading, setLoading] = useState(true);
+    const [tableData, setTableData] = useState([]);
+
+    const instance = ApiConnection("/patient/appointments/formerAppointments/");
+
+    useEffect(() => {
+        instance.get(
+            "/patient/appointments/formerAppointments/" + GetId()
+        ).then(r => {
+            setTableData(r.data)
+        })
+            .finally(() => {
+                setLoading(false)
+            });
+    }, [])
 
 
     const patient = new Patient(tmp);
@@ -84,9 +80,13 @@ export default function PatientDashboard() {
                             />
                             <Divider orientation="vertical" sx={{mx: 0}}/>
                         </Grid>
-                        <Grid item xs={12} xl={8}>
-                            <DataTable table={{columns: tableColumns, rows: tableData}}/>
-                        </Grid>
+                        {
+                            loading ?
+                                <Grid item xs={12} xl={8}>Loading</Grid> :
+                                <Grid item xs={12} xl={8}>
+                                    <DataTable table={{columns: tableColumns, rows: tableData}}/>
+                                </Grid>
+                        }
                     </Grid>
                 </MDBox>
             </Header>
