@@ -8,12 +8,12 @@ on:
     branches: 
       - main
       - develop
-      - feature/basic-styles
+      - feature/*
   pull_request:
     branches:
       - main
       - develop
-      - feature/basic-styles
+      - feature/*
 
 jobs:
   build:
