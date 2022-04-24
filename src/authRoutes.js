@@ -6,7 +6,7 @@ const routes = [
     {
         name: "Zaloguj",
         key: "logIn",
-        route: "/login",
+        route: "/logIn",
         component: <LogInComponent />,
     },
     {
