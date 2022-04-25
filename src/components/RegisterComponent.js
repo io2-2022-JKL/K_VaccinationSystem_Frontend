@@ -118,7 +118,7 @@ function RegisterComponent(props) {
                 Masz już konto?{" "}
                 <MDTypography
                   component={Link}
-                  to="/signin"
+                  to="/login"
                   variant="button"
                   color="info"
                   fontWeight="medium"
