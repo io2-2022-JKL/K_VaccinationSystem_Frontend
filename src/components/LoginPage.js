@@ -1,7 +1,7 @@
 import {useState} from "react";
 
 // react-router-dom components
-import {Link} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -22,8 +22,6 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import ApiConnection from "../logic/api/ApiConnection";
 import useLogin from "../logic/useLogin";
 
-import routes from "../routes";
-
 function LogInComponent(props) {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
@@ -32,6 +30,8 @@ function LogInComponent(props) {
 
     const conn = ApiConnection("/signin");
     const {LogIn} = useLogin();
+
+    let navigate = useNavigate();
 
     const SubmitLogIn = () => {
         setSendingData(true);
@@ -43,13 +43,12 @@ function LogInComponent(props) {
             }).then(r => {
             if (r.status !== 200) {
                 setFail(true);
-                props.history.push("/patient");
             } else {
                 LogIn(r.data.jwt, r.data.userId, r.data.userType);
-                props.history.push("/patient");
             }
         }).finally(() => {
             setSendingData(false);
+            if(!fail)navigate("../patient", {replace: true});
         })
     }
 

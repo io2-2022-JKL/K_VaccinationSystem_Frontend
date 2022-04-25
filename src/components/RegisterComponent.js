@@ -30,6 +30,7 @@ function RegisterComponent(props) {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [sendingData, setSendingData] = useState(false);
+  const [fail, setFail] = useState(false);
 
 
   const conn = ApiConnection("/register");
@@ -49,10 +50,12 @@ function RegisterComponent(props) {
           phoneNumber: phone,
         }).then(r => {
       if (r.status === 200) {
-        props.history.push("/signin");
+      } else {
+        setFail(true);
       }
     }).finally(() => {
       setSendingData(false);
+      if(!fail) props.history.push("/logIn");
     })
   }
   return (

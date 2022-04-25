@@ -12,6 +12,7 @@ import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import {Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
+import {useNavigate, Link} from "react-router-dom";
 
 export default function PatientSignup() {
 
