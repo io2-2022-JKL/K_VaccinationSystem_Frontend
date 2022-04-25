@@ -13,6 +13,7 @@ import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
 import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
+import Button from "@mui/material/Button";
 
 export default function PatientDashboard() {
 
@@ -23,29 +24,49 @@ export default function PatientDashboard() {
     const instance = ApiConnection("/patient/appointments/incomingAppointments/");
 
     useEffect(() => {
+        updateData();
+    }, [])
+
+
+    const updateData = () => {
         instance.get(
             "/patient/appointments/incomingAppointments/" + GetId()
         ).then(r => {
+            for(let i = 0; i < r.data.length; i++)
+            {
+                r.data[i].button = <Button onClick={() => handleCancellation(r.data[i].appointmentId)} color={"error"}>Anuluj</Button>
+            }
             setTableData(r.data)
         })
             .finally(() => {
                 setLoading(false)
             });
-    }, [])
-
-
+    }
     const [patient, setPatient] = useState({
         firstName: "Andrew",
         lastName: "Bagpipe",
-
     })
 
+    const handleCancellation = (id) => {
+        const url = "/patient/appointments/incomingAppointments/cancelAppointments/" + GetId() + "/" + id
+
+        instance.delete(
+            url
+        ).then(r => {
+            updateData()
+        })
+            .finally(() => {
+                setLoading(false)
+            });
+    }
+
     const tableColumns = [
-        {Header: "Wirus", accessor: "vaccineVirus", width: "20%"},
+        {Header: "Wirus", accessor: "vaccineVirus", width: "10%"},
         {Header: "Centrum szczepień", accessor: "vaccinationCenterName", width: "20%"},
         {Header: "Misto", accessor: "vaccinationCenterCity", width: "20%"},
         {Header: "Ulica", accessor: "vaccinationCenterStreet", width: "20%"},
         {Header: "Data", accessor: "windowBegin", width: "20%"},
+        {Header: "", accessor: "button", width: "10%"},
     ]
 
 
