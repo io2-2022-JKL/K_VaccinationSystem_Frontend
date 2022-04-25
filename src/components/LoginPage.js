@@ -1,7 +1,7 @@
 import {useState} from "react";
 
 // react-router-dom components
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -30,7 +30,7 @@ function LogInComponent(props) {
 
     const conn = ApiConnection("/signin");
     const {LogIn} = useLogin();
-
+    const navigate = useNavigate();
     const SubmitLogIn = () => {
         setSendingData(true);
         conn.post(
@@ -43,7 +43,7 @@ function LogInComponent(props) {
                 setFail(true);
             } else {
                 LogIn(r.data.jwt, r.data.userId, r.data.userType);
-                props.history.pop();
+                navigate("/patient")
             }
         }).finally(() => {
             setSendingData(false);
@@ -83,21 +83,21 @@ function LogInComponent(props) {
                                 </MDBox>
                                 <MDBox mt={4} mb={1}>
                                     <MDButton variant="gradient" color="info" onClick={SubmitLogIn} fullWidth>
-                                        sign in
+                                        Zaloguj się
                                     </MDButton>
                                 </MDBox>
                                 <MDBox mt={3} mb={1} textAlign="center">
                                     <MDTypography variant="button" color="text">
-                                        Don&apos;t have an account?{" "}
+                                        Nie masz konta?{" "}
                                         <MDTypography
                                             component={Link}
-                                            to="/authentication/sign-up"
+                                            to="/register"
                                             variant="button"
                                             color="info"
                                             fontWeight="medium"
                                             textGradient
                                         >
-                                            Sign up
+                                            Zarejestruj się
                                         </MDTypography>
                                     </MDTypography>
                                 </MDBox>

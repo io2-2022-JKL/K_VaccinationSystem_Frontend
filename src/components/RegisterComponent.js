@@ -1,5 +1,5 @@
 // react-router-dom components
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -35,6 +35,8 @@ function RegisterComponent(props) {
   const conn = ApiConnection("/register");
   const {LogIn} = useLogin();
 
+  const navigate = useNavigate();
+
   const SubmitData = () => {
     setSendingData(true);
     conn.post(
@@ -49,7 +51,7 @@ function RegisterComponent(props) {
           phoneNumber: phone,
         }).then(r => {
       if (r.status === 200) {
-        props.history.push("/signin");
+        navigate("/login")
       }
     }).finally(() => {
       setSendingData(false);
