@@ -22,6 +22,8 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import ApiConnection from "../logic/api/ApiConnection";
 import useLogin from "../logic/useLogin";
 
+let loginPassStatus;
+
 function LogInComponent(props) {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
@@ -43,12 +45,14 @@ function LogInComponent(props) {
             }).then(r => {
             if (r.status !== 200) {
                 setFail(true);
+                loginPassStatus = false;
             } else {
+                loginPassStatus = true;
                 LogIn(r.data.jwt, r.data.userId, r.data.userType);
             }
         }).finally(() => {
             setSendingData(false);
-            if(!fail)navigate("../patient", {replace: true});
+            if(fail!==true)navigate("../patient", {replace: true});
         })
     }
 
@@ -58,7 +62,7 @@ function LogInComponent(props) {
                 sendingData ?
                     <Card> Loading </Card> :
                     <Card>
-                        <MDBox
+                       ! <MDBox
                             variant="gradient"
                             bgColor="info"
                             borderRadius="lg"
