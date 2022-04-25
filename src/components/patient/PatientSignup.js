@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import '../../styles/patient/patient.css';
 import '../../models/User';
 import MDBox from "../MDBox";
@@ -18,11 +18,11 @@ export default function PatientSignup() {
     const {GetId} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
-    const [fromDate, setFromDate] = useState("");
-    const [toDate, setToDate] = useState("");
+    const [fromDate, setFromDate] = useState("2010-12-09");
+    const [toDate, setToDate] = useState("2023-05-09");
     const [open, setOpen] = useState(true);
-    const [cityFilter, setCityFilter] = useState("");
-    const [virusFilter, setVirusFilter] = useState("");
+    const [cityFilter, setCityFilter] = useState("Warszawa");
+    const [virusFilter, setVirusFilter] = useState("Koronawirus");
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -34,9 +34,24 @@ export default function PatientSignup() {
 
     const instance = ApiConnection("/patient/timeSlots/Filter");
 
+    const signIn = (id, vaccine) => {
+        const url = "/patient/timeSlots/Book/" + GetId() + "/" + id + "/" + vaccine;
+        instance.post(
+            url
+        ).then(r => {
+            handleFilter()
+        })
+            .finally(() => {
+                setLoading(false)
+            });
+    }
+
     const createURL = () => {
         const url = "/patient/timeSlots/Filter?" + "city=" + cityFilter +
-            "&dateFrom=" + fromDate + " 00:00" + "&dateTo=" + toDate + " 23:59&" +
+            "&dateFrom=" + fromDate.substring(8, 10) + "-" + fromDate.substring(5, 7) + "-" + fromDate.substring(0, 4) +
+            " 00:00" + "&dateTo=" +
+            toDate.substring(8, 10) + "-" + toDate.substring(5, 7) + "-" + toDate.substring(0, 4)
+            + " 23:59&" +
             "virus=" + virusFilter;
         return url;
 
@@ -55,9 +70,8 @@ export default function PatientSignup() {
     }
 
     const configureTableData = (data) => {
-        for(let i = 0; i < data.length; i++)
-        {
-            data[i].signInButton = <button>Zapisz sie</button>
+        for (let i = 0; i < data.length; i++) {
+            data[i].signInButton = <button onClick={() => signIn(data[i].timeSlotId, data[i].availableVaccines[0].vaccineId)}>Zapisz sie</button>
         }
         setTableData(data);
     }
