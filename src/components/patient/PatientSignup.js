@@ -71,7 +71,7 @@ export default function PatientSignup() {
 
     const configureTableData = (data) => {
         for (let i = 0; i < data.length; i++) {
-            data[i].signInButton = <button onClick={() => signIn(data[i].timeSlotId, data[i].availableVaccines[0].vaccineId)}>Zapisz sie</button>
+            data[i].signInButton = <Button onClick={() => signIn(data[i].timeSlotId, data[i].availableVaccines[0].vaccineId)}>Wybierz</Button>
         }
         setTableData(data);
     }
@@ -95,13 +95,6 @@ export default function PatientSignup() {
             <DashboardNavbar/>
             <MDBox mb={10}/>
             <Header name={patient.firstName + " " + patient.lastName} position={"Pacjent"}>
-                <MDBox mt={5} mb={3}>
-                    <Grid container spacing={1}>
-                        <Grid xl={4} sx={{display: "flex"}}>
-                            <Button onClick={() => setOpen(true)}>Filtruj wyniki</Button>
-                        </Grid>
-                    </Grid>
-                </MDBox>
                 <MDBox mt={5} mb={3}>
                     <DataTable table={{columns: tableColumns, rows: tableData}}/>
                 </MDBox>
@@ -169,6 +162,14 @@ export default function PatientSignup() {
                             <Button onClick={handleFilter}>Zastosuj</Button>}
                     </DialogActions>
                 </Dialog>
+                <MDBox mt={2} mb={2}>
+                    <Grid container spacing={1}>
+                        <Grid item xl={11} sx={{display: "flex"}} />
+                        <Grid item xl={1} sx={{display: "flex"}}>
+                            <Button onClick={() => setOpen(true)}>Filtruj wyniki</Button>
+                        </Grid>
+                    </Grid>
+                </MDBox>
             </Header>
             <Footer/>
         </DashboardLayout>
