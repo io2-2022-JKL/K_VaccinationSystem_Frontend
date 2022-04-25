@@ -11,7 +11,7 @@ const routes = [
     name: "Moje konto",
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/patient/",
+    route: "/patient",
     component: <PatientDashboard />,
   },
   {

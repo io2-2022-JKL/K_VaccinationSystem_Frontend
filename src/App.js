@@ -208,7 +208,7 @@ export default function App() {
             <Routes>
                 {getRoutes(authRoutes)}
                 {getRoutes(routes)}
-                <Route path="*" element={<Navigate to="/patient" />} />
+                <Route path="*" element={<Navigate to="/logIn" />} />
             </Routes>
         </ThemeProvider>
     );

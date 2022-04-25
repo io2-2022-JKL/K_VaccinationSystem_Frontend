@@ -22,6 +22,8 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import ApiConnection from "../logic/api/ApiConnection";
 import useLogin from "../logic/useLogin";
 
+import routes from "../routes";
+
 function LogInComponent(props) {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
@@ -41,9 +43,10 @@ function LogInComponent(props) {
             }).then(r => {
             if (r.status !== 200) {
                 setFail(true);
+                props.history.push("/patient");
             } else {
                 LogIn(r.data.jwt, r.data.userId, r.data.userType);
-                props.history.pop();
+                props.history.push("/patient");
             }
         }).finally(() => {
             setSendingData(false);
@@ -82,7 +85,11 @@ function LogInComponent(props) {
                                              onChange={e => setPassword(e.target.value)} fullWidth/>
                                 </MDBox>
                                 <MDBox mt={4} mb={1}>
-                                    <MDButton variant="gradient" color="info" onClick={SubmitLogIn} fullWidth>
+                                    <MDButton 
+                                    variant="gradient" 
+                                    color="info" 
+                                    onClick={SubmitLogIn} 
+                                    fullWidth>
                                         sign in
                                     </MDButton>
                                 </MDBox>
@@ -91,7 +98,7 @@ function LogInComponent(props) {
                                         Don&apos;t have an account?{" "}
                                         <MDTypography
                                             component={Link}
-                                            to="/authentication/sign-up"
+                                            to="/register"
                                             variant="button"
                                             color="info"
                                             fontWeight="medium"
