@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 import { useState, useEffect } from "react";
 
 // react-router components
-import { useLocation, Link } from "react-router-dom";
+import {useLocation, Link, useNavigate} from "react-router-dom";
 
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
@@ -52,6 +52,7 @@ import {
   setMiniSidenav,
   setOpenConfigurator,
 } from "context";
+import useLogin from "../../../logic/useLogin";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
@@ -59,6 +60,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
+  const {LogOut} = useLogin();
 
   useEffect(() => {
     // Setting the navbar type
@@ -122,6 +124,12 @@ function DashboardNavbar({ absolute, light, isMini }) {
     },
   });
 
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    LogOut();
+    navigate("/login");
+  }
+
   return (
     <AppBar
       position={absolute ? "absolute" : navbarType}
@@ -134,15 +142,10 @@ function DashboardNavbar({ absolute, light, isMini }) {
         </MDBox>
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>
-            <MDBox pr={1}>
-              <MDInput label="Search here" />
-            </MDBox>
             <MDBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in/basic">
                 <IconButton sx={navbarIconButton} size="small" disableRipple>
-                  <Icon sx={iconsStyle}>account_circle</Icon>
+                  <Icon sx={iconsStyle} onClick={handleLogout}>account_circle</Icon>
                 </IconButton>
-              </Link>
               <IconButton
                 size="small"
                 disableRipple
