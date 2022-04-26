@@ -8,7 +8,7 @@ import { act } from "react-dom/test-utils";
 import { MaterialUIControllerProvider } from "context";
 import "babel-polyfill";
 
-import PatientDashboard from '../../components/patient/PatientDashboard';
+import PatientDashboard from "../../components/patient/PatientDashboard"
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -33,9 +33,51 @@ describe("PatientDashboardTesting", () =>{
       container);
   });
 
-  it("renders patient data", () => {
-    act(() => {});
-    expect(container.textContent).toContain("P");
-  }
-  );
+  it("renders patient data tags", () => {
+    expect(
+      container.textContent.toLowerCase()
+    ).toContain(
+      "informacje o pacjencie"
+    );
+  });
+
+  it("renders table first column", () => {
+    expect(
+      container.textContent.toLowerCase()
+    ).toContain(
+      "nazwa szczepionki"
+    );
+  });
+
+  it("renders table second column", () => {
+    expect(
+      container.textContent.toLowerCase()
+    ).toContain(
+      "data"
+    );
+  });
+
+  it("renders table third column", () => {
+    expect(
+      container.textContent.toLowerCase()
+    ).toContain(
+      "godzina"
+    );
+  });
+
+  it("renders records on page counter", () => {
+    expect(
+      container.textContent.toLowerCase()
+    ).toContain(
+      "rekordów na stronie"
+    );
+  });
+
+  it("renders number of records text", () => {
+    expect(
+      container.textContent.toLowerCase()
+    ).toContain(
+      "rekordów na stronie"
+    );
+  });
 });
