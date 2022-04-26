@@ -45,8 +45,6 @@ export default function PatientDashboard() {
         {Header: "Data", accessor: "windowBegin", width: "25%"},
     ]
 
-
-
     return (
         <DashboardLayout>
             <DashboardNavbar/>
