@@ -99,10 +99,10 @@ export default function PatientSignup() {
                     <DataTable table={{columns: tableColumns, rows: tableData}}/>
                 </MDBox>
                 <Dialog open={open} onClose={handleClose}>
-                    <DialogTitle>Subscribe</DialogTitle>
+                    <DialogTitle>Filtruj</DialogTitle>
                     <DialogContent>
-                        <Stack>
-                            <MDBox mb={2}>
+                        <Stack ml={10} mr={10}>
+                            <MDBox mb={3}>
                                 <TextField
                                     autoFocus
                                     margin="dense"
@@ -115,7 +115,7 @@ export default function PatientSignup() {
                                     variant="standard"
                                 />
                             </MDBox>
-                            <MDBox mb={2}>
+                            <MDBox mb={3}>
                                 <TextField
                                     autoFocus
                                     margin="dense"
@@ -128,7 +128,7 @@ export default function PatientSignup() {
                                     variant="standard"
                                 />
                             </MDBox>
-                            <MDBox mb={2}>
+                            <MDBox mb={3}>
                                 <TextField
                                     id="datefrom"
                                     label="Data od"
@@ -141,7 +141,7 @@ export default function PatientSignup() {
                                     fullWidth
                                 />
                             </MDBox>
-                            <MDBox mb={2}>
+                            <MDBox mb={3}>
                                 <TextField
                                     id="dateto"
                                     label="Data do"
