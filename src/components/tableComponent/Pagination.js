@@ -13,7 +13,7 @@ export default function Pagination(props) {
                     onClick={() => props.setActive(1)}> First </button>
                 <button className="paginationMiddleButton" disabled={props.active == 1} 
                     onClick={() => props.setActive(props.active - 1)}> Previous </button>
-                <p class="nowrap"> Page {props.active} of {props.pages} </p>
+                <p className="nowrap"> Page {props.pages == 0 ? 0 : props.active} of {props.pages} </p>
                 <button className="paginationMiddleButton" disabled={props.active == props.pages} 
                     onClick={() => props.setActive(props.active + 1)}> Next </button>
                 <button className="paginationButton" disabled={props.active == props.pages} 
