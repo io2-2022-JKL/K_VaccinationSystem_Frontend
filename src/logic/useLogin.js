@@ -16,16 +16,30 @@ const useLogin = () => {
         return null;
     }
 
-    const LogIn = (token, role) => {
+    const LogIn = (token, id, role) => {
         console.log(token, role);
         localStorage.setItem(role + "Token", token);
+        localStorage.setItem("id", id);
+    }
+
+    const GetId = () => {
+        return localStorage.getItem("id");
     }
 
     const LogOut = () => {
         localStorage.clear();
     }
 
-    return {isLoggedIn, LogIn, LogOut};
+    const GetToken = (APIPath) => {
+        for (let i = 0; i < LoginRules.length; i++)
+        {
+            if (APIPath.match(LoginRules[i].rule) && localStorage.getItem(LoginRules[i].token))
+                return localStorage.getItem(LoginRules[i].token);
+        }
+        return null;
+    }
+
+    return {isLoggedIn, LogIn, LogOut, GetToken, GetId};
 }
 
 export default useLogin;
