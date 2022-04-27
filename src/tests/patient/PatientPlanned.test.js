@@ -41,7 +41,7 @@ describe("Patient Planned Testing", () =>{
     );
   });
 
-  it("renders table first column", () => {
+  it("renders table fifth column", () => {
     expect(
       container.textContent.toLowerCase()
     ).toContain(
@@ -49,39 +49,31 @@ describe("Patient Planned Testing", () =>{
     );
   });
 
+  it("renders table fourth column", () => {
+    expect(
+      container.textContent.toLowerCase()
+    ).toContain(
+      "ulica"
+    );
+  });
+
   it("renders table second column", () => {
     expect(
       container.textContent.toLowerCase()
     ).toContain(
-      "godzina"
+      "centrum szczepień"
     );
   });
 
-  it("renders table third column", () => {
+  it("renders table first column", () => {
     expect(
       container.textContent.toLowerCase()
     ).toContain(
-      "miejsce"
-    );
-  });
-
-  it("renders table third column", () => {
-    expect(
-      container.textContent.toLowerCase()
-    ).toContain(
-      "szczepionka"
+      "wirus"
     );
   });
 
   it("renders records on page counter", () => {
-    expect(
-      container.textContent.toLowerCase()
-    ).toContain(
-      "rekordów na stronie"
-    );
-  });
-
-  it("renders number of records text", () => {
     expect(
       container.textContent.toLowerCase()
     ).toContain(

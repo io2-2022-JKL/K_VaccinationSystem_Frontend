@@ -41,15 +41,15 @@ describe("Patient History Testing", () =>{
     expect(container.textContent.toLowerCase()).toContain("pacjent");
   });
 
-  it("renders table first column", () => {
+  it("renders table third column", () => {
     expect(container.textContent.toLowerCase()).toContain("data");
   });
 
   it("renders table second column", () => {
-    expect(container.textContent.toLowerCase()).toContain("szczepionka");
+    expect(container.textContent.toLowerCase()).toContain("wirus");
   });
 
-  it("renders table second column", () => {
-    expect(container.textContent.toLowerCase()).toContain("odbyto");
+  it("renders table first column", () => {
+    expect(container.textContent.toLowerCase()).toContain("nazwa szczepionki");
   });
 });

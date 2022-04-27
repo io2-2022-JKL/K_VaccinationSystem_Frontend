@@ -40,44 +40,4 @@ describe("PatientDashboardTesting", () =>{
       "informacje o pacjencie"
     );
   });
-
-  it("renders table first column", () => {
-    expect(
-      container.textContent.toLowerCase()
-    ).toContain(
-      "nazwa szczepionki"
-    );
-  });
-
-  it("renders table second column", () => {
-    expect(
-      container.textContent.toLowerCase()
-    ).toContain(
-      "data"
-    );
-  });
-
-  it("renders table third column", () => {
-    expect(
-      container.textContent.toLowerCase()
-    ).toContain(
-      "godzina"
-    );
-  });
-
-  it("renders records on page counter", () => {
-    expect(
-      container.textContent.toLowerCase()
-    ).toContain(
-      "rekordów na stronie"
-    );
-  });
-
-  it("renders number of records text", () => {
-    expect(
-      container.textContent.toLowerCase()
-    ).toContain(
-      "rekordów na stronie"
-    );
-  });
 });
