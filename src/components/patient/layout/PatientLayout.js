@@ -5,7 +5,7 @@ export default function PatientLayout(props) {
          <div style={{
             padding: '50px 0px 0px 370px'
         }}>
-            <Sidebar/>;
+            <Sidebar/>
             {props.content}
         </div>
     )
