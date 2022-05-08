@@ -13,6 +13,7 @@ import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
 import ApiConnection from "../../logic/api/ApiConnection";
 import useLogin from "../../logic/useLogin";
+import Loader from "react-loader";
 
 export default function PatientDashboard() {
 
@@ -82,7 +83,10 @@ export default function PatientDashboard() {
                         </Grid>
                         {
                             loading ?
-                                <Grid item xs={12} xl={8}>Loading</Grid> :
+                                <Grid>
+                                    <Loader /> 
+                                </Grid>
+                                :
                                 <Grid item xs={12} xl={8}>
                                     <DataTable table={{columns: tableColumns, rows: tableData}}/>
                                 </Grid>
