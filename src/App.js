@@ -133,6 +133,7 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 import { MarkEmailUnreadOutlined } from "@mui/icons-material";
+import useLogin from "./logic/useLogin";
 
 export default function App() {
     const [controller, dispatch] = useMaterialUIController();
@@ -149,6 +150,7 @@ export default function App() {
     const [onMouseEnter, setOnMouseEnter] = useState(false);
     const [rtlCache, setRtlCache] = useState(null);
     const { pathname } = useLocation();
+    const {isLoggedIn} = useLogin();
 
 
     // Open sidenav when mouse enter on mini sidenav
@@ -208,8 +210,7 @@ export default function App() {
         if (curPath === "patient") return "/patient";
         if (curPath === "doctor") return "/doctor";
         if (curPath === "admin") return "/admin";
-        if (curPath === "home") return "/home";
-        return "/home";
+        return "/login";
     }
 
     return (
@@ -229,11 +230,10 @@ export default function App() {
             )}
             {layout === "vr" && <Configurator />}
             <Routes>
-                {getRoutes(authRoutes)}
-                {getRoutes(routes)}
-                {getRoutes(doctorRoutes)}
-                {getRoutes(adminRoutes)}
-                {getRoutes(homeRoutes)}
+                {isLoggedIn("/admin") ? getRoutes(adminRoutes) :
+                    isLoggedIn("/doctor") ? getRoutes(doctorRoutes) :
+                        isLoggedIn("/patient") ? getRoutes(routes) : getRoutes(authRoutes)
+                }
                 <Route path="*" element={<Navigate to={mainRoute()} />} />
             </Routes>
         </ThemeProvider>
