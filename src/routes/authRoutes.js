@@ -16,13 +16,6 @@ const routes = [
         route: "/register",
         component: <RegisterComponent />,
     },
-    {
-        name: "Strona Główna",
-        key: "home",
-        route: "/home",
-        component: <Home />,
-    },
-
 ];
 
 export default routes;

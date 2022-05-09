@@ -234,7 +234,12 @@ export default function App() {
                     isLoggedIn("/doctor") ? getRoutes(doctorRoutes) :
                         isLoggedIn("/patient") ? getRoutes(routes) : getRoutes(authRoutes)
                 }
-                <Route path="*" element={<Navigate to={mainRoute()} />} />
+                {/* {getRoutes(adminRoutes)}
+                {getRoutes(doctorRoutes)}
+                {getRoutes(routes)}
+                {getRoutes(authRoutes)} */}
+                {getRoutes(homeRoutes)}
+                <Route path="*" element={<Navigate to="/patient" />} />
             </Routes>
         </ThemeProvider>
     );

@@ -1,3 +1,4 @@
+import { Home } from "@mui/icons-material";
 import Icon from "@mui/material/Icon";
 import AdminDoctorList from "components/admin/AdminDoctorList";
 import DoctorDashboard from "components/doctor/DoctorDashboard";
@@ -27,6 +28,12 @@ const homeRoutes = [
         icon: <Icon fontSize="small">receipt_long</Icon>,
         route: "/admin/doctorlist",
         component: <AdminDoctorList />,
+    },
+    {
+        name: "Strona Główna",
+        key: "home",
+        route: "/home",
+        component: <Home />,
     },
 ];
 
