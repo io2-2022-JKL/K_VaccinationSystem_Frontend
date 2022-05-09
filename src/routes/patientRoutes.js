@@ -1,10 +1,11 @@
 // @mui icons
 import Icon from "@mui/material/Icon";
-import PatientCertifications from "./components/patient/PatientCertifications";
-import PatientHistory from "./components/patient/PatientHistory";
-import PatientPlanned from "./components/patient/PatientPlanned";
-import PatientSignup from "./components/patient/PatientSignup";
-import PatientDashboard from "./components/patient/PatientDashboard";
+import PatientCertifications from "../components/patient/PatientCertifications";
+import PatientHistory from "../components/patient/PatientHistory";
+import PatientPlanned from "../components/patient/PatientPlanned";
+import PatientSignup from "../components/patient/PatientSignup";
+import PatientDashboard from "../components/patient/PatientDashboard";
+import DoctorDashboard from "components/doctor/DoctorDashboard";
 
 const routes = [
   {

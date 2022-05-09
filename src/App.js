@@ -120,9 +120,11 @@ import theme from "assets/theme";
 //import createCache from "@emotion/cache";
 
 // Material Dashboard 2 React routes
-import routes from "routes";
-import authRoutes from "authRoutes";
-
+import routes from "./routes/patientRoutes";
+import authRoutes from "./routes/authRoutes";
+import doctorRoutes from "./routes/doctorRoutes";
+import adminRoutes from "./routes/adminRoutes";
+import homeRoutes from "./routes/homeRoutes";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
@@ -130,6 +132,7 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
+import { MarkEmailUnreadOutlined } from "@mui/icons-material";
 
 export default function App() {
     const [controller, dispatch] = useMaterialUIController();
@@ -189,6 +192,26 @@ export default function App() {
             return null;
         });
 
+    const printableRoutes = () =>
+    {
+        const curPath = window.location.pathname.split('/')[1];
+        if (curPath === "patient") return routes;
+        if (curPath === "doctor") return doctorRoutes;
+        if (curPath === "admin") return adminRoutes;
+        if (curPath === "home") return homeRoutes;
+        return [];
+    }
+
+    const mainRoute = () =>
+    {
+        const curPath = window.location.pathname.split('/')[1];
+        if (curPath === "patient") return "/patient";
+        if (curPath === "doctor") return "/doctor";
+        if (curPath === "admin") return "/admin";
+        if (curPath === "home") return "/home";
+        return "/home";
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -198,7 +221,7 @@ export default function App() {
                         color={sidenavColor}
                         brand={(transparentSidenav) || whiteSidenav ? brandDark : brandWhite}
                         brandName="MiNI szczepienia"
-                        routes={routes}
+                        routes={printableRoutes()}
                         onMouseEnter={handleOnMouseEnter}
                         onMouseLeave={handleOnMouseLeave}
                     />
@@ -208,7 +231,10 @@ export default function App() {
             <Routes>
                 {getRoutes(authRoutes)}
                 {getRoutes(routes)}
-                <Route path="*" element={<Navigate to="/patient" />} />
+                {getRoutes(doctorRoutes)}
+                {getRoutes(adminRoutes)}
+                {getRoutes(homeRoutes)}
+                <Route path="*" element={<Navigate to={mainRoute()} />} />
             </Routes>
         </ThemeProvider>
     );
