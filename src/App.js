@@ -230,10 +230,10 @@ export default function App() {
             )}
             {layout === "vr" && <Configurator />}
             <Routes>
-                {isLoggedIn("/admin") ? getRoutes(adminRoutes) :
-                    isLoggedIn("/doctor") ? getRoutes(doctorRoutes) :
-                        isLoggedIn("/patient") ? getRoutes(routes) : getRoutes(authRoutes)
-                }
+                {isLoggedIn("/admin") ? getRoutes(adminRoutes) : []}
+                {isLoggedIn("/doctor") ? getRoutes(doctorRoutes) : []}
+                {isLoggedIn("/patient") ? getRoutes(routes) : []}
+                {getRoutes(authRoutes)}
                 {/* {getRoutes(adminRoutes)}
                 {getRoutes(doctorRoutes)}
                 {getRoutes(routes)}
