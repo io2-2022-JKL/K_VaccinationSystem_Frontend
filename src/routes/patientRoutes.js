@@ -5,7 +5,6 @@ import PatientHistory from "./components/patient/PatientHistory";
 import PatientPlanned from "./components/patient/PatientPlanned";
 import PatientSignup from "./components/patient/PatientSignup";
 import PatientDashboard from "./components/patient/PatientDashboard";
-import DoctorDashboard from "components/doctor/DoctorDashboard";
 
 const routes = [
   {
@@ -46,14 +45,6 @@ const routes = [
     icon: <Icon fontSize="small">notifications</Icon>,
     route: "/patient/vaccination",
     component: <PatientSignup />,
-  },
-  {
-    type: "collapse",
-    name: "Test doctor dashboard",
-    key: "doctorDashboard",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/doctor",
-    component: <DoctorDashboard />,
   },
 ];
 
