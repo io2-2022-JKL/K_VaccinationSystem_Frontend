@@ -54,7 +54,7 @@ export default function PatientDashboard() {
             .finally(() => {
                 //setLoading(false)
             });
-        instance.get(
+        instance2.get(
             "/patient/info/" + GetId()
         ).then(r => {
             setPatientData(r.data)
