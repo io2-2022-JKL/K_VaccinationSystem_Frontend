@@ -36,7 +36,7 @@ export default function PatientDashboard() {
     }, [])
 
     const [patient, setPatient] = useState({
-        firstName: tableData.length,//"Andrew",
+        firstName: "Andrew",
         lastName: "Bagpipe",
 
     })
