@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../../styles/patient/patient.css';
 import Patient from '../../models/Patient'
 import '../../models/User';
@@ -13,29 +13,27 @@ import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
 import Button from "@mui/material/Button";
 import {Typography} from "@mui/material";
+import useLogin from "../../logic/useLogin";
+import ApiConnection from "../../logic/api/ApiConnection";
 
 export default function PatientDashboard() {
 
-    const [certs, setCerts] = useState([
-        {
-            Vaccine: "covid",
-            from: "11.04.2022",
-            to: "11.05.2022",
-            download: <Button variant="contained" color={"success"}>Pobierz</Button>,
-        },
-        {
-            Vaccine: "grypa",
-            from: "10.04.2022",
-            to: "10.04.2122",
-            download: <Button variant="contained" color={"success"}>Pobierz</Button>,
-        },
-        {
-            Vaccine: "świńska grypa",
-            from: "6.10.2010",
-            to: "27.12.2024",
-            download: <Button variant="contained" color={"success"}>Pobierz</Button>,
-        }
-    ]);
+    const {GetId} = useLogin();
+    const [loading, setLoading] = useState(true);
+    const [tableData, setTableData] = useState([]);
+
+    const instance = ApiConnection("/patient/certificates/");
+
+    useEffect(() => {
+        instance.get(
+            "/patient/certificates/" + GetId()
+        ).then(r => {
+            setTableData(r.data)
+        })
+            .finally(() => {
+                setLoading(false)
+            });
+    }, [])
 
     const [patient, setPatient] = useState({
         firstName: "Andrew",
@@ -50,15 +48,13 @@ export default function PatientDashboard() {
         {Header: "", accessor: "download", width: "25%"},
     ]
 
-
-
     return (
         <DashboardLayout>
             <DashboardNavbar/>
             <MDBox mb={10}/>
             <Header name={patient.firstName + " " + patient.lastName} position={"Pacjent"}>
                 <MDBox mt={5} mb={3}>
-                    <DataTable table={{columns: tableColumns, rows: certs}}/>
+                    <DataTable table={{columns: tableColumns, rows: tableData}}/>
                 </MDBox>
             </Header>
             <Footer/>
