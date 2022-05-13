@@ -12,6 +12,7 @@ import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import {Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
+import Loader from "react-loader";
 
 export default function PatientSignup() {
 
@@ -95,9 +96,16 @@ export default function PatientSignup() {
             <DashboardNavbar/>
             <MDBox mb={10}/>
             <Header name={patient.firstName + " " + patient.lastName} position={"Pacjent"}>
-                <MDBox mt={5} mb={3}>
-                    <DataTable table={{columns: tableColumns, rows: tableData}}/>
-                </MDBox>
+            {
+                loading?
+                    <Grid>
+                        <Loader /> 
+                    </Grid> 
+                    :
+                    <MDBox mt={5} mb={3}>
+                        <DataTable table={{columns: tableColumns, rows: tableData}}/>
+                    </MDBox>
+            }
                 <Dialog open={open} onClose={handleClose}>
                     <DialogTitle>Filtruj</DialogTitle>
                     <DialogContent>

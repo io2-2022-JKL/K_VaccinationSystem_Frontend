@@ -14,6 +14,8 @@ import DataTable from "../../examples/Tables/DataTable";
 import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 
+import Loader from "react-loader";
+
 export default function PatientDashboard() {
 
     const {GetId} = useLogin();
@@ -53,9 +55,16 @@ export default function PatientDashboard() {
             <DashboardNavbar/>
             <MDBox mb={10}/>
             <Header name={patient.firstName + " " + patient.lastName} position={"Pacjent"}>
-                <MDBox mt={5} mb={3}>
-                    <DataTable table={{columns: tableColumns, rows: tableData}}/>
-                </MDBox>
+                {
+                    loading?
+                        <Grid>
+                            <Loader /> 
+                        </Grid> 
+                        :
+                        <MDBox mt={5} mb={3}>
+                            <DataTable table={{columns: tableColumns, rows: tableData}}/>
+                        </MDBox>
+                }
             </Header>
             <Footer/>
         </DashboardLayout>
