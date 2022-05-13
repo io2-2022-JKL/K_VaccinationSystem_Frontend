@@ -1,3 +1,5 @@
+import User from "./User";
+
 export default class Doctor extends User 
 {
     _vaccinationCenter;
@@ -7,7 +9,7 @@ export default class Doctor extends User
 
     constructor(doctor)
     {
-        user = new Object();
+        var user = new Object();
         user.id = doctor.id;
         user.pesel = doctor.pesel;
         user.firstName = doctor.firstName;
@@ -37,7 +39,7 @@ export default class Doctor extends User
 
 export function createDoctor(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber,vaccinationCenter,futureVaccinations,vaccinationArchieve,active)
 {
-    doctor = new Object(),
+    var doctor = new Object();
     doctor.id = id;
     doctor.pesel = pesel;
     doctor.firstName = firstName;
