@@ -40,8 +40,10 @@ export default function PatientDashboard() {
     const {GetId} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
+    const [patientData, setPatientData] = useState([]);
 
     const instance = ApiConnection("/patient/appointments/formerAppointments/");
+    const instance2 = ApiConnection("/patient/info/");
 
     useEffect(() => {
         instance.get(
@@ -50,22 +52,36 @@ export default function PatientDashboard() {
             setTableData(r.data)
         })
             .finally(() => {
+                //setLoading(false)
+            });
+        instance.get(
+            "/patient/info/" + GetId()
+        ).then(r => {
+            setPatientData(r.data)
+        })
+            .finally(() => {
                 setLoading(false)
             });
     }, [])
 
 
-    const patient = new Patient(tmp);
+    const patient = new Patient(patientData);
 
     return (
         <DashboardLayout>
             <DashboardNavbar/>
             <MDBox mb={10}/>
+            {
+                loading?
+                <Loader/>:
             <Header name={patient.getFirstName + " " + patient.getLastName} position={"Pacjent"}>
                 <MDBox mt={5} mb={3}>
                     <Grid container spacing={1}>
                         <Grid item xs={12} md={6} xl={4} sx={{display: "flex"}}>
                             <Divider orientation="vertical" sx={{ml: -2, mr: 1}}/>
+                            {
+                                loading?
+                                    <Loader/>:
                             <ProfileInfoCard
                                 title="Informacje o pacjencie"
                                 description=""
@@ -79,6 +95,7 @@ export default function PatientDashboard() {
                                 action={{route: "", tooltip: "Edit Profile"}}
                                 shadow={false}
                             />
+                            }
                             <Divider orientation="vertical" sx={{mx: 0}}/>
                         </Grid>
                         {
@@ -94,6 +111,7 @@ export default function PatientDashboard() {
                     </Grid>
                 </MDBox>
             </Header>
+            }
             <Footer/>
         </DashboardLayout>
     )
