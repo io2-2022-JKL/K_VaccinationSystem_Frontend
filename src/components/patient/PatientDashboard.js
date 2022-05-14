@@ -17,20 +17,6 @@ import Loader from "react-loader";
 
 export default function PatientDashboard() {
 
-    let tmp = {};
-    tmp.id = '1';
-    tmp.pesel = '00000000001';
-    tmp.firstName = 'Andrew';
-    tmp.lastName = 'Bagpipe';
-    tmp.dateOfBirth = '24-03-1999';
-    tmp.mail = 'jakub.nowak@adres.mailowy.pl';
-    tmp.phoneNumber = '+48000000000';
-    tmp.vaccinationCount = '0';
-    tmp.vaccinationHistory = 'todo';
-    tmp.futureVaccinations = 'todo';
-    tmp.certificates = 'todo';
-    tmp.active = 'a';
-
     const tableColumns = [
         {Header: "Nazwa szczepionki", accessor: "vaccineName", width: "50%"},
         {Header: "Wirus", accessor: "vaccineVirus", width: "25%"},
@@ -89,9 +75,9 @@ export default function PatientDashboard() {
                                     "Imie i Nazwisko": patient.getFirstName + " " + patient.getLastName,
                                     "Pesel": patient.getPesel,
                                     "Data urodzenia": patient.getDateOfBirth,
-                                    "Email": patient.getEmail,
+                                    "Email": patient.getMail,
+                                    "Numer telefonu": patient.getPhoneNumber,
                                 }}
-                                social={[]}
                                 action={{route: "", tooltip: "Edit Profile"}}
                                 shadow={false}
                             />
