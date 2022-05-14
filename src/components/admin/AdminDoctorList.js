@@ -17,7 +17,7 @@ import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
 
-export default function AdminPatientList() {
+export default function AdminDoctorList() {
 
     const {GetId} = useLogin();
     const [loading, setLoading] = useState(true);
