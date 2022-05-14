@@ -89,7 +89,7 @@ export default function PatientDashboard() {
                                     "Imie i Nazwisko": patient.getFirstName + " " + patient.getLastName,
                                     "Pesel": patient.getPesel,
                                     "Data urodzenia": patient.getDateOfBirth,
-                                    Email: patient.getMail,
+                                    "Email": patient.getEmail,
                                 }}
                                 social={[]}
                                 action={{route: "", tooltip: "Edit Profile"}}
