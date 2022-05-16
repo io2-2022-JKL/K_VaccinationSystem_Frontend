@@ -39,7 +39,7 @@ const doctorRoutes = [
     },
     {
         type: "collapse",
-        name: "Moje konto",
+        name: "Niepotwierdzone",
         key: "unconfirmed",
         icon: <Icon fontSize="small">notifications</Icon>,
         route: "/doctor/unconfirmed",
