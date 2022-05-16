@@ -14,13 +14,15 @@ import DataTable from "../../examples/Tables/DataTable";
 import ApiConnection from "../../logic/api/ApiConnection";
 import useLogin from "../../logic/useLogin";
 import Loader from "react-loader";
+import { PatientIncomingVisitModal } from './PatientVisitModal';
 
 export default function PatientDashboard() {
 
     const tableColumns = [
-        {Header: "Nazwa szczepionki", accessor: "vaccineName", width: "50%"},
+        {Header: "Nazwa szczepionki", accessor: "vaccineName", width: "25%"},
         {Header: "Wirus", accessor: "vaccineVirus", width: "25%"},
         {Header: "Data", accessor: "windowBegin", width: "25%"},
+        {Header: "Szczegóły", accessor: "detailsButton", width: "25%"},
     ]
 
     const {GetId} = useLogin();
@@ -28,13 +30,17 @@ export default function PatientDashboard() {
     const [tableData, setTableData] = useState([]);
     const [patientData, setPatientData] = useState([]);
 
-    const instance = ApiConnection("/patient/appointments/formerAppointments/");
+    const instance = ApiConnection("/patient/appointments/incomingAppointments/");
     const instance2 = ApiConnection("/patient/info/");
 
     useEffect(() => {
         instance.get(
-            "/patient/appointments/formerAppointments/" + GetId()
+            "/patient/appointments/incomingAppointments/" + GetId()
         ).then(r => {
+            for(let i = 0; i < r.data.length; i++)
+            {
+                r.data[i].detailsButton = <PatientIncomingVisitModal data={r.data[i]}/>
+            }
             setTableData(r.data)
         })
             .finally(() => {
