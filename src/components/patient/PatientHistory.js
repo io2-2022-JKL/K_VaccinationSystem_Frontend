@@ -13,7 +13,7 @@ import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
 import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
-
+import { PatientIncomingVisitModal } from './PatientVisitModal';
 import Loader from "react-loader";
 
 export default function PatientDashboard() {
@@ -30,6 +30,10 @@ export default function PatientDashboard() {
         instance.get(
             "/patient/appointments/formerAppointments/" + GetId()
         ).then(r => {
+            for(let i = 0; i < r.data.length; i++)
+            {
+                r.data[i].detailsButton = <PatientIncomingVisitModal data={r.data[i]}/>
+            }
             setTableData(r.data)
         })
             .finally(() => {
@@ -48,9 +52,10 @@ export default function PatientDashboard() {
     const patient = new Patient(patientData);
 
     const tableColumns = [
-        {Header: "Nazwa szczepionki", accessor: "vaccineName", width: "50%"},
+        {Header: "Nazwa szczepionki", accessor: "vaccineName", width: "25%"},
         {Header: "Wirus", accessor: "vaccineVirus", width: "25%"},
         {Header: "Data", accessor: "windowBegin", width: "25%"},
+        {Header: "Szczegóły", accessor: "detailsButton", width: "25%"},
     ]
 
     return (
