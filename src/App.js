@@ -148,7 +148,7 @@ export default function App() {
                 {getRoutes(routes)}
                 {getRoutes(authRoutes)} */}
                 {getRoutes(homeRoutes)}
-                <Route path="*" element={<Navigate to="/patient" />} />
+                <Route path="*" element={<Navigate to={mainRoute()} />} />
             </Routes>
         </ThemeProvider>
     );
