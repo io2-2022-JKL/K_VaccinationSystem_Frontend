@@ -51,7 +51,7 @@ const useLogin = () => {
         return false;
     }
 
-    return {isLoggedIn, LogIn, LogOut, GetToken, GetId};
+    return {isLoggedIn, LogIn, LogOut, GetToken, GetId, isAnyoneLogged};
 }
 
 export default useLogin;
