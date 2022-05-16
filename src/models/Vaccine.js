@@ -16,7 +16,7 @@ class Vaccine
         this._id = vaccine.id;
         this._company = vaccine.company;
         this._name = vaccine.name;
-        this._number = vaccine.number;
+        this._number = vaccine.numberOfDoses;
         this._minDaysBetweenDoses = vaccine.minDaysBetweenDoses;
         this._maxDaysBetweenDoses = vaccine.maxDaysBetweenDoses;
         this._virus = vaccine.virus;

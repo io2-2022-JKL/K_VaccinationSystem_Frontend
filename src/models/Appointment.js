@@ -1,49 +1,70 @@
-class Appointment
+export default class Appointment
 {
+    _vaccineName;
+    _vaccineCompany;
+    _vaccineVirus;
     _whichDose;
-    _timeSlot;
-    _patient;
-    _vaccine;
-    _completed;
+    _appointmentId;
+    _windowBegin;
+    _windowEnd;
+    _vaccinationCenterName;
+    _vaccinationCenterCity;
+    _vaccinationCenterStreet;
+    _doctorFirstName;
+    _doctorLastName;
+    _visitState;
+    _certifyState;
+    _patientFirstName;
+    _patientLastName;
+    _patientPesel;
     _vaccineBatchNumber;
 
     constructor(appointment)
     {
-        this._whichDose = appointment.whichDose;
-        this._timeSlot = appointment.timeSlot;
-        this._patient = appointment.patient;
-        this._vaccine = appointment.vaccine;
-        this._completed = appointment.completed;
-        this._vaccineBatchNumber = appointment.vaccineBatchNumber;
+        this._vaccineName = appointment.vaccineName;
+        this._vaccineCompany = appointment.vaccineCompany;
+        this._vaccineVirus = appointment.vaccineVirus;
+        this._whichDose = appointment.whichVaccineDose;
+        this._appointmentId = appointment.appointmentId;
+        this._windowBegin = appointment.windowBegin ? appointment.windowBegin : appointment.from;
+        this._windowEnd = appointment.windowEnd ? appointment.windowEnd : appointment.to;
+        this._vaccinationCenterName = appointment.vaccinationCenterName;
+        this._vaccinationCenterCity = appointment.vaccinationCenterCity;
+        this._vaccinationCenterStreet = appointment.vaccinationCenterStreet;
+        this._doctorFirstName = appointment.doctorFirstName;
+        this._doctorLastName = appointment.doctorLastName;
+        this._visitState = appointment.visitState ? appointment.visitState : appointment.state;
+        this._certifyState = appointment.certifyState;
+        this._patientFirstName = appointment.patientFirstName;
+        this._patientLastName = appointment.patientLastName;
+        this._patientPesel = appointment.pesel;
+        this._vaccineBatchNumber = appointment.batchNumber;
     }
 
-    get getWhichDose() { return this._whichDose; }
-    set setWhichDose(whichDose) { this._whichDose = whichDose; }
-
-    get getTimeSlot() { return this._timeSlot; }
-    set setTimeSlot(timeSlot) { this._timeSlot = timeSlot; }
-    
-    get getPatient() { return this._patient; }
-    set setPatient(patient) { this._patient = patient; }
-
-    get getVaccine() { return this._vaccine; }
-    set setVaccine(vaccine) { this._vaccine = vaccine; }
-
-    get getCompleted() { return this._completed; }
-    set setCompleted(completed) { this._completed = completed; }
-
-    get getVaccineBatchNumber() { return this._vaccineBatchNumber; }
-    set setVaccineBatchNumber(vaccineBatchNumber) { this._vaccineBatchNumber = vaccineBatchNumber; }
-}
-
-function createAppointment(whichDose,timeSlot,patient,vaccine,completed,vaccineBatchNumber)
-{
-    appointment = new Object();
-    appointment.whichDose = whichDose;
-    appointment.timeSlot = timeSlot;
-    appointment.patient = patient;
-    appointment.vaccine = vaccine;
-    appointment.completed = completed;
-    appointment.vaccineBatchNumber = vaccineBatchNumber;
-    return new Appointment(appointment);
+    toString(listOfColumns) {
+        let result = [];
+        listOfColumns.map((column) => {
+            switch(column.accessor) {
+                case "vaccineName":
+                    result = [...result, { vaccine: this._vaccineName }];
+                    break;
+                case "vaccineVirus":
+                    result = [...result, { virus: this._vaccineVirus }];
+                    break;
+                case "vaccinationCenterName":
+                    result = [...result, { download: this._vaccinationCenterName }];
+                    break;
+                case "vaccinationCenterCity":
+                    result = [...result, { download: this._vaccinationCenterCity }];
+                    break;
+                case "vaccinationCenterStreet":
+                    result = [...result, { download: this._vaccinationCenterStreet }];
+                    break;
+                case "windowBegin":
+                    result = [...result, { download: this._windowBegin }];
+                    break;
+            }
+        })
+        return result;
+    }
 }

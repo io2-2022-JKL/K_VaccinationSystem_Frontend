@@ -43,10 +43,9 @@ export default function PatientDashboard() {
     })
 
     const tableColumns = [
-        {Header: "Szczepionka", accessor: "Vaccine", width: "25%"},
-        {Header: "Od", accessor: "from", width: "25%"},
-        {Header: "Do", accessor: "to", width: "25%"},
-        {Header: "", accessor: "download", width: "25%"},
+        {Header: "Szczepionka", accessor: "vaccine", width: "40%"},
+        {Header: "Choroba", accessor: "virus", width: "40%"},
+        {Header: "", accessor: "download", width: "20%"},
     ]
 
     return (
