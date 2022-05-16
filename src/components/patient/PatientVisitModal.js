@@ -38,8 +38,8 @@ export function PatientSignupVisitModal(props) {
                     Szczegóły wizyty
                 </Typography>
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    <div>Data: {props.data.windowBegin.substring(8, 10)}.{props.data.windowBegin.substring(5, 7)}.{props.data.windowBegin.substring(0, 4)}</div>
-                    <div>Godzina: {props.data.windowBegin.substring(11, 16)}-{props.data.to.substring(11, 16)}</div>
+                    <div>Data: {props.data.from.substring(8, 10)}.{props.data.from.substring(5, 7)}.{props.data.from.substring(0, 4)}</div>
+                    <div>Godzina: {props.data.from.substring(11, 16)}-{props.data.to.substring(11, 16)}</div>
                     <div>Centrum: {props.data.vaccinationCenterName}</div>
                     <div>Adres: {props.data.vaccinationCenterStreet}, {props.data.vaccinationCenterCity}</div>
                     <div>Możliwe szczepienia: {props.data.availableVaccines[0].name}</div>
