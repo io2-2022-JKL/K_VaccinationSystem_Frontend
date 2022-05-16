@@ -29,7 +29,7 @@ import PageLayout from "examples/LayoutContainers/PageLayout";
 // Authentication pages components
 import Footer from "layouts/authentication/components/Footer";
 
-function BasicLayout({ children }) {
+function BasicLayout({ image, children }) {
   return (
     <PageLayout>
       <MDBox
@@ -37,6 +37,12 @@ function BasicLayout({ children }) {
         width="100%"
         minHeight="100vh"
         sx={{
+          backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
+            image &&
+            `${linearGradient(
+              rgba(gradients.dark.main, 0.6),
+              rgba(gradients.dark.state, 0.6)
+            )}, url(${image})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -56,6 +62,7 @@ function BasicLayout({ children }) {
 
 // Typechecking props for the BasicLayout
 BasicLayout.propTypes = {
+  image: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
 };
 
