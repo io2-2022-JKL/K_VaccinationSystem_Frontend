@@ -1,4 +1,4 @@
-class VaccintationCenter
+export default class VaccintationCenter
 {
     _id;
     _name;
@@ -6,20 +6,19 @@ class VaccintationCenter
     _address;
     _availableVaccines;
     _openingHours;
-    _closingHours;
-    _doctors;
     _active;
   
     constructor(vaccintationCenter)
     {
         this._id = vaccintationCenter.id; 
-        this._name = vaccintationCenter.name;
-        this._city = vaccintationCenter.city;
-        this._address = vaccintationCenter.address;
-        this._availableVaccines = vaccintationCenter.availableVaccines;
+        this._name = vaccintationCenter.name ? vaccintationCenter.name : vaccintationCenter.centerName;
+        if (!this._name) this._name = vaccintationCenter.vaccinationCenterName;
+        this._city = vaccintationCenter.city ? vaccintationCenter.city : vaccintationCenter.centerCity;
+        if (!this._city) this._city = vaccintationCenter.vaccinationCenterCity;
+        this._address = vaccintationCenter.street ? vaccintationCenter.street : vaccintationCenter.centerStreet;
+        if (!this._address) this._address = vaccintationCenter.vaccinationCenterStreet;
+        this._availableVaccines = vaccintationCenter.vaccines.map((vac) => new Vaccine(vac));
         this._openingHours = vaccintationCenter.openingHours;
-        this._closingHours = vaccintationCenter.closingHours;
-        this._doctors = vaccintationCenter.doctors;
         this._active = vaccintationCenter.active;
     }
     
@@ -49,19 +48,4 @@ class VaccintationCenter
 
     get getActive() { return this._active; }
     set setActive(active) { this._active = active; }
-}
-
-function createVaccinationCenter(id,name,city,address,availableVaccines,openingHours,closingHours,doctors,active)
-{
-    vaccintationCenter = new Object();
-    vaccintationCenter.id = id; 
-    vaccintationCenter.name = name;
-    vaccintationCenter.city = city;
-    vaccintationCenter.address = address;
-    vaccintationCenter.availableVaccines = availableVaccines;
-    vaccintationCenter.openingHours = openingHours;
-    vaccintationCenter.closingHours = closingHours;
-    vaccintationCenter.doctors = doctors;
-    vaccintationCenter.active = active;
-    return new VaccintationCenter(vaccintationCenter);
 }
