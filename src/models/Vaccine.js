@@ -17,6 +17,7 @@ export default class Vaccine
         this._id = vaccine.id ? vaccine.id : vaccine.vaccineId;
         this._name = vaccine.name ? vaccine.name : vaccine.vaccineName;
         this._company = vaccine.company ? vaccine.company : vaccine.vaccineCompany;
+        if (!this._company) this._company = vaccine.companyName;
         this._virus = vaccine.virus ? vaccine.virus : vaccine.vaccineVirus;
         this._numberOfDoses = vaccine.numberOfDoses;
         this._minDaysBetweenDoses = vaccine.minDaysBetweenDoses;
