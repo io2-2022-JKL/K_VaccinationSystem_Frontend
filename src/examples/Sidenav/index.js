@@ -161,9 +161,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           </MDTypography>
         </MDBox>
         <MDBox component={NavLink} to="/" display="flex" alignItems="center">
-          {//brand && <MDBox component="img" src={brand} alt="Brand" width="2rem" />}
-          }
-          <Icon fontSize={"medium"} color={"primary"} width="2rem">coronavirus_rounded_icon</Icon>
+          {brand && <MDBox component="img" src={brand} alt="Brand" width="2rem" />}
           <MDBox
             width={!brandName && "100%"}
             sx={(theme) => sidenavLogoLabel(theme, { miniSidenav })}
