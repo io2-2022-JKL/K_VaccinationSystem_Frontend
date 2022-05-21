@@ -14,7 +14,7 @@ import ApiConnection from "../../logic/api/ApiConnection";
 import {Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import Loader from "react-loader";
-import { PatientSignupVisitModal } from './PatientVisitModal';
+import { PatientSignupVisitModal } from "./PatientVisitModal";
 
 export default function PatientSignup() {
 
