@@ -1,4 +1,4 @@
-class VaccintationCenter
+export default class VaccintationCenter
 {
     _id;
     _name;
@@ -6,21 +6,20 @@ class VaccintationCenter
     _address;
     _availableVaccines;
     _openingHours;
-    _closingHours;
-    _doctors;
     _active;
   
-    constructor(vaccintationCenter)
+    constructor(vaccinationCenter)
     {
-        this._id = vaccintationCenter.id; 
-        this._name = vaccintationCenter.name;
-        this._city = vaccintationCenter.city;
-        this._address = vaccintationCenter.address;
-        this._availableVaccines = vaccintationCenter.availableVaccines;
-        this._openingHours = vaccintationCenter.openingHours;
-        this._closingHours = vaccintationCenter.closingHours;
-        this._doctors = vaccintationCenter.doctors;
-        this._active = vaccintationCenter.active;
+        this._id = vaccinationCenter.id;
+        this._name = vaccinationCenter.name ? vaccinationCenter.name : vaccinationCenter.centerName;
+        if (!this._name) this._name = vaccinationCenter.vaccinationCenterName;
+        this._city = vaccinationCenter.city ? vaccinationCenter.city : vaccinationCenter.centerCity;
+        if (!this._city) this._city = vaccinationCenter.vaccinationCenterCity;
+        this._address = vaccinationCenter.street ? vaccinationCenter.street : vaccinationCenter.centerStreet;
+        if (!this._address) this._address = vaccinationCenter.vaccinationCenterStreet;
+        this._availableVaccines = vaccinationCenter.vaccines.map((vac) => new Vaccine(vac));
+        this._openingHours = vaccinationCenter.openingHours;
+        this._active = vaccinationCenter.active;
     }
     
     get getId() { return this._id; }
@@ -49,19 +48,67 @@ class VaccintationCenter
 
     get getActive() { return this._active; }
     set setActive(active) { this._active = active; }
-}
 
-function createVaccinationCenter(id,name,city,address,availableVaccines,openingHours,closingHours,doctors,active)
-{
-    vaccintationCenter = new Object();
-    vaccintationCenter.id = id; 
-    vaccintationCenter.name = name;
-    vaccintationCenter.city = city;
-    vaccintationCenter.address = address;
-    vaccintationCenter.availableVaccines = availableVaccines;
-    vaccintationCenter.openingHours = openingHours;
-    vaccintationCenter.closingHours = closingHours;
-    vaccintationCenter.doctors = doctors;
-    vaccintationCenter.active = active;
-    return new VaccintationCenter(vaccintationCenter);
+    toTableData(listOfColumns) {
+        const NA = "NA";
+        let result = [];
+        listOfColumns.map((column) => {
+            switch(column.accessor) {
+                case "vaccinationCenterName":
+                    this._name 
+                    ? result = [...result, { vaccinationCenterName: this._name }] 
+                    : result = [...result, { vaccinationCenterName: NA }];
+                    break;
+                case "centerName":
+                    this._name 
+                    ? result = [...result, { centerName: this._name }] 
+                    : result = [...result, { centerName: NA }];
+                    break;
+                case "name":
+                    this._name 
+                    ? result = [...result, { name: this._name }] 
+                    : result = [...result, { name: NA }];
+                    break;
+                case "vaccinationCenterCity":
+                    this._city 
+                    ? result = [...result, { vaccinationCenterCity: this._city }] 
+                    : result = [...result, { vaccinationCenterCity: NA }];
+                    break;
+                case "centerCity":
+                    this._city 
+                    ? result = [...result, { centerCity: this._city }] 
+                    : result = [...result, { centerCity: NA }];
+                case "city":
+                    this._city 
+                    ? result = [...result, { city: this._city }] 
+                    : result = [...result, { city: NA }];
+                case "vaccinationCenterAddress":
+                    this._address 
+                    ? result = [...result, { vaccinationCenterAdress: this._address }] 
+                    : result = [...result, { vaccinationCenterAdress: NA }];
+                    break;
+                case "centerAddress":
+                    this._address 
+                    ? result = [...result, { centerAdress: this._address }] 
+                    : result = [...result, { centerAdress: NA }];
+                    break;
+                case "address":
+                    this._address 
+                    ? result = [...result, { address: this._address }] 
+                    : result = [...result, { address: NA }];
+                    break;
+                case "active":
+                    this._active 
+                    ? result = [...result, { active: this._active }] 
+                    : result = [...result, { active: NA }];
+                    break;
+                case "id":
+                    this._id 
+                    ? result = [...result, { id: this._id }] 
+                    : result = [...result, { id: NA }];
+                    break;
+            }
+        })
+        return result;
+    }
 }
