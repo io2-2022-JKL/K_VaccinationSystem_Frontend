@@ -29,9 +29,11 @@ import theme from "assets/theme";
 //import createCache from "@emotion/cache";
 
 // Material Dashboard 2 React routes
-import routes from "routes";
-import authRoutes from "authRoutes";
-
+import routes from "./routes/patientRoutes";
+import authRoutes from "./routes/authRoutes";
+import doctorRoutes from "./routes/doctorRoutes";
+import adminRoutes from "./routes/adminRoutes";
+import homeRoutes from "./routes/homeRoutes";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
@@ -39,6 +41,8 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
+import { MarkEmailUnreadOutlined } from "@mui/icons-material";
+import useLogin from "./logic/useLogin";
 
 export default function App() {
     const [controller, dispatch] = useMaterialUIController();
@@ -127,7 +131,7 @@ export default function App() {
                         color={sidenavColor}
                         brand={(transparentSidenav) || whiteSidenav ? brandDark : brandWhite}
                         brandName="MiNI szczepienia"
-                        routes={routes}
+                        routes={printableRoutes()}
                         onMouseEnter={handleOnMouseEnter}
                         onMouseLeave={handleOnMouseLeave}
                     />
