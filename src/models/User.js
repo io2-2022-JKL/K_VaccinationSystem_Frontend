@@ -47,63 +47,42 @@ export default class User {
     get getActive() { return this._active; }
     set setActive(active) { this._active = active; }
 
-    toTableData(listOfColumns) {
+    toTableData() {
         const NA = "NA";
         let result = [];
-        listOfColumns.map((column) => {
-            switch(column.accessor) {
-                case "patientFirstName":
-                    this._firstName 
-                    ? result = [...result, { patientFirstName: this._firstName }] 
-                    : result = [...result, { patientFirstName: NA }];
-                    break;
-                case "firstName":
-                    this._firstName 
-                    ? result = [...result, { firstName: this._firstName }] 
-                    : result = [...result, { firstName: NA }];
-                    break;
-                case "patientLastName":
-                    this._lastName 
-                    ? result = [...result, { patientLastName: this._lastName }] 
-                    : result = [...result, { patientLastName: NA }];
-                    break;
-                case "lastName":
-                    this._lastName 
-                    ? result = [...result, { lastName: this._lastName }] 
-                    : result = [...result, { lastName: NA }];
-                    break;
-                case "pesel":
-                    this._pesel 
-                    ? result = [...result, { pesel: this._pesel }] 
-                    : result = [...result, { pesel: NA }];
-                    break;
-                case "dateOfBirth":
-                    this._dateOfBirth 
-                    ? result = [...result, { dateOfBirth: this._dateOfBirth }] 
-                    : result = [...result, { dateOfBirth: NA }];
-                    break;
-                case "mail":
-                    this._mail 
-                    ? result = [...result, { mail: this._mail }] 
-                    : result = [...result, { mail: NA }];
-                    break;
-                case "phoneNumber":
-                    this._phoneNumber 
-                    ? result = [...result, { phoneNumber: this._phoneNumber }] 
-                    : result = [...result, { phoneNumber: NA }];
-                    break;
-                case "active":
-                    this._active 
-                    ? result = [...result, { active: this._active }] 
-                    : result = [...result, { active: NA }];
-                    break;
-                case "patientId":
-                    this._id 
-                    ? result = [...result, { patientId: this._id }] 
-                    : result = [...result, { patientId: NA }];
-                    break;
-            }
-        })
+
+        this._firstName 
+        ? result = [...result, { patientFirstName: this._firstName }] 
+        : result = [...result, { patientFirstName: NA }];
+
+        this._lastName 
+        ? result = [...result, { patientLastName: this._lastName }] 
+        : result = [...result, { patientLastName: NA }];
+
+        this._pesel 
+        ? result = [...result, { pesel: this._pesel }] 
+        : result = [...result, { pesel: NA }];
+
+        this._dateOfBirth 
+        ? result = [...result, { dateOfBirth: this._dateOfBirth }] 
+        : result = [...result, { dateOfBirth: NA }];
+        
+        this._mail 
+        ? result = [...result, { mail: this._mail }] 
+        : result = [...result, { mail: NA }];
+
+        this._phoneNumber 
+        ? result = [...result, { phoneNumber: this._phoneNumber }] 
+        : result = [...result, { phoneNumber: NA }];
+
+        this._active 
+        ? result = [...result, { userActive: this._active }] 
+        : result = [...result, { userActive: NA }];
+
+        this._id 
+        ? result = [...result, { patientId: this._id }] 
+        : result = [...result, { patientId: NA }];
+        
         return result;
     }
 }
