@@ -30,7 +30,7 @@ export default class User {
     get getLastName() { return this._lastName; }
     set setLastName(lastName) { this._lastName = lastName; }
 
-    get getDateOfBirth() { return this._dateOfBirth[8]+this._dateOfBirth[9]+' '+this._dateOfBirth[5]+this._dateOfBirth[6]+' '+this._dateOfBirth[0]+this._dateOfBirth[1]+this._dateOfBirth[2]+this._dateOfBirth[3]; }
+    get getDateOfBirth() { return this._dateOfBirth; }
     set setDateOfBirth(dateOfBirth) { this._dateOfBirth = dateOfBirth; }
 
     get getMail() { return this._mail; }

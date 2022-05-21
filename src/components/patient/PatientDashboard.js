@@ -18,6 +18,20 @@ import { PatientIncomingVisitModal } from './PatientVisitModal';
 
 export default function PatientDashboard() {
 
+    let tmp = {};
+    tmp.id = '1';
+    tmp.pesel = '00000000001';
+    tmp.firstName = 'Andrew';
+    tmp.lastName = 'Bagpipe';
+    tmp.dateOfBirth = '24-03-1999';
+    tmp.mail = 'jakub.nowak@adres.mailowy.pl';
+    tmp.phoneNumber = '+48000000000';
+    tmp.vaccinationCount = '0';
+    tmp.vaccinationHistory = 'todo';
+    tmp.futureVaccinations = 'todo';
+    tmp.certificates = 'todo';
+    tmp.active = 'a';
+
     const tableColumns = [
         {Header: "Nazwa szczepionki", accessor: "vaccineName", width: "25%"},
         {Header: "Wirus", accessor: "vaccineVirus", width: "25%"},
@@ -28,7 +42,6 @@ export default function PatientDashboard() {
     const {GetId} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
-    const [patientData, setPatientData] = useState([]);
 
     const instance = ApiConnection("/patient/appointments/incomingAppointments/");
     const instance2 = ApiConnection("/patient/info/");
@@ -44,36 +57,22 @@ export default function PatientDashboard() {
             setTableData(r.data)
         })
             .finally(() => {
-                //setLoading(false)
-            });
-        instance2.get(
-            "/patient/info/" + GetId()
-        ).then(r => {
-            setPatientData(r.data)
-        })
-            .finally(() => {
                 setLoading(false)
             });
     }, [])
 
 
-    const patient = new Patient(patientData);
+    const patient = new Patient(tmp);
 
     return (
         <DashboardLayout>
             <DashboardNavbar/>
             <MDBox mb={10}/>
-            {
-                loading?
-                <Loader/>:
             <Header name={patient.getFirstName + " " + patient.getLastName} position={"Pacjent"}>
                 <MDBox mt={5} mb={3}>
                     <Grid container spacing={1}>
                         <Grid item xs={12} md={6} xl={4} sx={{display: "flex"}}>
                             <Divider orientation="vertical" sx={{ml: -2, mr: 1}}/>
-                            {
-                                loading?
-                                    <Loader/>:
                             <ProfileInfoCard
                                 title="Informacje o pacjencie"
                                 description=""
@@ -81,21 +80,17 @@ export default function PatientDashboard() {
                                     "Imie i Nazwisko": patient.getFirstName + " " + patient.getLastName,
                                     "Pesel": patient.getPesel,
                                     "Data urodzenia": patient.getDateOfBirth,
-                                    "Email": patient.getMail,
-                                    "Numer telefonu": patient.getPhoneNumber,
+                                    Email: patient.getMail,
                                 }}
+                                social={[]}
                                 action={{route: "", tooltip: "Edit Profile"}}
                                 shadow={false}
                             />
-                            }
                             <Divider orientation="vertical" sx={{mx: 0}}/>
                         </Grid>
                         {
                             loading ?
-                                <Grid>
-                                    <Loader /> 
-                                </Grid>
-                                :
+                                <Grid item xs={12} xl={8}>Loading</Grid> :
                                 <Grid item xs={12} xl={8}>
                                     <DataTable table={{columns: tableColumns, rows: tableData}}/>
                                 </Grid>
@@ -103,7 +98,6 @@ export default function PatientDashboard() {
                     </Grid>
                 </MDBox>
             </Header>
-            }
             <Footer/>
         </DashboardLayout>
     )

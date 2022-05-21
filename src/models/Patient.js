@@ -2,6 +2,12 @@ import User from './User';
 
 export default class Patient extends User
 {
+    _vaccinationCount;
+    _vaccinationHistory;
+    _futureVaccinations;
+    _certificates;
+    _active;
+
     constructor(patient)
     {
         var user = new Object();
@@ -13,7 +19,11 @@ export default class Patient extends User
         user.mail = patient.mail;
         user.phoneNumber = patient.phoneNumber;
         super(user);
-    
+        this._vaccinationCount = patient.vaccinationCount;
+        this._vaccinationHistory = patient.vaccinationHistory;
+        this._futureVaccinations = patient.futureVaccinations;
+        this._certificates = patient.certificates;
+        this._active = patient.active;
     }
 
     get getVaccinationCount() { return this._vaccinationCount; }

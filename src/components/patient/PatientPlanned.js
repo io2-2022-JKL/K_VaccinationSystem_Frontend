@@ -22,10 +22,8 @@ export default function PatientDashboard() {
     const {GetId} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
-    const [patientData, setPatientData] = useState([]);
 
     const instance = ApiConnection("/patient/appointments/incomingAppointments/");
-    const instance2 = ApiConnection("/patient/info/");
 
     useEffect(() => {
         updateData();
@@ -44,19 +42,13 @@ export default function PatientDashboard() {
             setTableData(r.data)
         })
             .finally(() => {
-                //setLoading(false)
-            });
-        instance2.get(
-            "/patient/info/" + GetId()
-        ).then(r => {
-            setPatientData(r.data)
-        })
-            .finally(() => {
                 setLoading(false)
             });
     }
-
-    const patient = new Patient(patientData);
+    const [patient, setPatient] = useState({
+        firstName: "Andrew",
+        lastName: "Bagpipe",
+    })
 
     const handleCancellation = (id) => {
         const url = "/patient/appointments/incomingAppointments/cancelAppointments/" + GetId() + "/" + id
@@ -87,18 +79,11 @@ export default function PatientDashboard() {
         <DashboardLayout>
             <DashboardNavbar/>
             <MDBox mb={10}/>
-            {
-                loading?
-                <Grid>
-                    <Loader /> 
-                </Grid> 
-                :
-                <Header name={patient.getFirstName + " " + patient.getLastName} position={"Pacjent"}>
-                    <MDBox mt={5} mb={3}>
-                        <DataTable table={{columns: tableColumns, rows: tableData}}/>
-                    </MDBox>
-                </Header>
-            }
+            <Header name={patient.firstName + " " + patient.lastName} position={"Pacjent"}>
+                <MDBox mt={5} mb={3}>
+                    <DataTable table={{columns: tableColumns, rows: tableData}}/>
+                </MDBox>
+            </Header>
             <Footer/>
         </DashboardLayout>
     )
