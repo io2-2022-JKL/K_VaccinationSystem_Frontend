@@ -1,3 +1,5 @@
+import Vaccine from "./Vaccine";
+
 export default class VaccintationCenter
 {
     _id;
@@ -10,14 +12,14 @@ export default class VaccintationCenter
   
     constructor(vaccinationCenter)
     {
-        this._id = vaccinationCenter.id;
+        this._id = vaccinationCenter.id ? vaccinationCenter.id : vaccinationCenter.vaccinationCenterId;
         this._name = vaccinationCenter.name ? vaccinationCenter.name : vaccinationCenter.centerName;
         if (!this._name) this._name = vaccinationCenter.vaccinationCenterName;
         this._city = vaccinationCenter.city ? vaccinationCenter.city : vaccinationCenter.centerCity;
         if (!this._city) this._city = vaccinationCenter.vaccinationCenterCity;
         this._address = vaccinationCenter.street ? vaccinationCenter.street : vaccinationCenter.centerStreet;
         if (!this._address) this._address = vaccinationCenter.vaccinationCenterStreet;
-        this._availableVaccines = vaccinationCenter.vaccines.map((vac) => new Vaccine(vac));
+        if (vaccinationCenter.vaccines) this._availableVaccines = vaccinationCenter.vaccines.map((vac) => new Vaccine(vac));
         this._openingHours = vaccinationCenter.openingHours;
         this._active = vaccinationCenter.active;
     }
@@ -78,10 +80,12 @@ export default class VaccintationCenter
                     this._city 
                     ? result = [...result, { centerCity: this._city }] 
                     : result = [...result, { centerCity: NA }];
+                    break;
                 case "city":
                     this._city 
                     ? result = [...result, { city: this._city }] 
                     : result = [...result, { city: NA }];
+                    break;
                 case "vaccinationCenterAddress":
                     this._address 
                     ? result = [...result, { vaccinationCenterAdress: this._address }] 
@@ -102,7 +106,7 @@ export default class VaccintationCenter
                     ? result = [...result, { active: this._active }] 
                     : result = [...result, { active: NA }];
                     break;
-                case "id":
+                case "centerId":
                     this._id 
                     ? result = [...result, { id: this._id }] 
                     : result = [...result, { id: NA }];
