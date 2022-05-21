@@ -97,11 +97,6 @@ export default class User {
                     ? result = [...result, { active: this._active }] 
                     : result = [...result, { active: NA }];
                     break;
-                case "id":
-                    this._id 
-                    ? result = [...result, { id: this._id }] 
-                    : result = [...result, { id: NA }];
-                    break;
                 case "patientId":
                     this._id 
                     ? result = [...result, { patientId: this._id }] 

@@ -128,11 +128,6 @@ export default class Vaccine
                     ? result = [...result, { batchNumber: this._batchNumber }] 
                     : result = [...result, { batchNumber: NA }];
                     break;
-                case "id":
-                    this._id 
-                    ? result = [...result, { id: this._id }] 
-                    : result = [...result, { id: NA }];
-                    break;
                 case "vaccineId":
                     this._id 
                     ? result = [...result, { vaccineId: this._id }] 
