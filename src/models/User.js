@@ -10,7 +10,7 @@ export default class User {
   
     constructor(user)
     {
-        this._id = user.id;
+        this._id = user.id ? user.id : user.patientAccountId;
         this._pesel = user.PESEL;
         this._firstName = user.firstName;
         this._lastName = user.lastName;
