@@ -58,83 +58,54 @@ export default class Vaccine
     get getActive() { return this._active; }
     set setActive(active) { this._active = active; }
 
-    toTableData(listOfColumns) {
+    toTableData() {
         const NA = "NA";
         let result = [];
-        listOfColumns.map((column) => {
-            switch(column.accessor) {
-                case "vaccineName":
-                    this._name 
-                    ? result = [...result, { vaccineName: this._name }] 
-                    : result = [...result, { vaccineName: NA }];
-                    break;
-                case "name":
-                    this._name 
-                    ? result = [...result, { name: this._name }] 
-                    : result = [...result, { name: NA }];
-                    break;
-                case "vaccineCompany":
-                    this._company 
-                    ? result = [...result, { vaccineCompany: this._company }] 
-                    : result = [...result, { vaccineCompany: NA }];
-                    break;
-                case "company":
-                    this._company 
-                    ? result = [...result, { company: this._company }] 
-                    : result = [...result, { company: NA }];
-                    break;
-                case "vaccineVirus":
-                    this._virus 
-                    ? result = [...result, { vaccineVirus: this._virus }] 
-                    : result = [...result, { vaccineVirus: NA }];
-                    break;
-                case "virus":
-                    this._virus 
-                    ? result = [...result, { virus: this._virus }] 
-                    : result = [...result, { virus: NA }];
-                    break;
-                case "numberOfDoses":
-                    this._numberOfDoses 
-                    ? result = [...result, { numberOfDoses: this._numberOfDoses }] 
-                    : result = [...result, { numberOfDoses: NA }];
-                    break;
-                case "minDaysBetweenDoses":
-                    this._minDaysBetweenDoses 
-                    ? result = [...result, { minDaysBetweenDoses: this._minDaysBetweenDoses }] 
-                    : result = [...result, { minDaysBetweenDoses: NA }];
-                    break;
-                case "maxDaysBetweenDoses":
-                    this._maxDaysBetweenDoses 
-                    ? result = [...result, { maxDaysBetweenDoses: this._maxDaysBetweenDoses }] 
-                    : result = [...result, { maxDaysBetweenDoses: NA }];
-                    break;
-                case "minPatientAge":
-                    this._minPatientAge 
-                    ? result = [...result, { minPatientAge: this._minPatientAge }] 
-                    : result = [...result, { minPatientAge: NA }];
-                    break;
-                case "maxPatientAge":
-                    this._maxPatientAge 
-                    ? result = [...result, { maxPatientAge: this._maxPatientAge }] 
-                    : result = [...result, { maxPatientAge: NA }];
-                    break;
-                case "active":
-                    this._active 
-                    ? result = [...result, { active: this._active }] 
-                    : result = [...result, { active: NA }];
-                    break;
-                case "batchNumber":
-                    this._batchNumber 
-                    ? result = [...result, { batchNumber: this._batchNumber }] 
-                    : result = [...result, { batchNumber: NA }];
-                    break;
-                case "vaccineId":
-                    this._id 
-                    ? result = [...result, { vaccineId: this._id }] 
-                    : result = [...result, { vaccineId: NA }];
-                    break;
-            }
-        })
+
+        this._name 
+        ? result = [...result, { vaccineName: this._name }] 
+        : result = [...result, { vaccineName: NA }];
+
+        this._company 
+        ? result = [...result, { vaccineCompany: this._company }] 
+        : result = [...result, { vaccineCompany: NA }];
+
+        this._virus 
+        ? result = [...result, { vaccineVirus: this._virus }] 
+        : result = [...result, { vaccineVirus: NA }];
+
+        this._numberOfDoses 
+        ? result = [...result, { numberOfDoses: this._numberOfDoses }] 
+        : result = [...result, { numberOfDoses: NA }];
+
+        this._minDaysBetweenDoses 
+        ? result = [...result, { minDaysBetweenDoses: this._minDaysBetweenDoses }] 
+        : result = [...result, { minDaysBetweenDoses: NA }];
+
+        this._maxDaysBetweenDoses 
+        ? result = [...result, { maxDaysBetweenDoses: this._maxDaysBetweenDoses }] 
+        : result = [...result, { maxDaysBetweenDoses: NA }];
+
+        this._minPatientAge 
+        ? result = [...result, { minPatientAge: this._minPatientAge }] 
+        : result = [...result, { minPatientAge: NA }];
+
+        this._maxPatientAge 
+        ? result = [...result, { maxPatientAge: this._maxPatientAge }] 
+        : result = [...result, { maxPatientAge: NA }];
+
+        this._active 
+        ? result = [...result, { vaccineActive: this._active }] 
+        : result = [...result, { vaccineActive: NA }];
+
+        this._batchNumber 
+        ? result = [...result, { batchNumber: this._batchNumber }] 
+        : result = [...result, { batchNumber: NA }];
+
+        this._id 
+        ? result = [...result, { vaccineId: this._id }] 
+        : result = [...result, { vaccineId: NA }];
+        
         return result;
     }
 }

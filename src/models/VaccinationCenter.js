@@ -51,68 +51,30 @@ export default class VaccintationCenter
     get getActive() { return this._active; }
     set setActive(active) { this._active = active; }
 
-    toTableData(listOfColumns) {
+    toTableData() {
         const NA = "NA";
         let result = [];
-        listOfColumns.map((column) => {
-            switch(column.accessor) {
-                case "vaccinationCenterName":
-                    this._name 
-                    ? result = [...result, { vaccinationCenterName: this._name }] 
-                    : result = [...result, { vaccinationCenterName: NA }];
-                    break;
-                case "centerName":
-                    this._name 
-                    ? result = [...result, { centerName: this._name }] 
-                    : result = [...result, { centerName: NA }];
-                    break;
-                case "name":
-                    this._name 
-                    ? result = [...result, { name: this._name }] 
-                    : result = [...result, { name: NA }];
-                    break;
-                case "vaccinationCenterCity":
-                    this._city 
-                    ? result = [...result, { vaccinationCenterCity: this._city }] 
-                    : result = [...result, { vaccinationCenterCity: NA }];
-                    break;
-                case "centerCity":
-                    this._city 
-                    ? result = [...result, { centerCity: this._city }] 
-                    : result = [...result, { centerCity: NA }];
-                    break;
-                case "city":
-                    this._city 
-                    ? result = [...result, { city: this._city }] 
-                    : result = [...result, { city: NA }];
-                    break;
-                case "vaccinationCenterAddress":
-                    this._address 
-                    ? result = [...result, { vaccinationCenterAdress: this._address }] 
-                    : result = [...result, { vaccinationCenterAdress: NA }];
-                    break;
-                case "centerAddress":
-                    this._address 
-                    ? result = [...result, { centerAdress: this._address }] 
-                    : result = [...result, { centerAdress: NA }];
-                    break;
-                case "address":
-                    this._address 
-                    ? result = [...result, { address: this._address }] 
-                    : result = [...result, { address: NA }];
-                    break;
-                case "active":
-                    this._active 
-                    ? result = [...result, { active: this._active }] 
-                    : result = [...result, { active: NA }];
-                    break;
-                case "centerId":
-                    this._id 
-                    ? result = [...result, { id: this._id }] 
-                    : result = [...result, { id: NA }];
-                    break;
-            }
-        })
+
+        this._name 
+        ? result = [...result, { centerName: this._name }] 
+        : result = [...result, { centerName: NA }];
+
+        this._city 
+        ? result = [...result, { centerCity: this._city }] 
+        : result = [...result, { centerCity: NA }];
+
+        this._address 
+        ? result = [...result, { centerAdress: this._address }] 
+        : result = [...result, { centerAdress: NA }];
+
+        this._active 
+        ? result = [...result, { centerActive: this._active }] 
+        : result = [...result, { centerActive: NA }];
+
+        this._id 
+        ? result = [...result, { centerId: this._id }] 
+        : result = [...result, { centerId: NA }];
+        
         return result;
     }
 }
