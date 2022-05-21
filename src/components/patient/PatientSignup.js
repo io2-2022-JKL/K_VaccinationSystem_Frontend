@@ -12,8 +12,6 @@ import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import {Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
-import Loader from "react-loader";
-import { PatientSignupVisitModal } from './PatientVisitModal';
 
 export default function PatientSignup() {
 
@@ -73,8 +71,7 @@ export default function PatientSignup() {
 
     const configureTableData = (data) => {
         for (let i = 0; i < data.length; i++) {
-            data[i].signInButton = <Button onClick={() => signIn(data[i].timeSlotId, data[i].availableVaccines[0].vaccineId)}>Wybierz</Button>;
-            data[i].detailsButton = <PatientSignupVisitModal data={data[i]}/>
+            data[i].signInButton = <Button onClick={() => signIn(data[i].timeSlotId, data[i].availableVaccines[0].vaccineId)}>Wybierz</Button>
         }
         setTableData(data);
     }
@@ -89,8 +86,7 @@ export default function PatientSignup() {
         {Header: "Nazwa centrum", accessor: "vaccinationCenterName", width: "50%"},
         {Header: "Ulica", accessor: "vaccinationCenterStreet", width: "25%"},
         {Header: "Termin", accessor: "from", width: "25%"},
-        {Header: "Szczegóły", accessor: "detailsButton", width: "10%"},
-        {Header: "Zapisz się", accessor: "signInButton", width: "15%"},
+        {Header: "", accessor: "signInButton", width: "25%"},
     ]
 
 
