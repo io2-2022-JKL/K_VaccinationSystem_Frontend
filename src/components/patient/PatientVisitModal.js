@@ -8,9 +8,8 @@ export function PatientSignupVisitModal(props) {
 
     const [open, setOpen] = useState(false);
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const handleClose = () => setOpen(false);
+
 
     const style = {
         position: 'absolute',
