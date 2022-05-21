@@ -1,94 +1,3 @@
-// import {Route, Routes, useLocation} from "react-router-dom";
-// import AdminDoctorList from "./components/admin/AdminDoctorList";
-// import DoctorLoginPage from "./components/doctor/DoctorLoginPage";
-// import AdminLayout from "./components/admin/layout/AdminLayout";
-// import DoctorLayout from "./components/doctor/layout/DoctorLayout";
-// import DoctorDashboard from "./components/doctor/DoctorDashboard";
-// import DoctorAvailability from "./components/doctor/DoctorAvalibility";
-// import DoctorPlanned from "./components/doctor/DoctorPlanned";
-// import DoctorUnconfirmed from "./components/doctor/DoctorUnconfirmed";
-// import DoctorHistory from "./components/doctor/DoctorHistory";
-// import AdminPatientList from "./components/admin/AdminPatientList";
-// import React from "react";
-// import useLogin from "./logic/useLogin";
-// import AdminLoginPage from "./components/admin/AdminLoginPage";
-// import Home from "./components/Home";
-// import PatientDashboard from "./components/patient/PatientDashboard";
-// import PatientLayout from "./components/patient/layout/PatientLayout";
-// import PatientCertifications from "./components/patient/PatientCertifications";
-// import PatientHistory from "./components/patient/PatientHistory";
-// import PatientPlanned from "./components/patient/PatientPlanned";
-// import PatientSignup from "./components/patient/PatientSignup";
-// import PatientVaccinationSignUp from "./components/patient/PatientVaccinationSignUp";
-// import DataTable from "./components/DataTable";
-// import { useState } from "react";
-// import PatientLoginPage from "./components/patient/PatientLoginPage";
-// import "./styles/global.css"
-//
-// function App() {
-//
-//     const {isLoggedIn} = useLogin();
-//     const location = useLocation();
-//     return (
-//         <>
-//             <Routes>
-//                 <Route path="" element={<Home/>}/>
-//                 {
-//                     isLoggedIn(location.pathname) ?
-//                         <Route path="admin" element={<AdminLayout/>}>
-//                             <Route path="" element={<AdminPatientList/>}/>
-//                             <Route path="doctors" element={<AdminDoctorList/>}/>
-//                             <Route path="patients" element={<AdminPatientList/>}/>
-//                         </Route> :
-//                         <Route path="admin" element={<AdminLoginPage/>}/>
-//                 }
-//                 {
-//                     isLoggedIn(location.pathname) ?
-//                         <Route path="doctor" element={<DoctorLayout/>}>
-//                             <Route path="" element={<DoctorDashboard/>}/>
-//                             <Route path="availability" element={<DoctorAvailability/>}/>
-//                             <Route path="planned" element={<DoctorPlanned/>}/>
-//                             <Route path="annulment" element={<DoctorUnconfirmed/>}/>
-//                             <Route path="history" element={<DoctorHistory/>}/>
-//                         </Route> :
-//                         <Route path="doctor" element={<DoctorLoginPage/>}/>
-//                 }
-//                 {
-//                     isLoggedIn(location.pathname) ?
-//                         <Route path={"patient"}>
-//                             <Route path="" element={<PatientLayout content={<PatientDashboard/>}/>}/>
-//                             <Route path="certifications" element={<PatientLayout content={<PatientCertifications/>}/>}/>
-//                             <Route path="history" element={<PatientLayout content={<PatientHistory/>}/>}/>
-//                             <Route path="planned" element={<PatientLayout content={<PatientPlanned/>}/>}/>
-//                             <Route path="signup" element={<PatientLayout content={<PatientSignup/>}/>}/>
-//                             <Route path="vaccination" element={<PatientLayout content={<PatientVaccinationSignUp/>}/>}/>
-//                         </Route> :
-//                         <Route path="patient" element={<PatientLoginPage/>}/>
-//                 }
-//             </Routes>
-//         </>
-//     );
-// }
-//
-//
-// export default App;
-
-
-/**
- =========================================================
- * Material Dashboard 2 React - v2.1.0
- =========================================================
-
- * Product Page: https://www.creative-tim.com/product/material-dashboard-react
- * Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
- Coded by www.creative-tim.com
-
- =========================================================
-
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- */
-
 import { useState, useEffect, useMemo } from "react";
 
 // react-router components
@@ -146,6 +55,7 @@ export default function App() {
     const [onMouseEnter, setOnMouseEnter] = useState(false);
     const [rtlCache, setRtlCache] = useState(null);
     const { pathname } = useLocation();
+    const {isLoggedIn, isAnyoneLogged} = useLogin();
 
 
     // Open sidenav when mouse enter on mini sidenav
@@ -189,6 +99,24 @@ export default function App() {
             return null;
         });
 
+    const printableRoutes = () =>
+    {
+        const curPath = window.location.pathname.split('/')[1];
+        if (curPath === "patient") return routes;
+        if (curPath === "doctor") return doctorRoutes;
+        if (curPath === "admin") return adminRoutes;
+        if (curPath === "home") return homeRoutes;
+        return [];
+    }
+
+    const mainRoute = () =>
+    {
+        if (isLoggedIn("/admin") !== null) return "/admin";
+        if (isLoggedIn("/doctor") !== null) return "/doctor";
+        if (isLoggedIn("/patient") !== null) return "/patient";
+        return "/login";
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -206,9 +134,12 @@ export default function App() {
             )}
             {layout === "vr" && <Configurator />}
             <Routes>
-                {getRoutes(authRoutes)}
-                {getRoutes(routes)}
-                <Route path="*" element={<Navigate to="/patient" />} />
+                {isLoggedIn("/admin") !== null ? getRoutes(adminRoutes) : []}
+                {isLoggedIn("/doctor") !== null ? getRoutes(doctorRoutes) : []}
+                {isLoggedIn("/patient") !== null ? getRoutes(routes) : []}
+                {!isAnyoneLogged() ? getRoutes(authRoutes) : []}
+                {getRoutes(homeRoutes)}
+                <Route path="*" element={<Navigate to={mainRoute()} />} />
             </Routes>
         </ThemeProvider>
     );

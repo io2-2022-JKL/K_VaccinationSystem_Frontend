@@ -39,7 +39,19 @@ const useLogin = () => {
         return null;
     }
 
-    return {isLoggedIn, LogIn, LogOut, GetToken, GetId};
+    const isAnyoneLogged = () => {
+        const rolesList = ["patient", "doctor", "admin"]
+        for(let role in rolesList)
+        {
+            if (localStorage.getItem(role + "Token"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    return {isLoggedIn, LogIn, LogOut, GetToken, GetId, isAnyoneLogged};
 }
 
 export default useLogin;
