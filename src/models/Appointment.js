@@ -39,4 +39,27 @@ export default class Appointment
 
     get getCertifyState() { return this._certifyState; }
     set setCertifyState(state) { this._certifyState = state; }
+
+    toTableData() {
+        const NA = "NA";
+        let result = [];
+
+        this._id 
+        ? result = [...result, {appointmentId: this._id}] 
+        : result = [...result, {appointmentId: NA}];
+
+        this._whichDose 
+        ? result = [...result, {whichDose: this._whichDose}] 
+        : result = [...result, {whichDose: NA}];
+
+        this._visitState 
+        ? result = [...result, {visitState: this._visitState}] 
+        : result = [...result, {visitState: NA}];
+        
+        this._certifyState 
+        ? result = [...result, {certifyState: this._certifyState}] 
+        : result = [...result, {certifyState: NA}];
+
+        result = [...result, ...this._timeSlot.toTableData(), ...this._patient.toTableData(), ...this._vaccine.toTableData()];
+    }
 }
