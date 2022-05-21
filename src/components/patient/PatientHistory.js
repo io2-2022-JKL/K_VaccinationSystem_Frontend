@@ -19,8 +19,10 @@ export default function PatientDashboard() {
     const {GetId} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
+    const [patientData, setPatientData] = useState([]);
 
     const instance = ApiConnection("/patient/appointments/formerAppointments/");
+    const instance2 = ApiConnection("/patient/info/");
 
     useEffect(() => {
         instance.get(
@@ -29,15 +31,19 @@ export default function PatientDashboard() {
             setTableData(r.data)
         })
             .finally(() => {
+                //setLoading(false)
+            });
+        instance2.get(
+            "/patient/info/" + GetId()
+        ).then(r => {
+            setPatientData(r.data)
+        })
+            .finally(() => {
                 setLoading(false)
             });
     }, [])
 
-    const [patient, setPatient] = useState({
-        firstName: "Andrew",
-        lastName: "Bagpipe",
-
-    })
+    const patient = new Patient(patientData);
 
     const tableColumns = [
         {Header: "Nazwa szczepionki", accessor: "vaccineName", width: "50%"},
@@ -45,18 +51,22 @@ export default function PatientDashboard() {
         {Header: "Data", accessor: "windowBegin", width: "25%"},
     ]
 
-
-
-
     return (
         <DashboardLayout>
             <DashboardNavbar/>
             <MDBox mb={10}/>
-            <Header name={patient.firstName + " " + patient.lastName} position={"Pacjent"}>
-                <MDBox mt={5} mb={3}>
-                    <DataTable table={{columns: tableColumns, rows: tableData}}/>
-                </MDBox>
-            </Header>
+            {
+                loading?
+                <Grid>
+                    <Loader /> 
+                </Grid> 
+                :
+                <Header name={patient.getFirstName + " " + patient.getLastName} position={"Pacjent"}>
+                    <MDBox mt={5} mb={3}>
+                        <DataTable table={{columns: tableColumns, rows: tableData}}/>
+                    </MDBox>
+                </Header>
+            }
             <Footer/>
         </DashboardLayout>
     )

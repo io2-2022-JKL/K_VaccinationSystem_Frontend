@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../../styles/patient/patient.css';
 import '../../models/User';
+import Patient from '../../models/Patient';
 import MDBox from "../MDBox";
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
@@ -12,17 +13,21 @@ import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import {Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
+import Loader from "react-loader";
+import { PatientSignupVisitModal } from "./PatientVisitModal";
 
 export default function PatientSignup() {
 
     const {GetId} = useLogin();
     const [loading, setLoading] = useState(true);
+    const [loading2, setLoading2] = useState(true);
     const [tableData, setTableData] = useState([]);
     const [fromDate, setFromDate] = useState("2010-12-09");
     const [toDate, setToDate] = useState("2023-05-09");
     const [open, setOpen] = useState(true);
     const [cityFilter, setCityFilter] = useState("Warszawa");
     const [virusFilter, setVirusFilter] = useState("Koronawirus");
+    const [patientData, setPatientData] = useState([]);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -33,6 +38,7 @@ export default function PatientSignup() {
     };
 
     const instance = ApiConnection("/patient/timeSlots/Filter");
+    const instance2 = ApiConnection("/patient/info/");
 
     const signIn = (id, vaccine) => {
         const url = "/patient/timeSlots/Book/" + GetId() + "/" + id + "/" + vaccine;
@@ -42,7 +48,7 @@ export default function PatientSignup() {
             handleFilter()
         })
             .finally(() => {
-                setLoading(false)
+                setLoading2(false)
             });
     }
 
@@ -64,7 +70,7 @@ export default function PatientSignup() {
             configureTableData(r.data)
         })
             .finally(() => {
-                setLoading(false)
+                setLoading2(false)
             });
         handleClose()
     }
@@ -76,11 +82,18 @@ export default function PatientSignup() {
         setTableData(data);
     }
 
-    const [patient, setPatient] = useState({
-        firstName: "Andrew",
-        lastName: "Bagpipe",
+    useEffect(() => {
+        instance2.get(
+            "/patient/info/" + GetId()
+        ).then(r => {
+            setPatientData(r.data)
+        })
+            .finally(() => {
+                setLoading(false)
+            });
+    }, [])
 
-    })
+    const patient = new Patient(patientData);
 
     const tableColumns = [
         {Header: "Nazwa centrum", accessor: "vaccinationCenterName", width: "50%"},
@@ -94,10 +107,23 @@ export default function PatientSignup() {
         <DashboardLayout>
             <DashboardNavbar/>
             <MDBox mb={10}/>
-            <Header name={patient.firstName + " " + patient.lastName} position={"Pacjent"}>
-                <MDBox mt={5} mb={3}>
-                    <DataTable table={{columns: tableColumns, rows: tableData}}/>
-                </MDBox>
+            {
+                loading?
+                    <Grid>
+                        <Loader /> 
+                    </Grid> 
+                    :
+                <Header name={patient.getFirstName + " " + patient.getLastName} position={"Pacjent"}>
+                {
+                    loading2?
+                    <Grid>
+                        <Loader /> 
+                    </Grid> 
+                    :
+                    <MDBox mt={5} mb={3}>
+                        <DataTable table={{columns: tableColumns, rows: tableData}}/>
+                    </MDBox>
+                }
                 <Dialog open={open} onClose={handleClose}>
                     <DialogTitle>Filtruj</DialogTitle>
                     <DialogContent>
@@ -171,6 +197,7 @@ export default function PatientSignup() {
                     </Grid>
                 </MDBox>
             </Header>
+            }
             <Footer/>
         </DashboardLayout>
     )

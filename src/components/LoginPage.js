@@ -22,6 +22,8 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import ApiConnection from "../logic/api/ApiConnection";
 import useLogin from "../logic/useLogin";
 
+import Loader from "react-loader";
+
 function LogInComponent(props) {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
@@ -51,10 +53,10 @@ function LogInComponent(props) {
     }
 
     return (
-        <BasicLayout image={bgImage}>
+        <BasicLayout>
             {
                 sendingData ?
-                    <Card> Loading </Card> :
+                    <Loader /> :
                     <Card>
                         <MDBox
                             variant="gradient"
@@ -68,7 +70,7 @@ function LogInComponent(props) {
                             textAlign="center"
                         >
                             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                                Sign in
+                                Logowanie
                             </MDTypography>
                         </MDBox>
                         <MDBox pt={4} pb={3} px={3}>
@@ -78,7 +80,7 @@ function LogInComponent(props) {
                                              fullWidth/>
                                 </MDBox>
                                 <MDBox mb={2}>
-                                    <MDInput type="password" label="Password"
+                                    <MDInput type="password" label="Hasło"
                                              onChange={e => setPassword(e.target.value)} fullWidth/>
                                 </MDBox>
                                 <MDBox mt={4} mb={1}>

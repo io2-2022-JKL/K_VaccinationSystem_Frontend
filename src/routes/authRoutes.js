@@ -1,6 +1,7 @@
 // @mui icons
-import LogInComponent from "./components/LoginPage";
-import RegisterComponent from "./components/RegisterComponent";
+import LogInComponent from "../components/LoginPage";
+import RegisterComponent from "../components/RegisterComponent";
+import Home from "components/Home";
 
 const routes = [
     {
@@ -15,7 +16,6 @@ const routes = [
         route: "/register",
         component: <RegisterComponent />,
     },
-
 ];
 
 export default routes;
