@@ -16,6 +16,7 @@ import {Typography} from "@mui/material";
 import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
+import { AdminPatientInfoModal } from './AdminPatientInfoModal';
 
 export default function AdminPatientList() {
 
@@ -29,6 +30,9 @@ export default function AdminPatientList() {
         instance.get(
             "/admin/patients"
         ).then(r => {
+            for (let i = 0; i < r.data.length; i++) {
+                r.data[i].detailsButton = <AdminPatientInfoModal data={r.data[i]}/>
+            }
             setTableData(r.data)
         })
             .finally(() => {
@@ -39,8 +43,8 @@ export default function AdminPatientList() {
     const tableColumns = [
         {Header: "Imię", accessor: "firstName", width: "25%"},
         {Header: "Nazwisko", accessor: "lastName", width: "25%"},
-        {Header: "Pesel", accessor: "PESEL", width: "25%"},
-        {Header: "Status", accessor: "status", width: "25%"},
+        {Header: "Pesel", accessor: "pesel", width: "25%"},
+        {Header: "Info", accessor: "detailsButton", width: "25%"},
     ]
     
     return (
