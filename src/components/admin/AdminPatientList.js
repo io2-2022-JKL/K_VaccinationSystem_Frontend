@@ -25,12 +25,18 @@ export default function AdminPatientList() {
     const [tableData, setTableData] = useState([]);
 
     const instance = ApiConnection("/admin/patients/");
+    const deleteInstance =ApiConnection("/admin/deletePatient/")
 
     useEffect(() => {
+        updateData()
+    }, [])
+
+    const updateData = () => {
         instance.get(
             "/admin/patients"
         ).then(r => {
             for (let i = 0; i < r.data.length; i++) {
+                r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].patientId)} color={"error"}>Usuń</Button>
                 r.data[i].detailsButton = <AdminPatientInfoModal data={r.data[i]}/>
             }
             setTableData(r.data)
@@ -38,20 +44,35 @@ export default function AdminPatientList() {
             .finally(() => {
                 setLoading(false)
             });
-    }, [])
+    }
+
+
+    const handleCancellation = (id) => {
+        const url = "/admin/deletePatient/" + id
+
+        deleteInstance.delete(
+            url
+        ).then(r => {
+            updateData()
+        })
+            .finally(() => {
+                setLoading(false)
+            });
+    }
 
     const tableColumns = [
         {Header: "Imię", accessor: "firstName", width: "25%"},
         {Header: "Nazwisko", accessor: "lastName", width: "25%"},
         {Header: "Pesel", accessor: "pesel", width: "25%"},
-        {Header: "Info", accessor: "detailsButton", width: "25%"},
+        {Header: "Info", accessor: "detailsButton", width: "15%"},
+        {Header: "Usuń", accessor: "deleteButton", width: "10%"},
     ]
     
     return (
         <DashboardLayout>
             <DashboardNavbar/>
             <MDBox mb={10}/>
-            <Header position={"Pacjent"}>
+            <Header name={"Administrator"}>
             {
                 loading?
                     <Grid>
