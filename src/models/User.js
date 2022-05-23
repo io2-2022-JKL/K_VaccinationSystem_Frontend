@@ -82,6 +82,10 @@ export default class User {
         this._id 
         ? result = [...result, { patientId: this._id }] 
         : result = [...result, { patientId: NA }];
+
+        this._id 
+        ? result = [...result, { id: this._id }] 
+        : result = [...result, { id: NA }];
         
         return result;
     }
