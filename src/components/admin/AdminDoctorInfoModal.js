@@ -33,8 +33,7 @@ export function AdminDoctorInfoModal(props) {
                     <div>PESEL: {props.data.pesel}</div>
                     <div>Mail: {props.data.mail}</div>
                     <div>Nr telefonu: {props.data.phoneNumber}</div>
-                    <div>Centrum szczepień: {props.data.name},{props.data.city},{props.data.street}</div>
-                    <div>Data urodzenia: {props.data.dateOfBirth}</div>
+                    <div>Centrum szczepień: {props.data.name}, {props.data.city}, {props.data.street}</div>
                 </Typography>
             </Box>
         </Modal>
