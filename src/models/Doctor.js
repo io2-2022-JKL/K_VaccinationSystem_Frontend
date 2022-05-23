@@ -11,6 +11,8 @@ export default class Doctor extends User
         super(doctor);
         this._doctorId = doctor.id ? doctor.id : doctor.doctorId;
         this._vaccinationCenter = new VaccinationCenter(doctor);
+        if (doctor.doctorFirstName) this._firstName = doctor.doctorFirstName;
+        if (doctor.doctorLastName) this._lastName = doctor.doctorLastName;
     }
 
     get getId() { return this._id; }
