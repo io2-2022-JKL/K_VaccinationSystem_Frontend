@@ -115,7 +115,7 @@ export default function App() {
 
     const mainRoute = () =>
     {
-        if (isLoggedIn("/admin") !== null) return "/admin";
+        if (isLoggedIn("/admin") !== null) return "/admin/doctorList";
         if (isLoggedIn("/doctor") !== null) return "/doctor";
         if (isLoggedIn("/patient") !== null) return "/patient";
         return "/login";
@@ -143,7 +143,7 @@ export default function App() {
                 {isLoggedIn("/patient") !== null ? getRoutes(routes) : []}
                 {!isAnyoneLogged() ? getRoutes(authRoutes) : []}
                 {getRoutes(homeRoutes)}
-                <Route path="*" element={<Navigate to={mainRoute()} />} />
+                {<Route path="*" element={<Navigate to={mainRoute()} />} />}
             </Routes>
         </ThemeProvider>
     );

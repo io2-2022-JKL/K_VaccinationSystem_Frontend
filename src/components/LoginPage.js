@@ -44,7 +44,8 @@ function LogInComponent(props) {
             if (r.status !== 200) {
                 setFail(true);
             } else {
-                LogIn(r.data.jwt, r.data.userId, r.data.userType);
+                LogIn(r.headers, r.data.userId, r.data.userType);
+                console.log(r.headers)
                 navigate("/patient")
             }
         }).finally(() => {
