@@ -72,7 +72,7 @@ const typography = {
   },
 
   h2: {
-    fontSize: pxToRem(36),
+    fontSize: pxToRem(20),
     lineHeight: 1.3,
     ...baseHeadingProperties,
   },
