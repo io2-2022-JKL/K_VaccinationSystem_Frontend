@@ -59,7 +59,7 @@ export default function App() {
     const [onMouseEnter, setOnMouseEnter] = useState(false);
     const [rtlCache, setRtlCache] = useState(null);
     const { pathname } = useLocation();
-    const {isLoggedIn, isAnyoneLogged} = useLogin();
+    const {isLoggedIn} = useLogin();
 
 
     // Open sidenav when mouse enter on mini sidenav
@@ -138,10 +138,10 @@ export default function App() {
             )}
             {layout === "vr" && <Configurator />}
             <Routes>
-                {isLoggedIn("/admin") !== null ? getRoutes(adminRoutes) : []}
-                {isLoggedIn("/doctor") !== null ? getRoutes(doctorRoutes) : []}
-                {isLoggedIn("/patient") !== null ? getRoutes(routes) : []}
-                {!isAnyoneLogged() ? getRoutes(authRoutes) : []}
+                {isLoggedIn("/admin") ? getRoutes(adminRoutes) : []}
+                {isLoggedIn("/doctor") ? getRoutes(doctorRoutes) : []}
+                {isLoggedIn("/patient") ? getRoutes(routes) : []}
+                {getRoutes(authRoutes)}
                 {getRoutes(homeRoutes)}
                 {<Route path="*" element={<Navigate to={mainRoute()} />} />}
             </Routes>

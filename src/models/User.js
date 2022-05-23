@@ -6,16 +6,18 @@ export default class User {
     _dateOfBirth;
     _mail;
     _phoneNumber;
+    _active
   
     constructor(user)
     {
-        this._id = user.id;
-        this._pesel = user.pesel;
+        this._id = user.id ? user.id : user.patientAccountId;
+        this._pesel = user.PESEL;
         this._firstName = user.firstName;
         this._lastName = user.lastName;
         this._dateOfBirth = user.dateOfBirth;
         this._mail = user.mail;
-        this._phoneNumber = user.phoneNumber; 
+        this._phoneNumber = user.phoneNumber;
+        this._active = user.active;
     }
 
     get getId() { return this._id; }
@@ -41,17 +43,46 @@ export default class User {
 
     get getPhoneNumber() { return this._phoneNumber; }
     set setPhoneNumber(phoneNumber) { this._phoneNumber = phoneNumber; }
-}
 
-function createUser(id,pesel,firstName,lastName,dateOfBirth,mail,phoneNumber)
-{
-    var user = new Object();
-    user.id = id;
-    user.pesel = pesel;
-    user.firstName = firstName;
-    user.lastName = lastName;
-    user.dateOfBirth = dateOfBirth;
-    user.mail = mail;
-    user.phoneNumber = phoneNumber;
-    return new User(user);
+    get getActive() { return this._active; }
+    set setActive(active) { this._active = active; }
+
+    toTableData() {
+        const NA = "NA";
+        let result = [];
+
+        this._firstName 
+        ? result = [...result, { patientFirstName: this._firstName }] 
+        : result = [...result, { patientFirstName: NA }];
+
+        this._lastName 
+        ? result = [...result, { patientLastName: this._lastName }] 
+        : result = [...result, { patientLastName: NA }];
+
+        this._pesel 
+        ? result = [...result, { pesel: this._pesel }] 
+        : result = [...result, { pesel: NA }];
+
+        this._dateOfBirth 
+        ? result = [...result, { dateOfBirth: this._dateOfBirth }] 
+        : result = [...result, { dateOfBirth: NA }];
+        
+        this._mail 
+        ? result = [...result, { mail: this._mail }] 
+        : result = [...result, { mail: NA }];
+
+        this._phoneNumber 
+        ? result = [...result, { phoneNumber: this._phoneNumber }] 
+        : result = [...result, { phoneNumber: NA }];
+
+        this._active 
+        ? result = [...result, { userActive: this._active }] 
+        : result = [...result, { userActive: NA }];
+
+        this._id 
+        ? result = [...result, { patientId: this._id }] 
+        : result = [...result, { patientId: NA }];
+        
+        return result;
+    }
 }
