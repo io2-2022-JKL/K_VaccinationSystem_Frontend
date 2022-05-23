@@ -1,6 +1,5 @@
 body {
     margin: 0;
-    background: antiquewhite;
     background-size: cover;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -15,9 +14,6 @@ body::before {
     position: fixed;
     top: 0;
     left: 0;
-    background: antiquewhite;
-    /* IE Fallback */
-    background: antiquewhite;
     width: 100%;
     height: 100%;
 }
@@ -48,7 +44,7 @@ h2{
     margin: 0 0 20px;
     line-height: 1;
     color: #000000;
-    font-size: 32px;
+    font-size: 12px;
     font-weight: 600;
 }
 
@@ -174,4 +170,13 @@ tr:last-of-type td:last-of-type {
     background-color: cornflowerblue;
     border-radius: 0px;
     padding: 0px 0px;
+}
+
+.modal {
+    position: 'absolute';
+    top: '50%';
+    left: '50%';
+    transform: 'translate(-50%, -50%)';
+    width: 600;
+    border: '2px solid #000';
 }

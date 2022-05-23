@@ -1,6 +1,7 @@
 import Icon from "@mui/material/Icon";
 import AdminDoctorList from "components/admin/AdminDoctorList";
 import AdminPatientList from "components/admin/AdminPatientList";
+import AdminVaccinesList from "components/admin/AdminVaccines";
 
 const adminRoutes = [
     {
@@ -18,6 +19,14 @@ const adminRoutes = [
         icon: <Icon fontSize="small">receipt_long</Icon>,
         route: "/admin/patientlist",
         component: <AdminPatientList />,
+    },
+    {
+        type: "collapse",
+        name: "Szczepionki",
+        key: "vaccines",
+        icon: <Icon fontSize="small">receipt_long</Icon>,
+        route: "/admin/vaccines",
+        component: <AdminVaccinesList />,
     },
 ];
 
