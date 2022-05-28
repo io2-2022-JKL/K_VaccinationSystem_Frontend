@@ -7,13 +7,9 @@ on:
   push:
     branches:
     - main
-    - develop
-    - feature/basic-styles
   pull_request:
     branches:
     - main
-    - develop
-    - feature/basic-styles
 
 jobs:
   build:
