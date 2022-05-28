@@ -29,7 +29,6 @@ export default function AdminVaccinationCenterList() {
                 r.data[i].detailsButton = <AdminVaccinationCenterInfoModal data={r.data[i]}/>
             }
             setTableData(r.data)
-            console.log(r.data)
         }).finally(() => {
             setLoading(false)
         });

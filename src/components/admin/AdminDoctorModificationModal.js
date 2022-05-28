@@ -12,10 +12,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import ApiConnection from "../../logic/api/ApiConnection";
-import TextField from '@mui/material/TextField';
 
 
-export function AdminAddDoctorModal(props) {
+export function AdminDoctorModifyModal(props) {
 
     const [open, setOpen] = useState(false);
     const [center, setCenter] = useState('');
@@ -38,7 +37,7 @@ export function AdminAddDoctorModal(props) {
     {
         console.log([patient, center])
         instance.post(
-            "/admin/doctors/addDoctor", {
+            "/admin/doctors/modifyDoctor", {
                 "patientId": patient,
                 "vaccinationCenterId": center
             }).then(function (response) {
@@ -64,26 +63,13 @@ export function AdminAddDoctorModal(props) {
                     Dodaj doktora {props.data.firstName} {props.data.lastName}
                 </Typography>
                 <Box sx={{ minWidth: 120, minHeight: 50 }}>
-                <FormControl fullWidth variant="standard" size="big">
-                        <InputLabel id="select-center-label">Centrum Szczepień</InputLabel>
-                        <Select
-                            labelId="select-center-label"
-                            id="select-center"
-                            value={center}
-                            defaultValue={"none"}
-                            label="Centrum"
-                            onChange={handleChange}
-                            >
-                        {props.centers.map((record) => (
-                            <option key={record.name} value={record.id}>
-                            {record.name}, , {record.city}
-                            </option>
-                            ))}
-                        </Select>
-                    </FormControl>
+                    <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                    <TextField id="filled-basic" label="Filled" variant="filled" />
+                    <TextField id="standard-basic" label="Standard" variant="standard" />
+                
                 </Box>
                 <Button onClick={() => addDoctor(props.data.patientId, center)}>
-                        Modyfikuj
+                        Doktoryzuj
                 </Button>
             </Box>
         </Modal>
