@@ -143,9 +143,13 @@ function DashboardNavbar({ absolute, light, isMini }) {
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>
             <MDBox color={light ? "white" : "inherit"}>
-                <IconButton sx={navbarIconButton} size="small" disableRipple>
-                  <Icon sx={iconsStyle} onClick={handleLogout}>account_circle</Icon>
-                </IconButton>
+              <IconButton 
+                sx={navbarIconButton} 
+                size="small" 
+                disableRipple
+                onClick={handleLogout}>
+                <Icon sx={iconsStyle}>account_circle</Icon>
+              </IconButton>
               <IconButton
                 size="small"
                 disableRipple
