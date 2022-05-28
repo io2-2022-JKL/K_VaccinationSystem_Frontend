@@ -83,7 +83,7 @@ export function AdminAddDoctorModal(props) {
                     </FormControl>
                 </Box>
                 <Button onClick={() => addDoctor(props.data.patientId, center)}>
-                        Modyfikuj
+                        Doktoryzuj
                 </Button>
             </Box>
         </Modal>

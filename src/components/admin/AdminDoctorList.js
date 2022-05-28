@@ -17,6 +17,7 @@ import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
 import { AdminDoctorInfoModal } from './AdminDoctorInfoModal';
+import { AdminDoctorModificationModal } from './AdminDoctorModificationModal'
 
 
 export default function AdminDoctorList() {
@@ -35,6 +36,7 @@ export default function AdminDoctorList() {
             for (let i = 0; i < r.data.length; i++) {
                 r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].id)} color={"error"}>Usuń</Button>
                 r.data[i].detailsButton = <AdminDoctorInfoModal data={r.data[i]}/>
+                r.data[i].editButton = <AdminDoctorModificationModal data={r.data[i]}/>
             }
             setTableData(r.data)
             console.log(r.data)
