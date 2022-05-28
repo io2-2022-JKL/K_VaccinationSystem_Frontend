@@ -45,7 +45,7 @@ function LogInComponent(props) {
                 setFail(true);
             } else {
                 LogIn(r.headers.authorization, r.data.userId, r.data.userType.toLowerCase());
-                navigate("/patient")
+                navigate("/" + r.data.userType.toLowerCase())
             }
         }).finally(() => {
             setSendingData(false);
