@@ -44,7 +44,7 @@ function LogInComponent(props) {
             if (r.status !== 200) {
                 setFail(true);
             } else {
-                LogIn(r.data, r.data.userId, r.data.userType);
+                LogIn(r.headers.authorization, r.data.userId, r.data.userType.toLowerCase());
                 navigate("/patient")
             }
         }).finally(() => {
