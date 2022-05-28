@@ -28,34 +28,33 @@ export default function AdminDoctorList() {
 
     const instance = ApiConnection("/admin/doctors");
     const deleteInstance =ApiConnection("/admin/doctors/deleteDoctor/")
+    const centerInstance = ApiConnection("/admin/vaccinationCenters")
 
-    const updateData = () => {
-        instance.get(
+    const updateData = async () => {
+        const  r = await instance.get(
             "/admin/doctors"
-        ).then(r => {
-            for (let i = 0; i < r.data.length; i++) {
-                r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].id)} color={"error"}>Usuń</Button>
-                r.data[i].detailsButton = <AdminDoctorInfoModal data={r.data[i]}/>
-                r.data[i].editButton = <AdminDoctorModificationModal data={r.data[i]}/>
-            }
-            setTableData(r.data)
-            console.log(r.data)
-        })
-            .finally(() => {
-                setLoading(false)
-            });
+        )
+        const c = await centerInstance.get(
+            "/admin/vaccinationCenters"
+        ) 
+        for (let i = 0; i < r.data.length; i++) {
+            r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].id)} color={"error"}>Usuń</Button>
+            r.data[i].detailsButton = <AdminDoctorInfoModal data={r.data[i]}/>
+            r.data[i].editButton = <AdminDoctorModificationModal data={r.data[i]} centers={c.data}/>
+        }
+        setTableData(r.data)
+        setLoading(false)
     }
 
     const handleCancellation = (id) => {
         const url = "/admin/doctors/deleteDoctor/" + id
         deleteInstance.delete(
             url
-        ).then(r => {
+        ).then(
             updateData()
-        })
-            .finally(() => {
-                setLoading(false)
-            });
+        ).finally(() => {
+            setLoading(false)
+        });
     }
 
     useEffect(() => {
@@ -66,7 +65,7 @@ export default function AdminDoctorList() {
         {Header: "Imię", accessor: "firstName", width: "15%"},
         {Header: "Nazwisko", accessor: "lastName", width: "15%"},
         {Header: "Pesel", accessor: "pesel", width: "15%"},
-        {Header: "Status", accessor: "active", width: "20%"},
+        {Header: "Edycja", accessor: "editButton", width: "20%"},
         {Header: "Info", accessor: "detailsButton", width: "15%"},
         {Header: "Usuń", accessor: "deleteButton", width: "20%"},
     ]

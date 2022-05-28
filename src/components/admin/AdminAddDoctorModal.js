@@ -42,10 +42,8 @@ export function AdminAddDoctorModal(props) {
                 "patientId": patient,
                 "vaccinationCenterId": center
             }).then(function (response) {
-                console.log(response);
               })
               .catch(function (error) {
-                console.log(error);
               })
 
     }
@@ -65,22 +63,22 @@ export function AdminAddDoctorModal(props) {
                 </Typography>
                 <Box sx={{ minWidth: 120, minHeight: 50 }}>
                 <FormControl fullWidth variant="standard" size="big">
-                        <InputLabel id="select-center-label">Centrum Szczepień</InputLabel>
-                        <Select
-                            labelId="select-center-label"
-                            id="select-center"
-                            value={center}
-                            defaultValue={"none"}
-                            label="Centrum"
-                            onChange={handleChange}
-                            >
-                        {props.centers.map((record) => (
-                            <option key={record.name} value={record.id}>
-                            {record.name}, , {record.city}
-                            </option>
-                            ))}
-                        </Select>
-                    </FormControl>
+                    <InputLabel id="select-center-label">Centrum Szczepień</InputLabel>
+                    <Select
+                        labelId="select-center-label"
+                        id="select-center"
+                        value={center}
+                        defaultValue={"none"}
+                        label="Centrum"
+                        onChange={handleChange}
+                        >
+                    {props.centers.map((record) => (
+                        <MenuItem key={record.name} value={record.id}>
+                        {record.name}, {record.street}, {record.city}
+                        </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
                 </Box>
                 <Button onClick={() => addDoctor(props.data.patientId, center)}>
                         Doktoryzuj

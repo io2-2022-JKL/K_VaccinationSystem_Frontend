@@ -20,22 +20,28 @@ export function AdminDoctorModificationModal(props) {
     const [open, setOpen] = useState(false);
     const [center, setCenter] = useState('');
     const [data, setData] = useState([]);
+
     let firstName = props.data.firstName;
     let lastName = props.data.lastName;
-    let PESEL = props.data.pesel;
+    let pesel = props.data.pesel;
     let mail = props.data.mail;
     let phoneNumber = props.data.phoneNumber;
+    let id = props.data.id;
+    let dateOfBirth = props.data.dateOfBirth;
+    let active = props.data.active;
+    let vaccinationCenterID = props.data.vaccinationCenterID;
 
     const instance = ApiConnection("/admin/doctors/modifyDoctor");
 
     const handleFirstName = (event) => firstName = event.target.value;
     const handleLastName = (event) => lastName = event.target.value;
-    const handlePesel = (event) => PESEL = event.target.value;
+    const handlePesel = (event) => pesel = event.target.value;
     const handleMail = (event) => mail = event.target.value;
     const handlePhoneNumber = (event) => phoneNumber = event.target.value;
+    const handleCenter = (event) => vaccinationCenterID = event.target.value;
+    const handleDateOfBirth = (event) => dateOfBirth = event.target.value + 'T00:00:00.000Z';
 
     const handleClose = () => {
-        console.log(props.centers)
         setOpen(false);
     }
 
@@ -45,19 +51,19 @@ export function AdminDoctorModificationModal(props) {
         setCenter(event.target.value);
       };
 
-    const editDoctor = () =>
+    const editDoctor = async (id, pesel, firstName, lastName, mail, dateOfBirth, phoneNumber, active, vaccinationCenterID) =>
     {
-        instance.post(
+        await instance.post(
             "/admin/doctors/editDoctor", {
-                "doctorId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "pesel": "string",
-                "firstName": "string",
-                "lastName": "string",
-                "mail": "string",
-                "dateOfBirth": "2022-05-28T18:12:20.092Z",
-                "phoneNumber": "string",
-                "active": true,
-                "vaccinationCenterID": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+                "doctorId": id,
+                "pesel": pesel,
+                "firstName": firstName,
+                "lastName": lastName,
+                "mail": mail,
+                "dateOfBirth": dateOfBirth,
+                "phoneNumber": phoneNumber,
+                "active": active,
+                "vaccinationCenterID": vaccinationCenterID
             }).then(function (response) {
                 console.log(response);
               })
@@ -65,11 +71,14 @@ export function AdminDoctorModificationModal(props) {
                 console.log(error);
               })
 
+        console.log(vaccinationCenterID)
+        handleClose()
+        window.location.reload(false);
     }
 
     return (
         <>
-        <Button onClick={() => setOpen(true)}>Doktoryzuj</Button>
+        <Button onClick={() => setOpen(true)}>Modyfikuj</Button>
         <Modal
             open={open}
             onClose={handleClose}
@@ -78,16 +87,81 @@ export function AdminDoctorModificationModal(props) {
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h2" component="h2">
-                    Dodaj doktora {props.data.firstName} {props.data.lastName}
+                    Zmodyfikuj dane doktora {props.data.firstName} {props.data.lastName}
                 </Typography>
-                <Box sx={{ minWidth: 120, minHeight: 50 }}>
-                    <TextField id="first_name" label="Imię" variant="standard" defaultValue={firstName} onChange={handleFirstName}/>
-                    <TextField id="last_name" label="Nazwisko" variant="standard" defaultValue={lastName} onChange={handleLastName}/>
-                    <TextField id="pesel" label="PESEL" variant="standard" defaultValue={PESEL} onChange={handlePesel}/>
-                    <TextField id="mail" label="Mail" variant="standard" defaultValue={mail} onChange={handleMail}/>
-                    <TextField id="phone_number" label="Nr Telefonu" variant="standard" defaultValue={phoneNumber} onChange={handlePhoneNumber}/>
+                <Box fullWidth>
+                    <Box fullWidth sx={{pl:4, pr:4, pt:2, pd:2}}>
+                        <TextField fullWidth 
+                            id="first_name" 
+                            label="Imię" 
+                            variant="standard" 
+                            defaultValue={firstName} 
+                            onChange={handleFirstName}/>
+                    </Box>
+                    <Box fullWidth sx={{pl:4, pr:4, pt:2, pd:2}}>
+                        <TextField fullWidth 
+                            id="last_name" 
+                            label="Nazwisko" 
+                            variant="standard"
+                            defaultValue={lastName} 
+                            onChange={handleLastName}/>
+                    </Box>
+                    <Box fullWidth sx={{pl:4, pr:4, pt:2, pd:2}}>
+                        <TextField fullWidth 
+                            id="pesel" 
+                            label="PESEL" 
+                            variant="standard" 
+                            defaultValue={pesel} 
+                            onChange={handlePesel}/>
+                    </Box>
+                    <Box fullWidth sx={{pl:4, pr:4, pt:2, pd:2}}>
+                        <TextField fullWidth 
+                            id="mail" 
+                            label="Mail" 
+                            variant="standard" 
+                            defaultValue={mail} 
+                            onChange={handleMail}/>
+                    </Box>
+                    <Box fullWidth sx={{pl:4, pr:4, pt:2, pd:2}}>
+                        <TextField fullWidth 
+                            id="phone_number" 
+                            label="Nr Telefonu" 
+                            variant="standard" 
+                            defaultValue={phoneNumber} 
+                            onChange={handlePhoneNumber}/>
+                    </Box>
+                    <Box fullWidth sx={{pl:4, pr:4, pt:2, pd:2}}>
+                        <TextField
+                        fullWidth
+                            label="Centrum szczepień"
+                            id="select-center"
+                            defaultValue={vaccinationCenterID}
+                            onChange={handleCenter}
+                            select
+                            variant="standard"
+                            >
+                            {props.centers.map((record) => (
+                                <MenuItem key={record.id} value={record.id}>{record.name}, {record.street}, {record.city}
+                                </MenuItem>
+                                 ))}
+                        </TextField>
+                    </Box>
+                    <Box fullWidth sx={{pl:4, pr:4, pt:2, pd:2}}>
+                        <TextField
+                            id="datefrom"
+                            label="Data od"
+                            type="date"
+                            variant="standard"
+                            defaultValue={dateOfBirth.slice(0,10)}
+                            onChange={handleDateOfBirth}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            fullWidth
+                            />
+                    </Box>
                 </Box>
-                <Button onClick={() => editDoctor()}>
+                <Button onClick={() => editDoctor(id, pesel, firstName, lastName, mail, dateOfBirth, phoneNumber, active, vaccinationCenterID)}>
                         Modyfikuj
                 </Button>
             </Box>

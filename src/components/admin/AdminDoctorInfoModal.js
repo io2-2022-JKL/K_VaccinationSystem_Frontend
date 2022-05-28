@@ -28,12 +28,13 @@ export function AdminDoctorInfoModal(props) {
                 <Typography id="modal-modal-title" variant="h2" component="h2">
                     Informacje o doktorze
                 </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }} variant="subtitle2" component="subtitle2">
+                <Typography id="modal-modal-description" sx={{ mt: 2 }} variant="subtitle2">
                     <div>Imię: {props.data.firstName} {props.data.lastName}</div>
                     <div>PESEL: {props.data.pesel}</div>
                     <div>Mail: {props.data.mail}</div>
                     <div>Nr telefonu: {props.data.phoneNumber}</div>
                     <div>Centrum szczepień: {props.data.name}, {props.data.city}, {props.data.street}</div>
+                    <div>Data Urodzenia: {props.data.dateOfBirth.slice(0,10)}</div>
                 </Typography>
             </Box>
         </Modal>

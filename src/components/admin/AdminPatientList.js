@@ -32,7 +32,6 @@ export default function AdminPatientList() {
 
     useEffect(() => {
         getAllData()
-        
     }, [])
 
     const getAllData = async () => {
