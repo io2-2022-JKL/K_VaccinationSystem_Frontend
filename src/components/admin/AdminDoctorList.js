@@ -18,6 +18,7 @@ import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
 import { AdminDoctorInfoModal } from './AdminDoctorInfoModal';
 
+
 export default function AdminDoctorList() {
 
     const {GetId} = useLogin();
@@ -25,27 +26,47 @@ export default function AdminDoctorList() {
     const [tableData, setTableData] = useState([]);
 
     const instance = ApiConnection("/admin/doctors");
+    const deleteInstance =ApiConnection("/admin/doctors/deleteDoctor/")
 
-    useEffect(() => {
+    const updateData = () => {
         instance.get(
             "/admin/doctors"
         ).then(r => {
             for (let i = 0; i < r.data.length; i++) {
+                r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].id)} color={"error"}>Usuń</Button>
                 r.data[i].detailsButton = <AdminDoctorInfoModal data={r.data[i]}/>
             }
             setTableData(r.data)
+            console.log(r.data)
         })
             .finally(() => {
                 setLoading(false)
             });
+    }
+
+    const handleCancellation = (id) => {
+        const url = "/admin/doctors/deleteDoctor/" + id
+        deleteInstance.delete(
+            url
+        ).then(r => {
+            updateData()
+        })
+            .finally(() => {
+                setLoading(false)
+            });
+    }
+
+    useEffect(() => {
+        updateData()
     }, [])
 
     const tableColumns = [
         {Header: "Imię", accessor: "firstName", width: "15%"},
         {Header: "Nazwisko", accessor: "lastName", width: "15%"},
         {Header: "Pesel", accessor: "pesel", width: "15%"},
-        {Header: "Status", accessor: "status", width: "40%"},
+        {Header: "Status", accessor: "active", width: "20%"},
         {Header: "Info", accessor: "detailsButton", width: "15%"},
+        {Header: "Usuń", accessor: "deleteButton", width: "20%"},
     ]
     
     return (

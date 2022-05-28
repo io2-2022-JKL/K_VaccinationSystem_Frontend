@@ -29,13 +29,13 @@ export function AdminVaccinationCenterInfoModal(props) {
                     Godziny otwarcia centrum szczepień
                 </Typography>
                 <Typography id="modal-modal-description" sx={{ mt: 2 }} variant="subtitle2" component="subtitle2">
-                    <div>Poniedziałek: {props.data[0].from} - {props.data[0].to}</div>
+                    {/* <div>Poniedziałek: {props.data[0].from} - {props.data[0].to}</div>
                     <div>Wtorek: {props.data[1].from} - {props.data[2].to}</div>
                     <div>Środa: {props.data[2].from} - {props.data[3].to}</div>
                     <div>Czwartek: {props.data[3].from} - {props.data[4].to}</div>
                     <div>Piątek: {props.data[4].from} - {props.data[5].to}</div>
                     <div>Sobota: {props.data[5].from} - {props.data[6].to}</div>
-                    <div>Niedziela: {props.data[6].from} - {props.data[7].to}</div>
+                    <div>Niedziela: {props.data[6].from} - {props.data[7].to}</div> */}
                 </Typography>
             </Box>
         </Modal>
