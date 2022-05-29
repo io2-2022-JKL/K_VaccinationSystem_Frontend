@@ -28,12 +28,11 @@ import MDBox from "components/MDBox";
 import { useMaterialUIController, setLayout } from "context";
 
 function PageLayout({ background, children }) {
-  const [ dispatch ] = useMaterialUIController();
+  const [, dispatch] = useMaterialUIController();
   const { pathname } = useLocation();
 
   useEffect(() => {
     setLayout(dispatch, "page");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   return (
