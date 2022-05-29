@@ -84,7 +84,7 @@ function LogInComponent(props) {
                                              onChange={e => setPassword(e.target.value)} fullWidth/>
                                 </MDBox>
                                 <MDBox mt={4} mb={1}>
-                                    <MDButton variant="gradient" color="info" onClick={SubmitLogIn} fullWidth>
+                                    <MDButton name="submit" variant="gradient" color="info" onClick={SubmitLogIn} fullWidth>
                                         Zaloguj się
                                     </MDButton>
                                 </MDBox>

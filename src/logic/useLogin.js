@@ -34,7 +34,11 @@ const useLogin = () => {
         for (let i = 0; i < LoginRules.length; i++)
         {
             if (APIPath.match(LoginRules[i].rule) && localStorage.getItem(LoginRules[i].token))
+            {
+                console.log(localStorage.getItem(LoginRules[i].token))
                 return localStorage.getItem(LoginRules[i].token);
+            }
+
         }
         return null;
     }
