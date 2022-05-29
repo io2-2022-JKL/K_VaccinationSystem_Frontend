@@ -39,7 +39,6 @@ export default function DoctorAvalibility() {
             r.data[i].deleteButton = <Button onClick={() => handleCancellation(GetId(), r.data[i].id)} color={"error"}>Usuń</Button>
         }
         setTableData(r.data)
-        console.log(r.data)
         setLoading(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }

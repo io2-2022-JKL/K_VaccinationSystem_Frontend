@@ -28,7 +28,7 @@ export default function DoctorAddTimeSlotsModal(props) {
     const {GetId} = useLogin();
     const [open, setOpen] = useState(false);
 
-    const instance = ApiConnection("/doctor/timeSlot/create");
+    const instance = ApiConnection("/doctor/timeSlots/create");
 
     const handleFrom = (event) => from = event.target.value;
     const handleTo = (event) => to = event.target.value;
@@ -49,7 +49,7 @@ export default function DoctorAddTimeSlotsModal(props) {
         let t = to.slice(8,10)+"-"+to.slice(5,7)+"-"+to.slice(0,4)+" "+to.slice(11,16)
         console.log(f)
         await instance.post(
-            "/doctor/timeSlot/create/" + GetId(), {
+            "/doctor/timeSlots/create/" + GetId(), {
                 "windowBegin": f,
                 "windowEnd": t,
                 "timeSlotDurationInMinutes": parseInt(minutes)
