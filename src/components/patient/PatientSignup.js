@@ -34,7 +34,6 @@ export default function PatientSignup() {
     };
 
     const instance = ApiConnection("/patient/timeSlots/Filter");
-    const instance2 = ApiConnection("/patient/info/");
 
     const signIn = (id, vaccine) => {
         const url = "/patient/timeSlots/Book/" + GetId() + "/" + id + "/" + vaccine;
@@ -49,9 +48,9 @@ export default function PatientSignup() {
     }
 
     const createURL = () => {
-        const url = "/patient/timeSlots/Filter?" + "city=" + cityFilter +
+        const url = "/patient/timeSlots/Filter?city=" + cityFilter +
             "&dateFrom=" + fromDate.substring(8, 10) + "-" + fromDate.substring(5, 7) + "-" + fromDate.substring(0, 4) +
-            " 00:00" + "&dateTo=" +
+            " 00:00&dateTo=" +
             toDate.substring(8, 10) + "-" + toDate.substring(5, 7) + "-" + toDate.substring(0, 4)
             + " 23:59&" +
             "virus=" + virusFilter;
@@ -80,14 +79,15 @@ export default function PatientSignup() {
     }
 
     useEffect(() => {
+        const instance2 = ApiConnection("/patient/info/");
         instance2.get(
             "/patient/info/" + GetId()
         ).then(r => {
             setPatientData(r.data)
-        })
-            .finally(() => {
-                setLoading(false)
-            });
+        }).finally(() => {
+            setLoading(false)
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const patient = new Patient(patientData);

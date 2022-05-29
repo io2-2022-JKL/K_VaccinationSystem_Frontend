@@ -9,7 +9,6 @@ import "../../styles/global.css"
 import ApiConnection from "../../logic/api/ApiConnection";
 import { TextField } from '@mui/material';
 import { Grid } from '@mui/material';
-import { FormControl } from '@mui/material';
 import { Select } from '@mui/material';
 import { MenuItem } from '@mui/material';
 
