@@ -21,10 +21,9 @@ export default function DoctorUnconfirmed() {
     const [tableData, setTableData] = useState([]);
     const [doctorData, setDoctorData] = useState([]);
 
-    const instance = ApiConnection("/patient/appointments/formerAppointments/");
-    const instance2 = ApiConnection("/patient/info/");
-
     useEffect(() => {
+        const instance = ApiConnection("/patient/appointments/formerAppointments/");
+        const instance2 = ApiConnection("/patient/info/");
         instance.get(
             "/patient/appointments/formerAppointments/" + GetId()
         ).then(r => {
@@ -41,6 +40,7 @@ export default function DoctorUnconfirmed() {
             .finally(() => {
                 setLoading(false)
             });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const doctor = new Patient(doctorData);

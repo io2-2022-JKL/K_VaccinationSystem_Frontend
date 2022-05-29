@@ -7,21 +7,17 @@ import Grid from "@mui/material/Grid";
 import Header from "../../layouts/profile/components/Header";
 import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
-import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
 import { AdminVaccinationCenterInfoModal } from "./AdminVaccinationCenterModals"
 
 export default function AdminVaccinationCenterList() {
 
-    const {GetId} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
-    const [patientData, setPatientData] = useState([]);
-
-    const instance = ApiConnection("/admin/vaccinationCenters/");
 
     useEffect(() => {
+        const instance = ApiConnection("/admin/vaccinationCenters/");
         instance.get(
             "/admin/vaccinationCenters"
         ).then(r => {

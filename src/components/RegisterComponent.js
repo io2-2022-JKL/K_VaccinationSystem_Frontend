@@ -3,7 +3,6 @@ import {Link, useNavigate} from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
-import Checkbox from "@mui/material/Checkbox";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -19,7 +18,6 @@ import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 import {TextField} from "@mui/material";
 import {useState} from "react";
 import ApiConnection from "../logic/api/ApiConnection";
-import useLogin from "../logic/useLogin";
 
 function RegisterComponent(props) {
   const [name, setName] = useState("");
@@ -29,16 +27,12 @@ function RegisterComponent(props) {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [sendingData, setSendingData] = useState(false);
-
 
   const conn = ApiConnection("/register");
-  const {LogIn} = useLogin();
 
   const navigate = useNavigate();
 
   const SubmitData = () => {
-    setSendingData(true);
     conn.post(
         "/register",
         {
@@ -54,7 +48,6 @@ function RegisterComponent(props) {
         navigate("/login")
       }
     }).finally(() => {
-      setSendingData(false);
     })
   }
   return (

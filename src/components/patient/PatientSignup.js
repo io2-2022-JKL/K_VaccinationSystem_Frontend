@@ -29,10 +29,6 @@ export default function PatientSignup() {
     const [virusFilter, setVirusFilter] = useState("Koronawirus");
     const [patientData, setPatientData] = useState([]);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
     const handleClose = () => {
         setOpen(false);
     };

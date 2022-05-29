@@ -6,12 +6,11 @@ import { useState } from 'react';
 import { Button } from "@mui/material";
 import { modalStyle } from "../../styles/modal.css";
 import "../../styles/global.css"
-import MenuItem from '@mui/material/MenuItem';
 import ApiConnection from "../../logic/api/ApiConnection";
 import { TextField } from '@mui/material';
 
 
-export function AdminDoctorModificationModal(props) {
+export default function AdminPatientEditModal(props) {
 
     const [open, setOpen] = useState(false);
 
@@ -20,19 +19,17 @@ export function AdminDoctorModificationModal(props) {
     let pesel = props.data.pesel;
     let mail = props.data.mail;
     let phoneNumber = props.data.phoneNumber;
-    let id = props.data.id;
+    let id = props.data.patientId;
     let dateOfBirth = props.data.dateOfBirth;
     let active = props.data.active;
-    let vaccinationCenterID = props.data.vaccinationCenterID;
 
-    const instance = ApiConnection("/admin/doctors/modifyDoctor");
+    const instance = ApiConnection("/admin/patients/editPatient");
 
     const handleFirstName = (event) => firstName = event.target.value;
     const handleLastName = (event) => lastName = event.target.value;
     const handlePesel = (event) => pesel = event.target.value;
     const handleMail = (event) => mail = event.target.value;
     const handlePhoneNumber = (event) => phoneNumber = event.target.value;
-    const handleCenter = (event) => vaccinationCenterID = event.target.value;
     const handleDateOfBirth = (event) => dateOfBirth = event.target.value + 'T00:00:00.000Z';
 
     const handleClose = () => {
@@ -44,8 +41,8 @@ export function AdminDoctorModificationModal(props) {
     const editDoctor = async (id, pesel, firstName, lastName, mail, dateOfBirth, phoneNumber, active, vaccinationCenterID) =>
     {
         await instance.post(
-            "/admin/doctors/editDoctor", {
-                "doctorId": id,
+            "/admin/patients/editPatient", {
+                "patientId": id,
                 "pesel": pesel,
                 "firstName": firstName,
                 "lastName": lastName,
@@ -53,15 +50,7 @@ export function AdminDoctorModificationModal(props) {
                 "dateOfBirth": dateOfBirth,
                 "phoneNumber": phoneNumber,
                 "active": active,
-                "vaccinationCenterID": vaccinationCenterID
-            }).then(function (response) {
-                console.log(response);
-              })
-              .catch(function (error) {
-                console.log(error);
-              })
-
-        console.log(vaccinationCenterID)
+            })
         handleClose()
         window.location.reload(false);
     }
@@ -122,22 +111,6 @@ export function AdminDoctorModificationModal(props) {
                     </Box>
                     <Box fullWidth sx={{pl:4, pr:4, pt:2, pd:2}}>
                         <TextField
-                        fullWidth
-                            label="Centrum szczepień"
-                            id="select-center"
-                            defaultValue={vaccinationCenterID}
-                            onChange={handleCenter}
-                            select
-                            variant="standard"
-                            >
-                            {props.centers.map((record) => (
-                                <MenuItem key={record.id} value={record.id}>{record.name}, {record.street}, {record.city}
-                                </MenuItem>
-                                 ))}
-                        </TextField>
-                    </Box>
-                    <Box fullWidth sx={{pl:4, pr:4, pt:2, pd:2}}>
-                        <TextField
                             id="datefrom"
                             label="Data od"
                             type="date"
@@ -151,7 +124,7 @@ export function AdminDoctorModificationModal(props) {
                             />
                     </Box>
                 </Box>
-                <Button onClick={() => editDoctor(id, pesel, firstName, lastName, mail, dateOfBirth, phoneNumber, active, vaccinationCenterID)}>
+                <Button onClick={() => editDoctor(id, pesel, firstName, lastName, mail, dateOfBirth, phoneNumber, active)}>
                         Modyfikuj
                 </Button>
             </Box>

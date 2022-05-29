@@ -1,9 +1,8 @@
 import { Modal } from "@mui/material";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
-import {useEffect, useState} from 'react';
+import { useState } from 'react';
 import { Button } from "@mui/material";
-import theme from "assets/theme";
 import {modalStyle} from "../../styles/modal.css";
 import "../../styles/global.css"
 
@@ -33,6 +32,7 @@ export function AdminPatientInfoModal(props) {
                     <div>PESEL: {props.data.pesel}</div>
                     <div>Mail: {props.data.mail}</div>
                     <div>Nr telefonu: {props.data.phoneNumber}</div>
+                    <div>Data urodzenia: {props.data.dateOfBirth.slice(0,10)}</div>
                 </Typography>
             </Box>
         </Modal>

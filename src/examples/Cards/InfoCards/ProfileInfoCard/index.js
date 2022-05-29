@@ -30,14 +30,10 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
 // Material Dashboard 2 React base styles
-import colors from "assets/theme/base/colors";
-import typography from "assets/theme/base/typography";
 
 function ProfileInfoCard({ title, description, info, action, shadow }) {
   const labels = [];
   const values = [];
-  const { socialMediaColors } = colors;
-  const { size } = typography;
 
   // Convert this form `objectKey` of the object key in to this `object key`
   Object.keys(info).forEach((el) => {

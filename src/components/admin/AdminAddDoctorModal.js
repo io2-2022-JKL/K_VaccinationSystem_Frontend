@@ -2,24 +2,21 @@ import * as React from 'react';
 import { Modal } from "@mui/material";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
-import {useEffect, useState} from 'react';
+import { useState } from 'react';
 import { Button } from "@mui/material";
-import theme from "assets/theme";
 import {modalStyle} from "../../styles/modal.css";
 import "../../styles/global.css"
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import ApiConnection from "../../logic/api/ApiConnection";
-import TextField from '@mui/material/TextField';
 
 
 export function AdminAddDoctorModal(props) {
 
     const [open, setOpen] = useState(false);
     const [center, setCenter] = useState('');
-    const [data, setData] = useState([]);
 
     const instance = ApiConnection("/admin/doctors/addDoctor");
 
