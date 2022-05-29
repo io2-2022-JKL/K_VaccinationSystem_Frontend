@@ -20,18 +20,14 @@ export default function PatientDashboard() {
     const [tableData, setTableData] = useState([]);
     const [patientData, setPatientData] = useState([]);
 
-    const instance = ApiConnection("/patient/certificates/");
-    const instance2 = ApiConnection("/patient/info/");
-
     useEffect(() => {
+        const instance = ApiConnection("/patient/certificates/");
+        const instance2 = ApiConnection("/patient/info/");
         instance.get(
             "/patient/certificates/" + GetId()
         ).then(r => {
             setTableData(r.data)
         })
-            .finally(() => {
-                //setLoading(false)
-            });
         instance2.get(
             "/patient/info/" + GetId()
         ).then(r => {
@@ -40,6 +36,7 @@ export default function PatientDashboard() {
             .finally(() => {
                 setLoading(false)
             });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const patient = new Patient(patientData);

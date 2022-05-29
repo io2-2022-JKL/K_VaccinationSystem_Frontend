@@ -27,6 +27,7 @@ export default function PatientDashboard() {
 
     useEffect(() => {
         updateData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 

@@ -13,6 +13,7 @@ import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
 import { AdminPatientInfoModal } from './AdminPatientInfoModal';
 import { AdminAddDoctorModal } from './AdminAddDoctorModal.js';
+import AdminPatientEditModal from './AdminPatientEditModal';
 
 export default function AdminPatientList() {
 
@@ -24,14 +25,10 @@ export default function AdminPatientList() {
     const centerInstance = ApiConnection("/admin/vaccinationCenters")
 
     useEffect(() => {
-        getAllData()
+        updateData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const getAllData = async () => {
-        await updateData()
-
-    }
     const updateData = async () => {
         const  r = await instance.get(
             "/admin/patients"
@@ -43,12 +40,11 @@ export default function AdminPatientList() {
             r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].patientId)} color={"error"}>Usuń</Button>
             r.data[i].detailsButton = <AdminPatientInfoModal data={r.data[i]}/>
             r.data[i].doctorButton = <AdminAddDoctorModal data={r.data[i]} centers={c.data}/>
+            r.data[i].modifyButton = <AdminPatientEditModal data={r.data[i]}/>
         }
         setTableData(r.data)
         setLoading(false)
     }
-
-
 
     const handleCancellation = (id) => {
         const url = "/admin/deletePatient/" + id
@@ -63,10 +59,11 @@ export default function AdminPatientList() {
     }
 
     const tableColumns = [
-        {Header: "Imię", accessor: "firstName", width: "25%"},
-        {Header: "Nazwisko", accessor: "lastName", width: "25%"},
+        {Header: "Imię", accessor: "firstName", width: "10%"},
+        {Header: "Nazwisko", accessor: "lastName", width: "10%"},
         {Header: "Pesel", accessor: "pesel", width: "15%"},
         {Header: "Info", accessor: "detailsButton", width: "15%"},
+        {Header: "Modyfikuj", accessor: "modifyButton", width: "15%"},
         {Header: "Doktoryzuj", accessor: "doctorButton", width: "10%"},
         {Header: "Usuń", accessor: "deleteButton", width: "10%"},
     ]

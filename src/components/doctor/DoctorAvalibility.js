@@ -40,6 +40,7 @@ export default function DoctorAvalibility() {
             .finally(() => {
                 setLoading(false)
             });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const doctor = new Patient(doctorData);

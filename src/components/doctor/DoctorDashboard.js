@@ -29,13 +29,12 @@ export default function DoctorDashboard() {
     tmp.certificates = 'todo';
     tmp.active = 'a';
 
-    const instance = ApiConnection("/doctor/incomingAppointments/");
-
     const {GetId} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
 
     useEffect(() => {
+        const instance = ApiConnection("/doctor/incomingAppointments/");
         instance.get(
             "/doctor/incomingAppointments/" + GetId()
         ).then(r => {
@@ -44,6 +43,7 @@ export default function DoctorDashboard() {
             .finally(() => {
                 setLoading(false)
             });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const tableColumns = [

@@ -32,6 +32,7 @@ export function AdminPatientInfoModal(props) {
                     <div>PESEL: {props.data.pesel}</div>
                     <div>Mail: {props.data.mail}</div>
                     <div>Nr telefonu: {props.data.phoneNumber}</div>
+                    <div>Data urodzenia: {props.data.dateOfBirth.slice(0,10)}</div>
                 </Typography>
             </Box>
         </Modal>
