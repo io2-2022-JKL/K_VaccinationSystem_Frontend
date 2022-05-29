@@ -18,6 +18,7 @@ import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
 import { AdminDoctorInfoModal } from './AdminDoctorInfoModal';
 import { AdminDoctorModificationModal } from './AdminDoctorModificationModal'
+import { setLayout } from 'context';
 
 
 export default function AdminDoctorList() {
@@ -53,16 +54,15 @@ export default function AdminDoctorList() {
         }
     }
 
-    const handleCancellation = (id) => {
+    const handleCancellation = async (id) => {
+        setLoading(true)
+        setExistance(true)
         const url = "/admin/doctors/deleteDoctor/" + id
-        deleteInstance.delete(
+        await deleteInstance.delete(
             url
-        ).then(r => {
-            updateData()
-        }).finally(() => {
-            setLoading(false)
-        });
-        window.location.reload(false);
+        )
+        updateData()
+        setLoading(false)
     }
 
     useEffect(() => {

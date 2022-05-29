@@ -17,7 +17,7 @@ import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
 import { AdminPatientInfoModal } from './AdminPatientInfoModal';
-import { AdminAddDoctorModal } from './AdminAddDoctorModal';
+import { AdminAddDoctorModal } from './AdminAddDoctorModal.js';
 
 export default function AdminPatientList() {
 
