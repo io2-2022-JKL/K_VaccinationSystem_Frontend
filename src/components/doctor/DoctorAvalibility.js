@@ -15,6 +15,7 @@ import DoctorAddTimeSlotsModal from './DoctorAddTimeSlotsModal';
 import { Button } from '@mui/material';
 
 import Loader from "react-loader";
+import DoctorEditTimeSlotsModal from './DoctorEditTimeSlotModal';
 
 export default function DoctorAvalibility() {
 
@@ -37,6 +38,7 @@ export default function DoctorAvalibility() {
         for (let i = 0; i < r.data.length; i++)
         {
             r.data[i].deleteButton = <Button onClick={() => handleCancellation(GetId(), r.data[i].id)} color={"error"}>Usuń</Button>
+            r.data[i].editButton = <DoctorEditTimeSlotsModal data={r.data[i]}/>
         }
         setTableData(r.data)
         setLoading(false)
@@ -58,8 +60,9 @@ export default function DoctorAvalibility() {
     }
 
     const tableColumns = [
-        {Header: "Od", accessor: "from", width: "50%"},
+        {Header: "Od", accessor: "from", width: "25%"},
         {Header: "Do", accessor: "to", width: "25%"},
+        {Header: "Edytuj", accessor: "editButton", width: "25%"},
         {Header: "Usuń", accessor: "deleteButton", width: "25%"},
     ]
 

@@ -15,6 +15,8 @@ import {Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField} fro
 import Button from "@mui/material/Button";
 import Loader from "react-loader";
 import { PatientSignupVisitModal } from "./PatientVisitModal";
+import { Select } from '@mui/material';
+import { MenuItem } from '@mui/material';
 
 export default function PatientSignup() {
 
@@ -26,17 +28,17 @@ export default function PatientSignup() {
     const [toDate, setToDate] = useState("2023-05-09");
     const [open, setOpen] = useState(true);
     const [cityFilter, setCityFilter] = useState("Warszawa");
-    const [virusFilter, setVirusFilter] = useState("Koronawirus");
+    const [virusFilter, setVirusFilter] = useState("SARS COVID-19");
     const [patientData, setPatientData] = useState([]);
+    const [viruses, setViruses] = useState([])
+    const [cities, setCities] = useState([])
 
     const handleClose = () => {
         setOpen(false);
     };
 
-    const instance = ApiConnection("/patient/timeSlots/Filter");
-    const instance2 = ApiConnection("/patient/info/");
-
     const signIn = (id, vaccine) => {
+        const instance = ApiConnection("/patient/timeSlots/Filter");
         const url = "/patient/timeSlots/Book/" + GetId() + "/" + id + "/" + vaccine;
         instance.post(
             url
@@ -49,17 +51,19 @@ export default function PatientSignup() {
     }
 
     const createURL = () => {
-        const url = "/patient/timeSlots/Filter?" + "city=" + cityFilter +
+        let url = "/patient/timeSlots/Filter?" + "city=" + cityFilter +
             "&dateFrom=" + fromDate.substring(8, 10) + "-" + fromDate.substring(5, 7) + "-" + fromDate.substring(0, 4) +
-            " 00:00" + "&dateTo=" +
+            "&dateTo=" +
             toDate.substring(8, 10) + "-" + toDate.substring(5, 7) + "-" + toDate.substring(0, 4)
-            + " 23:59&" +
+             +
             "virus=" + virusFilter;
+            url = url.replace(" ", "+")
+            console.log(url)
         return url;
-
     }
 
     const handleFilter = () => {
+        const instance = ApiConnection("/patient/timeSlots/Filter");
         instance.get(
             createURL()
         ).then(r => {
@@ -79,15 +83,23 @@ export default function PatientSignup() {
         setTableData(data);
     }
 
-    useEffect(() => {
-        instance2.get(
+    useEffect(async () => {
+        const instance2 = ApiConnection("/patient/info/")
+        const instanceViruses = ApiConnection("/viruses")
+        const instacneCities = ApiConnection("/cities")
+        const r = await instance2.get(
             "/patient/info/" + GetId()
-        ).then(r => {
-            setPatientData(r.data)
-        })
-            .finally(() => {
-                setLoading(false)
-            });
+        )
+        const v = await instanceViruses.get(
+            "/viruses"
+        )
+        const c = await instacneCities.get(
+            "/cities"
+        )
+        setCities(c.data)
+        setViruses(v.data)
+        setPatientData(r.data)
+        setLoading(false)
     }, [])
 
     const patient = new Patient(patientData);
@@ -127,30 +139,36 @@ export default function PatientSignup() {
                     <DialogContent>
                         <Stack ml={10} mr={10}>
                             <MDBox mb={3}>
-                                <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    id="city"
-                                    label="Miasto"
-                                    type="text"
-                                    fullWidth
-                                    onChange={e => setCityFilter(e.target.value)}
-                                    value={cityFilter}
+                                <Select
                                     variant="standard"
-                                />
+                                    fullWidth
+                                    id="select-city"
+                                    defaultValue={cities[0].city}
+                                    label="Miasto"
+                                    onChange={e => setCityFilter(e.target.value)}
+                                    >
+                                    {cities.map((record) => (
+                                        <MenuItem value={record.city}>
+                                        {record.city}
+                                        </MenuItem>
+                                        ))}
+                                </Select>
                             </MDBox>
                             <MDBox mb={3}>
-                                <TextField
-                                    autoFocus
-                                    margin="dense"
-                                    id="virus"
-                                    label="Wirus"
-                                    type="text"
-                                    fullWidth
-                                    onChange={e => setVirusFilter(e.target.value)}
-                                    value={virusFilter}
-                                    variant="standard"
-                                />
+                                <Select
+                                variant="standard"
+                                fullWidth
+                                id="select-virus"
+                                defaultValue={viruses[0].virus}
+                                label="Wirus"
+                                onChange={e => setVirusFilter(e.target.value)}
+                                >
+                                    {viruses.map((record) => (
+                                        <MenuItem value={record.virus}>
+                                        {record.virus}
+                                        </MenuItem>
+                                        ))}
+                                </Select>
                             </MDBox>
                             <MDBox mb={3}>
                                 <TextField

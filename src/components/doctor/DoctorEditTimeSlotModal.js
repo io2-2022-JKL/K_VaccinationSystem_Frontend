@@ -10,7 +10,7 @@ import ApiConnection from "../../logic/api/ApiConnection";
 import { TextField } from '@mui/material';
 import useLogin from 'logic/useLogin';
 
-export default function DoctorAddTimeSlotsModal(props) {
+export default function DoctorEditTimeSlotsModal(props) {
 
     const d = new Date()
     let from = String(d.getFullYear())+"-"+
@@ -23,16 +23,14 @@ export default function DoctorAddTimeSlotsModal(props) {
                 ("0"+String(d.getDay())).slice(-2)+"T"+
                 ("0"+String(d.getHours())).slice(-2)+":"+
                 ("0"+String(d.getMinutes())).slice(-2);
-    let minutes = "3";
 
     const {GetId} = useLogin();
     const [open, setOpen] = useState(false);
 
-    const instance = ApiConnection("/doctor/timeSlots/create");
+    const instance = ApiConnection("/doctor/timeSlots/modify");
 
     const handleFrom = (event) => from = event.target.value;
     const handleTo = (event) => to = event.target.value;
-    const handleMinutes = (event) => minutes = event.target.value;
 
     const handleClose = () => {
         setOpen(false);
@@ -40,26 +38,25 @@ export default function DoctorAddTimeSlotsModal(props) {
 
     const style = modalStyle()
 
-    const addSlots = async ( 
+    const editSlots = async ( 
         from, 
-        to, 
-        minutes) =>
+        to) =>
     {
         let f = from.slice(8,10)+"-"+from.slice(5,7)+"-"+from.slice(0,4)+" "+from.slice(11,16)
         let t = to.slice(8,10)+"-"+to.slice(5,7)+"-"+to.slice(0,4)+" "+to.slice(11,16)
         await instance.post(
-            "/doctor/timeSlots/create/" + GetId(), {
+            "/doctor/timeSlots/modify/" + GetId() + "/" + props.data.id, {
                 "windowBegin": f,
                 "windowEnd": t,
-                "timeSlotDurationInMinutes": parseInt(minutes)
             })
-        handleClose()
-        window.location.reload(false);
+            console.log(f)
+        //handleClose()
+        //window.location.reload(false);
     }
 
     return (
         <>
-        <Button onClick={() => setOpen(true)}>Utwórz</Button>
+        <Button onClick={() => setOpen(true)}>Edytuj</Button>
         <Modal
             open={open}
             onClose={handleClose}
@@ -95,20 +92,11 @@ export default function DoctorAddTimeSlotsModal(props) {
                             }}
                         fullWidth
                         />
-                    <TextField
-                        variant="standard" 
-                        id="minutes"
-                        label="Czas trwania"
-                        defaultValue={minutes}
-                        onChange={handleMinutes}
-                        fullWidth
-                        />
                 </Box>
-                <Button onClick={() => addSlots(
+                <Button onClick={() => editSlots(
                     from, 
-                    to, 
-                    minutes, )}>
-                        Utwórz
+                    to )}>
+                        Edytuj
                 </Button>
             </Box>
         </Modal>
