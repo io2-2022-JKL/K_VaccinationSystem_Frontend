@@ -30,26 +30,18 @@ export default function PatientDashboard() {
     const [tableData, setTableData] = useState([]);
     const [patientData, setPatientData] = useState([]);
 
-    useEffect(() => {
+    useEffect(async () => {
         const instance = ApiConnection("/patient/appointments/incomingAppointments/");
         const instance2 = ApiConnection("/patient/info/");
-        instance.get(
-            "/patient/appointments/incomingAppointments/" + GetId()
-        ).then(r => {
-            for(let i = 0; i < r.data.length; i++)
-            {
-                r.data[i].detailsButton = <PatientIncomingVisitModal data={r.data[i]}/>
-            }
-            setTableData(r.data)
-        })
-        instance2.get(
-            "/patient/info/" + GetId()
-        ).then(r => {
-            setPatientData(r.data)
-        })
-            .finally(() => {
-                setLoading(false)
-            });
+        const r = await instance.get("/patient/appointments/incomingAppointments/" + GetId())
+        for(let i = 0; i < r.data.length; i++)
+        {
+            r.data[i].detailsButton = <PatientIncomingVisitModal data={r.data[i]}/>
+        }
+        setTableData(r.data)
+        const c = await instance2.get("/patient/info/" + GetId())
+        setPatientData(c.data)
+        setLoading(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
