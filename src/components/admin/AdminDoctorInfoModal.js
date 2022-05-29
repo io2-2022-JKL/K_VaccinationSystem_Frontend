@@ -25,6 +25,7 @@ export function AdminDoctorInfoModal(props) {
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
+                <button onClick={handleClose} id={"close_modal"} />
                 <Typography id="modal-modal-title" variant="h2" component="h2">
                     Informacje o doktorze
                 </Typography>
@@ -32,7 +33,7 @@ export function AdminDoctorInfoModal(props) {
                     <div>Imię: {props.data.firstName} {props.data.lastName}</div>
                     <div>PESEL: {props.data.pesel}</div>
                     <div>Mail: {props.data.mail}</div>
-                    <div>Nr telefonu: {props.data.phoneNumber}</div>
+                    <div id={"phone_number"}>Nr telefonu: {props.data.phoneNumber}</div>
                     <div>Centrum szczepień: {props.data.name}, {props.data.city}, {props.data.street}</div>
                     <div>Data Urodzenia: {props.data.dateOfBirth.slice(0,10)}</div>
                 </Typography>
