@@ -10,7 +10,7 @@ import DataTable from "../../examples/Tables/DataTable";
 import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
-import { AdminVaccinationCenterInfoModal } from './AdminVaccinationCenterModals';
+import { AdminVaccinationCenterInfoModal } from "./AdminVaccinationCenterModals"
 
 export default function AdminVaccinationCenterList() {
 
@@ -29,13 +29,16 @@ export default function AdminVaccinationCenterList() {
                 r.data[i].detailsButton = <AdminVaccinationCenterInfoModal data={r.data[i]}/>
             }
             setTableData(r.data)
-        })
+        }).finally(() => {
+            setLoading(false)
+        });
     }, [])
 
     const tableColumns = [
         {Header: "Nazwa centrum", accessor: "name", width: "25%"},
-        {Header: "Adres", accesor: "street", width: "10%"},
-        {Header: "Miasto", accessor: "city", width: "15%"},
+        {Header: "Adres", accesor: "street", width: "25%"},
+        {Header: "Miasto", accessor: "city", width: "25%"},
+        {Header: "Info", accessor: "detailsButton", width: "25%"},
     ]
 
     return (

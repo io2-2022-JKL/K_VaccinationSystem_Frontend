@@ -31,6 +31,8 @@ export default function AdminVaccinesList() {
                 r.data[i].detailsButton = <AdminVaccineInfoModal data={r.data[i]}/>
             }
             setTableData(r.data)
+        }).finally(()=>{
+            setLoading(false)
         })
     }, [])
 
@@ -46,18 +48,18 @@ export default function AdminVaccinesList() {
         <DashboardLayout>
             <DashboardNavbar/>
             <MDBox mb={10}/>
+            <Header name={"Administrator"}>
             {
                 loading?
                 <Grid>
                     <Loader /> 
                 </Grid> 
                 :
-                <Header name={"Administrator"}>
-                    <MDBox mt={5} mb={3}>
-                        <DataTable table={{columns: tableColumns, rows: tableData}}/>
-                    </MDBox>
-                </Header>
+                <MDBox mt={5} mb={3}>
+                    <DataTable table={{columns: tableColumns, rows: tableData}}/>
+                </MDBox>
             }
+            </Header>
             <Footer/>
         </DashboardLayout>
     )

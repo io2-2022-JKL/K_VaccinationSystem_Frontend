@@ -17,39 +17,47 @@ import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
 import { AdminPatientInfoModal } from './AdminPatientInfoModal';
+import { AdminAddDoctorModal } from './AdminAddDoctorModal';
 
 export default function AdminPatientList() {
 
     const {GetId} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
+    const [centerData, setCenterData] = useState([])
 
     const instance = ApiConnection("/admin/patients/");
     const deleteInstance =ApiConnection("/admin/deletePatient/")
+    const centerInstance = ApiConnection("/admin/vaccinationCenters")
 
     useEffect(() => {
-        updateData()
+        getAllData()
     }, [])
 
-    const updateData = () => {
-        instance.get(
-            "/admin/patients"
-        ).then(r => {
-            for (let i = 0; i < r.data.length; i++) {
-                r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].patientId)} color={"error"}>Usuń</Button>
-                r.data[i].detailsButton = <AdminPatientInfoModal data={r.data[i]}/>
-            }
-            setTableData(r.data)
-        })
-            .finally(() => {
-                setLoading(false)
-            });
+    const getAllData = async () => {
+        await updateData()
+
     }
+    const updateData = async () => {
+        const  r = await instance.get(
+            "/admin/patients"
+        )
+        const c = await centerInstance.get(
+            "/admin/vaccinationCenters"
+        )
+        for (let i = 0; i < r.data.length; i++) {
+            r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].patientId)} color={"error"}>Usuń</Button>
+            r.data[i].detailsButton = <AdminPatientInfoModal data={r.data[i]}/>
+            r.data[i].doctorButton = <AdminAddDoctorModal data={r.data[i]} centers={c.data}/>
+        }
+        setTableData(r.data)
+        setLoading(false)
+    }
+
 
 
     const handleCancellation = (id) => {
         const url = "/admin/deletePatient/" + id
-
         deleteInstance.delete(
             url
         ).then(r => {
@@ -63,8 +71,9 @@ export default function AdminPatientList() {
     const tableColumns = [
         {Header: "Imię", accessor: "firstName", width: "25%"},
         {Header: "Nazwisko", accessor: "lastName", width: "25%"},
-        {Header: "Pesel", accessor: "pesel", width: "25%"},
+        {Header: "Pesel", accessor: "pesel", width: "15%"},
         {Header: "Info", accessor: "detailsButton", width: "15%"},
+        {Header: "Doktoryzuj", accessor: "doctorButton", width: "10%"},
         {Header: "Usuń", accessor: "deleteButton", width: "10%"},
     ]
     

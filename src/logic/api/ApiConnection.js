@@ -16,7 +16,7 @@ export default (path) => {
     {
         return axios.create({
             baseURL: url,
-            authorization: "Bearer " + token,
+            headers:{ authorization: "Bearer " + token,}
         });
     }
 
