@@ -50,16 +50,9 @@ export default function AdminPatientEditModal(props) {
                 "dateOfBirth": dateOfBirth,
                 "phoneNumber": phoneNumber,
                 "active": active,
-            }).then(function (response) {
-                console.log(response);
-              })
-              .catch(function (error) {
-                console.log(error);
-              })
-
-        console.log(vaccinationCenterID)
+            })
         handleClose()
-        //window.location.reload(false);
+        window.location.reload(false);
     }
 
     return (
