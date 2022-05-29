@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import '../../styles/patient/patient.css';
-import Vaccine from 'models/Vaccine';
 import '../../models/User';
 import MDBox from "../MDBox";
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
@@ -9,21 +8,17 @@ import Grid from "@mui/material/Grid";
 import Header from "../../layouts/profile/components/Header";
 import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
-import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
 import { AdminVaccineInfoModal } from './AdminVaccineInfoModal';
 
 export default function AdminVaccinesList() {
 
-    const {GetId} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
-    const [patientData, setPatientData] = useState([]);
-
-    const instance = ApiConnection("/admin/vaccines/");
 
     useEffect(() => {
+        const instance = ApiConnection("/admin/vaccines/");
         instance.get(
             "/admin/vaccines"
         ).then(r => {

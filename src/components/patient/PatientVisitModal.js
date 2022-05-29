@@ -1,7 +1,7 @@
 import { Modal } from "@mui/material";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
-import {useEffect, useState} from 'react';
+import { useState } from 'react';
 import { Button } from "@mui/material";
 
 export function PatientSignupVisitModal(props) {

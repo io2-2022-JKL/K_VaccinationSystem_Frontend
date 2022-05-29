@@ -12,7 +12,6 @@ import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
 import ApiConnection from "../../logic/api/ApiConnection";
 import useLogin from "../../logic/useLogin";
-import {DoctorCalendar} from "./utils/DoctorCalendar";
 
 export default function DoctorDashboard() {
 

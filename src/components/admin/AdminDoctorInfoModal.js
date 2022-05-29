@@ -1,10 +1,9 @@
 import { Modal } from "@mui/material";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
-import {useEffect, useState} from 'react';
+import { useState } from 'react';
 import { Button } from "@mui/material";
-import theme from "assets/theme";
-import {modalStyle} from "../../styles/modal.css";
+import { modalStyle } from "../../styles/modal.css";
 import "../../styles/global.css"
 
 export function AdminDoctorInfoModal(props) {

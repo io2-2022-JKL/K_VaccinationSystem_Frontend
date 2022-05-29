@@ -21,10 +21,9 @@ export default function DoctorAvalibility() {
     const [tableData, setTableData] = useState([]);
     const [doctorData, setDoctorData] = useState([]);
 
-    const instance = ApiConnection("/patient/appointments/formerAppointments/");
-    const instance2 = ApiConnection("/patient/info/");
-
     useEffect(() => {
+        const instance = ApiConnection("/patient/appointments/formerAppointments/");
+        const instance2 = ApiConnection("/patient/info/");
         instance.get(
             "/patient/appointments/formerAppointments/" + GetId()
         ).then(r => {

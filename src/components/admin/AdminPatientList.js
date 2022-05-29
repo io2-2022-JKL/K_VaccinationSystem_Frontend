@@ -1,19 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import '../../styles/patient/patient.css';
-import Patient from '../../models/Patient'
 import '../../models/User';
 import MDBox from "../MDBox";
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
 import Grid from "@mui/material/Grid";
 import Header from "../../layouts/profile/components/Header";
-import Divider from "@mui/material/Divider";
-import ProfileInfoCard from "../../examples/Cards/InfoCards/ProfileInfoCard";
 import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
 import Button from "@mui/material/Button";
-import {Typography} from "@mui/material";
-import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
 import { AdminPatientInfoModal } from './AdminPatientInfoModal';
@@ -21,10 +16,8 @@ import { AdminAddDoctorModal } from './AdminAddDoctorModal.js';
 
 export default function AdminPatientList() {
 
-    const {GetId} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
-    const [centerData, setCenterData] = useState([])
 
     const instance = ApiConnection("/admin/patients/");
     const deleteInstance =ApiConnection("/admin/deletePatient/")
@@ -32,6 +25,7 @@ export default function AdminPatientList() {
 
     useEffect(() => {
         getAllData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const getAllData = async () => {

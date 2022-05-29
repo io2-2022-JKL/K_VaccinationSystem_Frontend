@@ -24,11 +24,9 @@ import MDBox from "components/MDBox";
 // import MDTypography from "components/MDTypography";
 
 // Material Dashboard 2 React example components
-import DefaultNavbar from "examples/Navbars/DefaultNavbar";
 import PageLayout from "examples/LayoutContainers/PageLayout";
 
 // Authentication layout components
-import Footer from "layouts/authentication/components/Footer";
 
 function CoverLayout({ coverHeight, image, children }) {
   return (

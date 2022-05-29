@@ -2,15 +2,11 @@ import * as React from 'react';
 import { Modal } from "@mui/material";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
-import {useEffect, useState} from 'react';
+import { useState } from 'react';
 import { Button } from "@mui/material";
-import theme from "assets/theme";
-import {modalStyle} from "../../styles/modal.css";
+import { modalStyle } from "../../styles/modal.css";
 import "../../styles/global.css"
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import ApiConnection from "../../logic/api/ApiConnection";
 import { TextField } from '@mui/material';
 
@@ -18,8 +14,6 @@ import { TextField } from '@mui/material';
 export function AdminDoctorModificationModal(props) {
 
     const [open, setOpen] = useState(false);
-    const [center, setCenter] = useState('');
-    const [data, setData] = useState([]);
 
     let firstName = props.data.firstName;
     let lastName = props.data.lastName;
@@ -46,10 +40,6 @@ export function AdminDoctorModificationModal(props) {
     }
 
     const style = modalStyle()
-
-    const handleChange = (event) => {
-        setCenter(event.target.value);
-      };
 
     const editDoctor = async (id, pesel, firstName, lastName, mail, dateOfBirth, phoneNumber, active, vaccinationCenterID) =>
     {
