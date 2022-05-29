@@ -18,15 +18,13 @@ import { AdminDoctorModificationModal } from './AdminDoctorModificationModal'
 
 export default function AdminDoctorList() {
 
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true)
     const [doctorsExist, setExistance] = useState(true)
-    const [tableData, setTableData] = useState([]);
-
-    const instance = ApiConnection("/admin/doctors");
-    const deleteInstance =ApiConnection("/admin/doctors/deleteDoctor/")
-    const centerInstance = ApiConnection("/admin/vaccinationCenters")
+    const [tableData, setTableData] = useState([])
 
     const updateData = async () => {
+        const instance = ApiConnection("/admin/doctors")
+        const centerInstance = ApiConnection("/admin/vaccinationCenters")
         const r = await instance.get(
             "/admin/doctors"
         ).catch((error) => {
@@ -49,6 +47,7 @@ export default function AdminDoctorList() {
     }
 
     const handleCancellation = async (id) => {
+        const deleteInstance = ApiConnection("/admin/doctors/deleteDoctor/")
         setLoading(true)
         setExistance(true)
         const url = "/admin/doctors/deleteDoctor/" + id

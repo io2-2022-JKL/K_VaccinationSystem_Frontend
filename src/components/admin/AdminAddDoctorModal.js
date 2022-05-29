@@ -38,11 +38,7 @@ export function AdminAddDoctorModal(props) {
             "/admin/doctors/addDoctor", {
                 "patientId": patient,
                 "vaccinationCenterId": center
-            }).then(function (response) {
-              })
-              .catch(function (error) {
-              })
-
+            })
     }
 
     return (
