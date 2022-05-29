@@ -14,12 +14,14 @@ import { AdminVaccineInfoModal } from './AdminVaccineInfoModal';
 import { Button } from '@mui/material';
 import AdminVaccineEditModal from './AdminVaccineEditModal';
 import { Typography } from '@mui/material';
+import AdminVaccineAddModal from './AdminVaccineAddModal';
 
 export default function AdminVaccinesList() {
 
     const [loading, setLoading] = useState(true)
     const [tableData, setTableData] = useState([])
     const [vaccinesExist, setExistance] = useState(true)
+    const [viruses, setViruses] = useState([])
 
     useEffect(() => {
         updateData()
@@ -29,15 +31,17 @@ export default function AdminVaccinesList() {
     const updateData = async () =>{
         const instance = ApiConnection("/admin/vaccines/")
         const virusInstance = ApiConnection("/viruses")
-        const r = await instance.get("/admin/vaccines")
         const c = await virusInstance.get("/viruses")
+        const r = await instance.get("/admin/vaccines")
+        console.log(c)
         for (let i = 0; i < r.data.length; i++) {
             r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].vaccineId)} color={"error"}>Usuń</Button>
             r.data[i].detailsButton = <AdminVaccineInfoModal data={r.data[i]}/>
             r.data[i].editButton = <AdminVaccineEditModal data={r.data[i]} viruses={c.data}/>
         }
-        setTableData(r.data)
-        setLoading(false)
+        await setTableData(r.data)
+        await setViruses(c.data)
+        await setLoading(false)
     }
 
     const handleCancellation = async (id) => {
@@ -95,6 +99,9 @@ export default function AdminVaccinesList() {
                     </Typography>
                 </Grid>
             }
+            <Grid>
+                <AdminVaccineAddModal viruses={viruses}/>
+            </Grid>
             </Header>
             <Footer/>
         </DashboardLayout>

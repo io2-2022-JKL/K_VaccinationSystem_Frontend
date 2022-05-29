@@ -9,26 +9,24 @@ import "../../styles/global.css"
 import ApiConnection from "../../logic/api/ApiConnection";
 import { TextField } from '@mui/material';
 import { Grid } from '@mui/material';
-import { FormControl } from '@mui/material';
 import { Select } from '@mui/material';
 import { MenuItem } from '@mui/material';
 
-export default function AdminVaccineeditModal(props) {
+export default function AdminVaccineAddModal(props) {
+
+    let name = "";
+    let company = "";
+    let virus = "";
+    let numberOfDoses = "0";
+    let maxDaysBetweenDoses = "0";
+    let minDaysBetweenDoses = "0";
+    let minPatientAge = "0";
+    let maxPatientAge = "0";
+    let active = true;
 
     const [open, setOpen] = useState(false);
 
-    let name = props.data.name;
-    let company = props.data.company;
-    let virus = props.data.virus;
-    let numberOfDoses = props.data.numberOfDoses;
-    let maxDaysBetweenDoses = props.data.maxDaysBetweenDoses;
-    let vaccineId = props.data.vaccineId;
-    let minDaysBetweenDoses = props.data.minDaysBetweenDoses;
-    let minPatientAge = props.data.minPatientAge;
-    let maxPatientAge = props.data.maxPatientAge;
-    let active = props.data.active;
-
-    const instance = ApiConnection("/admin/vaccine/editVaccine");
+    const instance = ApiConnection("/admin/vaccines/addVaccine");
 
     const handleName = (event) => name = event.target.value;
     const handlecompany = (event) => company = event.target.value;
@@ -45,7 +43,7 @@ export default function AdminVaccineeditModal(props) {
 
     const style = modalStyle()
 
-    const editVaccine = async (vaccineId, 
+    const addVaccine = async ( 
         virus, 
         name, 
         company, 
@@ -58,8 +56,7 @@ export default function AdminVaccineeditModal(props) {
     {
         console.log(props.viruses)
         await instance.post(
-            "/admin/vaccines/editVaccine", {
-                "vaccineId": vaccineId,
+            "/admin/vaccines/addVaccine", {
                 "virus": virus,
                 "name": name,
                 "company": company,
@@ -76,7 +73,7 @@ export default function AdminVaccineeditModal(props) {
 
     return (
         <>
-        <Button onClick={() => setOpen(true)}>Modyfikuj</Button>
+        <Button onClick={() => setOpen(true)}>Utwórz</Button>
         <Modal
             open={open}
             onClose={handleClose}
@@ -85,7 +82,7 @@ export default function AdminVaccineeditModal(props) {
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h2" component="h2">
-                    Zmodyfikuj dane szczepionki {props.data.name}
+                    Dodaj nową szczepionkę
                 </Typography>
                 <Box fullWidth>
                     <Box fullWidthsx={{pl:4, pr:4, pt:2, pd:2}}>
@@ -104,7 +101,7 @@ export default function AdminVaccineeditModal(props) {
                             defaultValue={company} 
                             onChange={handlecompany}/>
                     </Box>
-                    <Box fullWidthsx={{pl:4, pr:4, pt:2, pd:2}}>
+                    <Box fullWidth sx={{pl:4, pr:4, pt:2, pd:2}}>
                         <Select
                             variant="standard"
                             fullWidth
@@ -128,7 +125,7 @@ export default function AdminVaccineeditModal(props) {
                             defaultValue={numberOfDoses} 
                             onChange={handlenumberOfDoses}/>
                     </Box>
-                    <Grid fullWidth sx={{pl:4, pr:4, pt:2, pd:2}} container>
+                    <Grid  sx={{pl:4, pr:4, pt:2, pd:2}} container>
                         <TextField 
                             id="min_days" 
                             label="Dni pomiędzy od" 
@@ -157,8 +154,7 @@ export default function AdminVaccineeditModal(props) {
                             onChange={handleMaxPatientAge}/>
                     </Grid>
                 </Box>
-                <Button onClick={() => editVaccine(
-                    vaccineId, 
+                <Button onClick={() => addVaccine(
                     virus, 
                     name, 
                     company, 
@@ -168,7 +164,7 @@ export default function AdminVaccineeditModal(props) {
                     minPatientAge,
                     maxPatientAge,
                     active)}>
-                        Modyfikuj
+                        Utwórz
                 </Button>
             </Box>
         </Modal>
