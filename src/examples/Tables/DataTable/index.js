@@ -81,7 +81,10 @@ function DataTable({
   } = tableInstance;
 
   // Set the default value for the entries per page when component mounts
-  useEffect(() => setPageSize(defaultValue || 10), [defaultValue]);
+  useEffect(() => {
+    setPageSize(defaultValue || 10)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [defaultValue])
 
   // Set the entries per page value based on the select value
   const setEntriesPerPage = (value) => setPageSize(value);
