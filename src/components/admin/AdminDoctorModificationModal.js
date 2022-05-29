@@ -151,7 +151,7 @@ export function AdminDoctorModificationModal(props) {
                             />
                     </Box>
                 </Box>
-                <Button onClick={() => editDoctor(id, pesel, firstName, lastName, mail, dateOfBirth, phoneNumber, active, vaccinationCenterID)}>
+                <Button id="submit" onClick={() => editDoctor(id, pesel, firstName, lastName, mail, dateOfBirth, phoneNumber, active, vaccinationCenterID)}>
                         Modyfikuj
                 </Button>
             </Box>
