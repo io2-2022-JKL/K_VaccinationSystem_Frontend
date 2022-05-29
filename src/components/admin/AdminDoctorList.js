@@ -24,6 +24,7 @@ export default function AdminDoctorList() {
 
     const {GetId} = useLogin();
     const [loading, setLoading] = useState(true);
+    const [doctorsExist, setExistance] = useState(true)
     const [tableData, setTableData] = useState([]);
 
     const instance = ApiConnection("/admin/doctors");
@@ -31,30 +32,37 @@ export default function AdminDoctorList() {
     const centerInstance = ApiConnection("/admin/vaccinationCenters")
 
     const updateData = async () => {
-        const  r = await instance.get(
+        const r = await instance.get(
             "/admin/doctors"
-        )
-        const c = await centerInstance.get(
-            "/admin/vaccinationCenters"
-        ) 
-        for (let i = 0; i < r.data.length; i++) {
-            r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].id)} color={"error"}>Usuń</Button>
-            r.data[i].detailsButton = <AdminDoctorInfoModal data={r.data[i]}/>
-            r.data[i].editButton = <AdminDoctorModificationModal data={r.data[i]} centers={c.data}/>
+        ).catch((error) => {
+            setExistance(false)
         }
-        setTableData(r.data)
-        setLoading(false)
+        )
+        if (typeof r !== 'undefined')
+        {
+            const c = await centerInstance.get(
+                "/admin/vaccinationCenters"
+            )
+            for (let i = 0; i < r.data.length; i++) {
+                r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].id)} color={"error"}>Usuń</Button>
+                r.data[i].detailsButton = <AdminDoctorInfoModal data={r.data[i]}/>
+                r.data[i].editButton = <AdminDoctorModificationModal data={r.data[i]} centers={c.data}/>
+            }
+            setTableData(r.data)
+            setLoading(false)
+        }
     }
 
     const handleCancellation = (id) => {
         const url = "/admin/doctors/deleteDoctor/" + id
         deleteInstance.delete(
             url
-        ).then(
+        ).then(r => {
             updateData()
-        ).finally(() => {
+        }).finally(() => {
             setLoading(false)
         });
+        window.location.reload(false);
     }
 
     useEffect(() => {
@@ -76,14 +84,32 @@ export default function AdminDoctorList() {
             <MDBox mb={10}/>
             <Header name={"Administrator"}>
             {
-                loading?
-                    <Grid>
-                        <Loader /> 
-                    </Grid> 
-                    :
-                    <MDBox mt={5} mb={3}>
-                        <DataTable table={{columns: tableColumns, rows: tableData}}/>
-                    </MDBox>
+                doctorsExist?
+                <>
+                {
+                    loading?
+                        <Grid>
+                            <Loader /> 
+                        </Grid> 
+                        :
+                        <MDBox mt={5} mb={3}>
+                            <DataTable table={{columns: tableColumns, rows: tableData}}/>
+                        </MDBox>
+                }
+                </>
+                :
+                <Grid
+                    container
+                    spacing={0}
+                    direction="column"
+                    alignContent="center"
+                    alignItems="center"
+                    justify="center"
+                    style={{ minHeight: 30 }}>
+                    <Typography>
+                        404 nie ma doktorów
+                    </Typography>
+                </Grid>
             }
             </Header>
             <Footer/>
