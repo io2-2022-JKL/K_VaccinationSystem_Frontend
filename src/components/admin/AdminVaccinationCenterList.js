@@ -11,6 +11,8 @@ import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
 import { AdminVaccinationCenterInfoModal } from "./AdminVaccinationCenterModals"
 import { Button } from '@mui/material';
+import AdminVaccinationCenterAddModal from './AdminVaccinationCenterAddModal';
+import { Box } from '@mui/material';
 
 export default function AdminVaccinationCenterList() {
 
@@ -56,18 +58,21 @@ export default function AdminVaccinationCenterList() {
         <DashboardLayout>
             <DashboardNavbar/>
             <MDBox mb={10}/>
+            <Header name={"Administrator"}>
             {
                 loading?
                 <Grid>
                     <Loader /> 
                 </Grid> 
                 :
-                <Header name={"Administrator"}>
-                    <MDBox mt={5} mb={3}>
-                        <DataTable table={{columns: tableColumns, rows: tableData}}/>
-                    </MDBox>
-                </Header>
+                <MDBox mt={5} mb={3}>
+                    <DataTable table={{columns: tableColumns, rows: tableData}}/>
+                </MDBox>
             }
+            <Box>
+                <AdminVaccinationCenterAddModal />
+            </Box>
+            </Header>
             <Footer/>
         </DashboardLayout>
     )
