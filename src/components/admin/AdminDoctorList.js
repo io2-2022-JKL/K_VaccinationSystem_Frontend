@@ -15,6 +15,7 @@ import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
 import { AdminDoctorInfoModal } from './AdminDoctorInfoModal';
 import { AdminDoctorModificationModal } from './AdminDoctorModificationModal'
+import AdminDoctorTimeSlotsModal from './AdminDoctorTimeSlotsModal';
 
 export default function AdminDoctorList() {
 
@@ -39,6 +40,7 @@ export default function AdminDoctorList() {
             for (let i = 0; i < r.data.length; i++) {
                 r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].id)} color={"error"}>Usuń</Button>
                 r.data[i].detailsButton = <AdminDoctorInfoModal data={r.data[i]}/>
+                r.data[i].timeSlotButton = <AdminDoctorTimeSlotsModal data={r.data[i]}/>
                 r.data[i].editButton = <AdminDoctorModificationModal data={r.data[i]} centers={c.data}/>
             }
             setTableData(r.data)
@@ -67,8 +69,9 @@ export default function AdminDoctorList() {
         {Header: "Imię", accessor: "firstName", width: "15%"},
         {Header: "Nazwisko", accessor: "lastName", width: "15%"},
         {Header: "Pesel", accessor: "pesel", width: "15%"},
-        {Header: "Edycja", accessor: "editButton", width: "20%"},
+        {Header: "Edycja", accessor: "editButton", width: "10%"},
         {Header: "Info", accessor: "detailsButton", width: "15%"},
+        {Header: "Sloty", accessor: "timeSlotButton", width: "10%"},
         {Header: "Usuń", accessor: "deleteButton", width: "20%"},
     ]
     
