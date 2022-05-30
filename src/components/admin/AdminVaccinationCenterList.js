@@ -10,31 +10,46 @@ import DataTable from "../../examples/Tables/DataTable";
 import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
 import { AdminVaccinationCenterInfoModal } from "./AdminVaccinationCenterModals"
+import { Button } from '@mui/material';
 
 export default function AdminVaccinationCenterList() {
 
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
 
-    useEffect(() => {
-        const instance = ApiConnection("/admin/vaccinationCenters/");
-        instance.get(
-            "/admin/vaccinationCenters"
-        ).then(r => {
-            for (let i = 0; i < r.data.length; i++) {
-                r.data[i].detailsButton = <AdminVaccinationCenterInfoModal data={r.data[i]}/>
-            }
-            setTableData(r.data)
-        }).finally(() => {
-            setLoading(false)
-        });
+    useEffect(async () => {
+        updateData()
     }, [])
 
+    const updateData = async () =>
+    {
+        const instance = ApiConnection("/admin/vaccinationCenters/");
+        const r = await instance.get("/admin/vaccinationCenters")
+        for (let i = 0; i < r.data.length; i++) {
+            r.data[i].detailsButton = <AdminVaccinationCenterInfoModal data={r.data[i]}/>
+            r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].id)} color={"error"}>Usuń</Button>
+        }
+        console.log(r.data)
+        setTableData(r.data)
+        setLoading(false)
+    }
+
+    const handleCancellation = async (id) => {
+        const deleteInstance = ApiConnection("/admin/vaccinationCenters/deleteVaccinationCenter/")
+        setLoading(true)
+        const url = "/admin/vaccinationCenters/deleteVaccinationCenter/" + id
+        await deleteInstance.delete(
+            url
+        )
+        updateData()
+    }
+
     const tableColumns = [
-        {Header: "Nazwa centrum", accessor: "name", width: "25%"},
-        {Header: "Adres", accesor: "street", width: "25%"},
+        {Header: "Nazwa centrum", accessor: "name", width: "20%"},
+        {Header: "Adres", accessor: "address", width: "20%"},
         {Header: "Miasto", accessor: "city", width: "25%"},
         {Header: "Info", accessor: "detailsButton", width: "25%"},
+        {Header: "Usuń", accessor: "deleteButton", width: "10%"},
     ]
 
     return (
