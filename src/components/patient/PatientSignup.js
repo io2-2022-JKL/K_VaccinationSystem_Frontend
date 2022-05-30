@@ -56,8 +56,8 @@ export default function PatientSignup() {
             "&dateTo=" +
             toDate.substring(8, 10) + "-" + toDate.substring(5, 7) + "-" + toDate.substring(0, 4)
              +
-            "virus=" + virusFilter;
-            url = url.replace(" ", "+")
+            "&virus=" + virusFilter;
+            url = url.replace(" ", "%20")
             console.log(url)
         return url;
     }

@@ -47,7 +47,7 @@ export default function AdminDoctorTimeSlotsModal(props) {
 
         await deleteInstance.post(
             url, {
-                slots
+                "": slots
             }
         )
         onOpen()
