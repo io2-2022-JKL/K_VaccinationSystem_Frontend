@@ -1,7 +1,7 @@
 import { Modal } from "@mui/material";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
-import {useEffect, useState} from 'react';
+import { useState } from 'react';
 import { Button } from "@mui/material";
 
 export function PatientSignupVisitModal(props) {
@@ -37,11 +37,11 @@ export function PatientSignupVisitModal(props) {
                     Szczegóły wizyty
                 </Typography>
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    <div>Data: {props.data.from.substring(8, 10)}.{props.data.from.substring(5, 7)}.{props.data.from.substring(0, 4)}</div>
-                    <div>Godzina: {props.data.from.substring(11, 16)}-{props.data.to.substring(11, 16)}</div>
+                    <div>Od: {props.data.from}</div>
+                    <div>Do: {props.data.to}</div>
                     <div>Centrum: {props.data.vaccinationCenterName}</div>
                     <div>Adres: {props.data.vaccinationCenterStreet}, {props.data.vaccinationCenterCity}</div>
-                    <div>Możliwe szczepienia: {props.data.availableVaccines[0].name}</div>
+                    {/*<div>Możliwe szczepienia: {props.data.availableVaccines[0].name}</div> */}
                     <div>Doktor: {props.data.doctorFirstName} {props.data.doctorLastName}</div>
                 </Typography>
             </Box>

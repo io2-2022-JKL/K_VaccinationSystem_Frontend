@@ -7,12 +7,8 @@ import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
 import Grid from "@mui/material/Grid";
 import Header from "../../layouts/profile/components/Header";
-import Divider from "@mui/material/Divider";
-import ProfileInfoCard from "../../examples/Cards/InfoCards/ProfileInfoCard";
 import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
-import Button from "@mui/material/Button";
-import {Typography} from "@mui/material";
 import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
@@ -24,18 +20,14 @@ export default function PatientDashboard() {
     const [tableData, setTableData] = useState([]);
     const [patientData, setPatientData] = useState([]);
 
-    const instance = ApiConnection("/patient/certificates/");
-    const instance2 = ApiConnection("/patient/info/");
-
     useEffect(() => {
+        const instance = ApiConnection("/patient/certificates/");
+        const instance2 = ApiConnection("/patient/info/");
         instance.get(
             "/patient/certificates/" + GetId()
         ).then(r => {
             setTableData(r.data)
         })
-            .finally(() => {
-                //setLoading(false)
-            });
         instance2.get(
             "/patient/info/" + GetId()
         ).then(r => {
@@ -44,6 +36,7 @@ export default function PatientDashboard() {
             .finally(() => {
                 setLoading(false)
             });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const patient = new Patient(patientData);

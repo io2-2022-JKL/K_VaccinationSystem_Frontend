@@ -7,8 +7,6 @@ import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
 import Grid from "@mui/material/Grid";
 import Header from "../../layouts/profile/components/Header";
-import Divider from "@mui/material/Divider";
-import ProfileInfoCard from "../../examples/Cards/InfoCards/ProfileInfoCard";
 import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
 import useLogin from "../../logic/useLogin";
@@ -29,6 +27,7 @@ export default function PatientDashboard() {
 
     useEffect(() => {
         updateData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 

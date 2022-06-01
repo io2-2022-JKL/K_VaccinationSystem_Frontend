@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 
 // react-router components
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -6,10 +6,8 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
-import MDBox from "components/MDBox";
 
 // Material Dashboard 2 React example components
 import Sidenav from "examples/Sidenav";
@@ -36,12 +34,11 @@ import adminRoutes from "./routes/adminRoutes";
 import homeRoutes from "./routes/homeRoutes";
 
 // Material Dashboard 2 React contexts
-import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
+import { useMaterialUIController, setMiniSidenav } from "context";
 
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
-import { MarkEmailUnreadOutlined } from "@mui/icons-material";
 import useLogin from "./logic/useLogin";
 
 export default function App() {
@@ -50,14 +47,13 @@ export default function App() {
         miniSidenav,
         direction,
         layout,
-        openConfigurator,
+        //openConfigurator,
         sidenavColor,
         transparentSidenav,
         whiteSidenav,
-        darkMode,
+        //darkMode,
     } = controller;
     const [onMouseEnter, setOnMouseEnter] = useState(false);
-    const [rtlCache, setRtlCache] = useState(null);
     const { pathname } = useLocation();
     const {isLoggedIn} = useLogin();
 
@@ -115,10 +111,9 @@ export default function App() {
 
     const mainRoute = () =>
     {
-        const curPath = window.location.pathname.split('/')[1];
-        if (curPath === "patient") return "/patient";
-        if (curPath === "doctor") return "/doctor";
-        if (curPath === "admin") return "/admin";
+        if (isLoggedIn("/admin") !== null) return "/admin/doctorList";
+        if (isLoggedIn("/doctor") !== null) return "/doctor";
+        if (isLoggedIn("/patient") !== null) return "/patient";
         return "/login";
     }
 
@@ -144,7 +139,7 @@ export default function App() {
                 {isLoggedIn("/patient") ? getRoutes(routes) : []}
                 {getRoutes(authRoutes)}
                 {getRoutes(homeRoutes)}
-                <Route path="*" element={<Navigate to={mainRoute()} />} />
+                {<Route path="*" element={<Navigate to={mainRoute()} />} />}
             </Routes>
         </ThemeProvider>
     );

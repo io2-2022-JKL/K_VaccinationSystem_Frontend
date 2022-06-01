@@ -1,7 +1,6 @@
 // @mui icons
 import LogInComponent from "../components/LoginPage";
 import RegisterComponent from "../components/RegisterComponent";
-import Home from "components/Home";
 
 const routes = [
     {

@@ -1,37 +1,65 @@
-class Appointment
+import TimeSlot from "./TimeSlot";
+import Vaccine from "./Vaccine";
+import User from "./User";
+
+export default class Appointment
 {
-    _whichDose;
+    _id;
+    _vaccine;
     _timeSlot;
     _patient;
-    _vaccine;
-    _completed;
-    _vaccineBatchNumber;
+    _whichDose;
+    _visitState;
+    _certifyState;
 
     constructor(appointment)
     {
-        this._whichDose = appointment.whichDose;
-        this._timeSlot = appointment.timeSlot;
-        this._patient = appointment.patient;
-        this._vaccine = appointment.vaccine;
-        this._completed = appointment.completed;
-        this._vaccineBatchNumber = appointment.vaccineBatchNumber;
+        this._timeSlot = new TimeSlot(appointment);
+        this._patient = new User(appointment)
+        this._vaccine = new Vaccine(appointment)
+        this._whichDose = appointment.whichVaccineDose;
+        this._visitState = appointment.visitState;
+        this._certifyState = appointment.certifyState;
     }
 
     get getWhichDose() { return this._whichDose; }
     set setWhichDose(whichDose) { this._whichDose = whichDose; }
 
     get getTimeSlot() { return this._timeSlot; }
-    set setTimeSlot(timeSlot) { this._timeSlot = timeSlot; }
+    set setTimeSlot(timeSlot) { this._timeSlot = new TimeSlot(timeSlot); }
     
     get getPatient() { return this._patient; }
-    set setPatient(patient) { this._patient = patient; }
+    set setPatient(patient) { this._patient = new User(patient); }
 
     get getVaccine() { return this._vaccine; }
-    set setVaccine(vaccine) { this._vaccine = vaccine; }
+    set setVaccine(vaccine) { this._vaccine = new Vaccine(vaccine); }
 
-    get getCompleted() { return this._completed; }
-    set setCompleted(completed) { this._completed = completed; }
+    get getVisitState() { return this._visitState; }
+    set setVisitState(state) { this._visitState = state; }
 
-    get getVaccineBatchNumber() { return this._vaccineBatchNumber; }
-    set setVaccineBatchNumber(vaccineBatchNumber) { this._vaccineBatchNumber = vaccineBatchNumber; }
+    get getCertifyState() { return this._certifyState; }
+    set setCertifyState(state) { this._certifyState = state; }
+
+    toTableData() {
+        const NA = "NA";
+        let result = [];
+
+        this._id 
+        ? result = [...result, {appointmentId: this._id}] 
+        : result = [...result, {appointmentId: NA}];
+
+        this._whichDose 
+        ? result = [...result, {whichDose: this._whichDose}] 
+        : result = [...result, {whichDose: NA}];
+
+        this._visitState 
+        ? result = [...result, {visitState: this._visitState}] 
+        : result = [...result, {visitState: NA}];
+        
+        this._certifyState 
+        ? result = [...result, {certifyState: this._certifyState}] 
+        : result = [...result, {certifyState: NA}];
+
+        result = [...result, ...this._timeSlot.toTableData(), ...this._patient.toTableData(), ...this._vaccine.toTableData()];
+    }
 }

@@ -18,7 +18,6 @@ import MDButton from "components/MDButton";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
-import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import ApiConnection from "../logic/api/ApiConnection";
 import useLogin from "../logic/useLogin";
 
@@ -28,7 +27,6 @@ function LogInComponent(props) {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [sendingData, setSendingData] = useState(false);
-    const [fail, setFail] = useState(false);
 
     const conn = ApiConnection("/signin");
     const {LogIn} = useLogin();
@@ -42,10 +40,9 @@ function LogInComponent(props) {
                 password: password,
             }).then(r => {
             if (r.status !== 200) {
-                setFail(true);
             } else {
-                LogIn(r.data.jwt, r.data.userId, r.data.userType);
-                navigate("/patient")
+                LogIn(r.headers.authorization, r.data.userId, r.data.userType.toLowerCase());
+                navigate("/" + r.data.userType.toLowerCase())
             }
         }).finally(() => {
             setSendingData(false);

@@ -1,4 +1,6 @@
-class VaccintationCenter
+import Vaccine from "./Vaccine";
+
+export default class VaccintationCenter
 {
     _id;
     _name;
@@ -6,21 +8,20 @@ class VaccintationCenter
     _address;
     _availableVaccines;
     _openingHours;
-    _closingHours;
-    _doctors;
     _active;
   
-    constructor(vaccintationCenter)
+    constructor(vaccinationCenter)
     {
-        this._id = vaccintationCenter.id; 
-        this._name = vaccintationCenter.name;
-        this._city = vaccintationCenter.city;
-        this._address = vaccintationCenter.address;
-        this._availableVaccines = vaccintationCenter.availableVaccines;
-        this._openingHours = vaccintationCenter.openingHours;
-        this._closingHours = vaccintationCenter.closingHours;
-        this._doctors = vaccintationCenter.doctors;
-        this._active = vaccintationCenter.active;
+        this._id = vaccinationCenter.id ? vaccinationCenter.id : vaccinationCenter.vaccinationCenterId;
+        this._name = vaccinationCenter.name ? vaccinationCenter.name : vaccinationCenter.centerName;
+        if (!this._name) this._name = vaccinationCenter.vaccinationCenterName;
+        this._city = vaccinationCenter.city ? vaccinationCenter.city : vaccinationCenter.centerCity;
+        if (!this._city) this._city = vaccinationCenter.vaccinationCenterCity;
+        this._address = vaccinationCenter.street ? vaccinationCenter.street : vaccinationCenter.centerStreet;
+        if (!this._address) this._address = vaccinationCenter.vaccinationCenterStreet;
+        if (vaccinationCenter.vaccines) this._availableVaccines = vaccinationCenter.vaccines.map((vac) => new Vaccine(vac));
+        this._openingHours = vaccinationCenter.openingHours;
+        this._active = vaccinationCenter.active;
     }
     
     get getId() { return this._id; }
@@ -49,19 +50,31 @@ class VaccintationCenter
 
     get getActive() { return this._active; }
     set setActive(active) { this._active = active; }
-}
 
-function createVaccinationCenter(id,name,city,address,availableVaccines,openingHours,closingHours,doctors,active)
-{
-    vaccintationCenter = new Object();
-    vaccintationCenter.id = id; 
-    vaccintationCenter.name = name;
-    vaccintationCenter.city = city;
-    vaccintationCenter.address = address;
-    vaccintationCenter.availableVaccines = availableVaccines;
-    vaccintationCenter.openingHours = openingHours;
-    vaccintationCenter.closingHours = closingHours;
-    vaccintationCenter.doctors = doctors;
-    vaccintationCenter.active = active;
-    return new VaccintationCenter(vaccintationCenter);
+    toTableData() {
+        const NA = "NA";
+        let result = [];
+
+        this._name 
+        ? result = [...result, { centerName: this._name }] 
+        : result = [...result, { centerName: NA }];
+
+        this._city 
+        ? result = [...result, { centerCity: this._city }] 
+        : result = [...result, { centerCity: NA }];
+
+        this._address 
+        ? result = [...result, { centerAdress: this._address }] 
+        : result = [...result, { centerAdress: NA }];
+
+        this._active 
+        ? result = [...result, { centerActive: this._active }] 
+        : result = [...result, { centerActive: NA }];
+
+        this._id 
+        ? result = [...result, { centerId: this._id }] 
+        : result = [...result, { centerId: NA }];
+        
+        return result;
+    }
 }
