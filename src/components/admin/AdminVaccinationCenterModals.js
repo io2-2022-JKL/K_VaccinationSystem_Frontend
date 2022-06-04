@@ -28,13 +28,13 @@ export function AdminVaccinationCenterInfoModal(props) {
                     Godziny otwarcia centrum szczepień
                 </Typography>
                 <Typography id="modal-modal-description" sx={{ mt: 2 }} variant="subtitle2" component="subtitle2">
-                    {/* <div>Poniedziałek: {props.data.openingHoursDays[0].from} - {props.data.openingHoursDays[0].to}</div>
-                    <div>Wtorek: {props.data.openingHoursDays[1].from} - {props.data.openingHoursDays[2].to}</div>
-                    <div>Środa: {props.data.openingHoursDays[2].from} - {props.data.openingHoursDays[3].to}</div>
-                    <div>Czwartek: {props.data.openingHoursDays[3].from} - {props.data.openingHoursDays[4].to}</div>
-                    <div>Piątek: {props.data.openingHoursDays[4].from} - {props.data.openingHoursDays[5].to}</div>
-                    <div>Sobota: {props.data.openingHoursDays[5].from} - {props.data.openingHoursDays[6].to}</div>
-                    <div>Niedziela: {props.data.openingHoursDays[6].from} - {props.data.openingHoursDays[7].to}</div> */}
+                    <div>Poniedziałek: {props.data.openingHoursDays[0].from} - {props.data.openingHoursDays[0].to}</div>
+                    <div>Wtorek: {props.data.openingHoursDays[1].from} - {props.data.openingHoursDays[1].to}</div>
+                    <div>Środa: {props.data.openingHoursDays[2].from} - {props.data.openingHoursDays[2].to}</div>
+                    <div>Czwartek: {props.data.openingHoursDays[3].from} - {props.data.openingHoursDays[3].to}</div>
+                    <div>Piątek: {props.data.openingHoursDays[4].from} - {props.data.openingHoursDays[4].to}</div>
+                    <div>Sobota: {props.data.openingHoursDays[5].from} - {props.data.openingHoursDays[5].to}</div>
+                    <div>Niedziela: {props.data.openingHoursDays[6].from} - {props.data.openingHoursDays[6].to}</div>
                 </Typography>
             </Box>
         </Modal>

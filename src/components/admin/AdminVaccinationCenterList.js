@@ -48,7 +48,7 @@ export default function AdminVaccinationCenterList() {
 
     const tableColumns = [
         {Header: "Nazwa centrum", accessor: "name", width: "20%"},
-        {Header: "Adres", accessor: "address", width: "20%"},
+        {Header: "Adres", accessor: "street", width: "20%"},
         {Header: "Miasto", accessor: "city", width: "25%"},
         {Header: "Info", accessor: "detailsButton", width: "25%"},
         {Header: "Usuń", accessor: "deleteButton", width: "10%"},
