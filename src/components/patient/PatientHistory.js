@@ -13,6 +13,7 @@ import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import { PatientIncomingVisitModal } from './PatientVisitModal';
 import Loader from "react-loader";
+import { Typography } from '@mui/material';
 
 export default function PatientDashboard() {
 
@@ -20,31 +21,26 @@ export default function PatientDashboard() {
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
     const [patientData, setPatientData] = useState([]);
+    const [visitsExist, setExist] = useState(true);
 
-    useEffect(() => {
+    useEffect(async () => {
         const instance = ApiConnection("/patient/appointments/formerAppointments/");
         const instance2 = ApiConnection("/patient/info/");
-        instance.get(
+        const p = await instance2.get("/patient/info/" + GetId())
+        const patient = new Patient(p.data)
+        setPatientData(patient)
+        const r = await instance.get(
             "/patient/appointments/formerAppointments/" + GetId()
-        ).then(r => {
-            for(let i = 0; i < r.data.length; i++)
-            {
-                r.data[i].detailsButton = <PatientIncomingVisitModal data={r.data[i]}/>
-            }
-            setTableData(r.data)
-        })
-        instance2.get(
-            "/patient/info/" + GetId()
-        ).then(r => {
-            setPatientData(r.data)
-        })
-            .finally(() => {
-                setLoading(false)
-            });
+        )
+        for(let i = 0; i < r.data.length; i++)
+        {
+            r.data[i].detailsButton = <PatientIncomingVisitModal data={r.data[i]}/>
+        }
+        setTableData(r.data)
+        setLoading(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const patient = new Patient(patientData);
 
     const tableColumns = [
         {Header: "Nazwa szczepionki", accessor: "vaccineName", width: "25%"},
@@ -57,18 +53,32 @@ export default function PatientDashboard() {
         <DashboardLayout>
             <DashboardNavbar/>
             <MDBox mb={10}/>
+            <Header name={patientData.getFirstName + " " + patientData.getLastName} position={"Pacjent"}>            
             {
+                visitsExist?
                 loading?
                 <Grid>
                     <Loader /> 
                 </Grid> 
                 :
-                <Header name={patient.getFirstName + " " + patient.getLastName} position={"Pacjent"}>
                     <MDBox mt={5} mb={3}>
                         <DataTable table={{columns: tableColumns, rows: tableData}}/>
                     </MDBox>
-                </Header>
+                :
+                <Grid
+                    container
+                    spacing={0}
+                    direction="column"
+                    alignContent="center"
+                    alignItems="center"
+                    justify="center"
+                    style={{ minHeight: 30 }}>
+                    <Typography>
+                        404 nie ma wizyt
+                    </Typography>
+                </Grid>
             }
+            </Header>
             <Footer/>
         </DashboardLayout>
     )

@@ -7,9 +7,7 @@ import { Button } from "@mui/material";
 export function PatientSignupVisitModal(props) {
 
     const [open, setOpen] = useState(false);
-
     const handleClose = () => setOpen(false);
-
 
     const style = {
         position: 'absolute',

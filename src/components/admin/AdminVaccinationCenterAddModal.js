@@ -11,13 +11,9 @@ import { TextField } from '@mui/material';
 import { Grid } from '@mui/material';
 import { Select } from '@mui/material';
 import { MenuItem } from '@mui/material';
-import { KeyboardDoubleArrowRightSharp } from '@mui/icons-material';
 
 export default function AdminVaccinationCenterAddModal(props) {
 
-    let name = "";
-    let city = "";
-    let street = "";
     let openingHoursDays = [
         {
             from: "00:00",
@@ -48,18 +44,20 @@ export default function AdminVaccinationCenterAddModal(props) {
             to: "23:59"
         },
     ];
-    let vaccineIds = [];
     let active = true;
 
     const [open, setOpen] = useState(false);
     const [vaccines, setVaccines] = useState([]);
     const [selectedVaccines, setSelectedVaccines] = useState([])
+    const [name, setName] = useState("");
+    const [city, setCity] = useState("");
+    const [street, setStreet] = useState("");
 
-    const instance = ApiConnection("/admin/vaccinationCenter/addVaccinationCenter");
+    const instance = ApiConnection("/admin/vaccinationCenters/addVaccinationCenter");
 
-    const handleName = (event) => name = event.target.value;
-    const handlecity = (event) => city = event.target.value;
-    const handlestreet = (event) => street = event.target.value;
+    const handleName = (event) => setName(event.target.value);
+    const handlecity = (event) => setCity(event.target.value);
+    const handlestreet = (event) => setStreet(event.target.value);
 
     const handleClose = () => {
         setOpen(false);
@@ -67,19 +65,14 @@ export default function AdminVaccinationCenterAddModal(props) {
 
     const style = modalStyle()
 
-    const addCenter = async ( 
-        street, 
-        name, 
-        city, 
-        active) =>
+    let addCenter = async () =>
     {
-        console.log(props.streetes)
         await instance.post(
-            "/admin/vaccinationCenter/addVaccinationCenter", {
+            "/admin/vaccinationCenters/addVaccinationCenter", {
                 "street": street,
                 "name": name,
                 "city": city,
-                vaccineIds,
+                "vaccineIds": selectedVaccines,
                 openingHoursDays,
                 "active": active,
             })
@@ -94,6 +87,7 @@ export default function AdminVaccinationCenterAddModal(props) {
         const v = await instanceVaccines.get("/admin/vaccines")
         setVaccines(v.data)
         setOpen(true)
+        console.log(vaccines)
     }
 
     const handleChange = (event) => {
@@ -153,8 +147,11 @@ export default function AdminVaccinationCenterAddModal(props) {
                             multiple 
                             onChange={handleChange}>
                                 {vaccines.map((record) => (
-                                    <MenuItem key={record.vaccineId} value={record.vaccineId}>
-                                    {record.name}
+                                    <MenuItem 
+                                        key={record.vaccineId} 
+                                        value={record.vaccineId}
+                                    >
+                                        {record.name}
                                     </MenuItem>
                                     ))}
                         </Select>
@@ -258,11 +255,7 @@ export default function AdminVaccinationCenterAddModal(props) {
                             onChange={(e) => openingHoursDays[6].to=e.target.value}/>
                     </Grid>
                 </Box>
-                <Button onClick={() => addCenter(
-                    street, 
-                    name, 
-                    city, 
-                    active)}>
+                <Button onClick={() => addCenter()}>
                         Utwórz
                 </Button>
             </Box>

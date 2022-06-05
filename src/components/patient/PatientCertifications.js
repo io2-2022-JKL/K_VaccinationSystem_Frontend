@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import '../../styles/patient/patient.css';
 import Patient from '../../models/Patient'
-import '../../models/User';
 import MDBox from "../MDBox";
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
@@ -12,34 +10,37 @@ import DataTable from "../../examples/Tables/DataTable";
 import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
+import { Typography } from '@mui/material';
 
 export default function PatientDashboard() {
 
-    const {GetId} = useLogin();
-    const [loading, setLoading] = useState(true);
-    const [tableData, setTableData] = useState([]);
-    const [patientData, setPatientData] = useState([]);
+    const {GetId} = useLogin()
+    const [loading, setLoading] = useState(true)
+    const [tableData, setTableData] = useState([])
+    const [patientData, setPatientData] = useState([])
+    const [certificatesExist, setCertificateExistance] = useState(true)
 
-    useEffect(() => {
-        const instance = ApiConnection("/patient/certificates/");
-        const instance2 = ApiConnection("/patient/info/");
-        instance.get(
+    useEffect( async () => {
+        const instance = ApiConnection("/patient/certificates/")
+        const instance2 = ApiConnection("/patient/info/")
+        const p = await instance2.get("/patient/info/" + GetId())
+        const patient = new Patient(p.data)
+        setPatientData(patient)
+        const r = await instance.get(
             "/patient/certificates/" + GetId()
-        ).then(r => {
+        ).catch((error) =>{
+            if(error.response.status == 404)
+                setCertificateExistance(false)
+        })
+        if ( typeof r !== 'undefined')
+        {
             setTableData(r.data)
-        })
-        instance2.get(
-            "/patient/info/" + GetId()
-        ).then(r => {
-            setPatientData(r.data)
-        })
-            .finally(() => {
-                setLoading(false)
-            });
+            setLoading(false)
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const patient = new Patient(patientData);
+    //const patient = new Patient(patientData);
 
     const tableColumns = [
         {Header: "Szczepionka", accessor: "Vaccine", width: "25%"},
@@ -53,16 +54,36 @@ export default function PatientDashboard() {
             <DashboardNavbar/>
             <MDBox mb={10}/>
             {
-                loading?
+            loading?
+                <Header name={patientData.getFirstName + " " + patientData.getLastName} position={"Pacjent"}>
+                {
+                    certificatesExist?
+                        loading?
+                        <Grid>
+                            <Loader /> 
+                        </Grid> 
+                        :
+                            <MDBox mt={5} mb={3}>
+                                <DataTable table={{columns: tableColumns, rows: tableData}}/>
+                            </MDBox> 
+                    :
+                    <Grid
+                        container
+                        spacing={0}
+                        direction="column"
+                        alignContent="center"
+                        alignItems="center"
+                        justify="center"
+                        style={{ minHeight: 30 }}>
+                        <Typography>
+                            404 nie nadchodzących wizyt
+                        </Typography>
+                    </Grid>
+                }
+                </Header>:
                 <Grid>
                     <Loader /> 
-                </Grid> 
-                :
-                <Header name={patient.getFirstName + " " + patient.getLastName} position={"Pacjent"}>
-                    <MDBox mt={5} mb={3}>
-                        <DataTable table={{columns: tableColumns, rows: tableData}}/>
-                    </MDBox>
-                </Header>
+                </Grid>
             }
             <Footer/>
         </DashboardLayout>
