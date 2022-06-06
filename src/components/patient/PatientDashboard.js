@@ -39,7 +39,7 @@ export default function PatientDashboard() {
         const patient = new Patient(p.data)
         setPatientData(patient)
         const r = await instance.get("/patient/appointments/incomingAppointments/" + GetId()).catch((error) =>{
-            if(error.response.status == 404)
+            if(error.response.status === 404)
                 setExist(false)
         })
         if ( typeof r !== 'undefined')
@@ -49,8 +49,8 @@ export default function PatientDashboard() {
                 r.data[i].detailsButton = <PatientIncomingVisitModal data={r.data[i]}/>
             }
             setTableData(r.data)
-            setLoading(false)
         }
+        setLoading(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

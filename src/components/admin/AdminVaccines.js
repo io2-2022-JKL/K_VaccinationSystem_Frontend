@@ -33,15 +33,15 @@ export default function AdminVaccinesList() {
         const virusInstance = ApiConnection("/viruses")
         const c = await virusInstance.get("/viruses")
         const r = await instance.get("/admin/vaccines")
-        console.log(c)
         for (let i = 0; i < r.data.length; i++) {
             r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].vaccineId)} color={"error"}>Usuń</Button>
             r.data[i].detailsButton = <AdminVaccineInfoModal data={r.data[i]}/>
             r.data[i].editButton = <AdminVaccineEditModal data={r.data[i]} viruses={c.data}/>
         }
-        await setTableData(r.data)
-        await setViruses(c.data)
-        await setLoading(false)
+        console.log(r.data)
+        setTableData(r.data)
+        setViruses(c.data)
+        setLoading(false)
     }
 
     const handleCancellation = async (id) => {

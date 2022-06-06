@@ -29,7 +29,7 @@ export default function AdminDoctorList() {
         const r = await instance.get(
             "/admin/doctors"
         ).catch((error) => {
-            if(error.response.status == 404)
+            if(error.response.status === 404)
                 setExistance(false)
         }
         )

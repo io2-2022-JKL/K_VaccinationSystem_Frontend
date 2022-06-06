@@ -12,6 +12,8 @@ import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
 import ApiConnection from "../../logic/api/ApiConnection";
 import useLogin from "../../logic/useLogin";
+import Loader from "react-loader"
+import { Typography } from '@mui/material';
 
 export default function DoctorDashboard() {
 
@@ -19,16 +21,23 @@ export default function DoctorDashboard() {
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
     const [patientData, setPatientData] = useState([]);
+    const [visitsExist, setExist] = useState(true);
 
     useEffect(async () => {
         const instance = ApiConnection("/doctor/incomingAppointments/");
         const instancePatient = ApiConnection("/patient/info/");
         const instanceDoctor = ApiConnection("/doctor/info")
-        const c = await instancePatient.get("/patient/info/" + GetId())
-        console.log(c.data)
+        const d = await instanceDoctor.get("/doctor/info/" + GetId())
+        const c = await instancePatient.get("/patient/info/" + d.data.patientAccountId)
         setPatientData(c.data)
-        const r = await instance.get("/doctor/incomingAppointments/" + GetId())
-        setTableData(r.data)
+        const r = await instance.get("/doctor/incomingAppointments/" + GetId()).catch((error) =>{
+            if(error.response.status === 404)
+                setExist(false)
+        })
+        if ( typeof r !== 'undefined')
+        {
+            setTableData(r.data) 
+        }
         setLoading(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -67,11 +76,28 @@ export default function DoctorDashboard() {
                             <Divider orientation="vertical" sx={{mx: 0}}/>
                         </Grid>
                         {
-                            loading ?
-                                <Grid item xs={12} xl={8}>Loading</Grid> :
-                                <Grid item xs={12} xl={8}>
-                                    <DataTable table={{columns: tableColumns, rows: tableData}}/>
-                                </Grid>
+                            visitsExist?
+                                loading?
+                                <Grid>
+                                    <Loader /> 
+                                </Grid> 
+                                :
+                                    <MDBox mt={5} mb={3}>
+                                        <DataTable table={{columns: tableColumns, rows: tableData}}/>
+                                    </MDBox>
+                            :
+                            <Grid
+                                container
+                                spacing={0}
+                                direction="column"
+                                alignContent="center"
+                                alignItems="center"
+                                justify="center"
+                                style={{ minHeight: 30 }}>
+                                <Typography>
+                                    404 nie ma wizyt
+                                </Typography>
+                            </Grid>
                         }
                     </Grid>
                 </MDBox>

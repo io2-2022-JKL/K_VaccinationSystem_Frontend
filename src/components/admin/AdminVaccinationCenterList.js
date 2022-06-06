@@ -13,6 +13,7 @@ import { AdminVaccinationCenterInfoModal } from "./AdminVaccinationCenterModals"
 import { Button } from '@mui/material';
 import AdminVaccinationCenterAddModal from './AdminVaccinationCenterAddModal';
 import { Box } from '@mui/material';
+import AdminVaccinationCenterEditModal from './AdminVaccinationCenterEditModal';
 
 export default function AdminVaccinationCenterList() {
 
@@ -29,9 +30,9 @@ export default function AdminVaccinationCenterList() {
         const r = await instance.get("/admin/vaccinationCenters")
         for (let i = 0; i < r.data.length; i++) {
             r.data[i].detailsButton = <AdminVaccinationCenterInfoModal data={r.data[i]}/>
+            r.data[i].editButton = <AdminVaccinationCenterEditModal data={r.data[i]}/>
             r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].id)} color={"error"}>Usuń</Button>
         }
-        console.log(r.data)
         setTableData(r.data)
         setLoading(false)
     }
@@ -51,6 +52,7 @@ export default function AdminVaccinationCenterList() {
         {Header: "Adres", accessor: "street", width: "20%"},
         {Header: "Miasto", accessor: "city", width: "25%"},
         {Header: "Info", accessor: "detailsButton", width: "25%"},
+        {Header: "Edytuj", accessor: "editButton", width: "25%"},
         {Header: "Usuń", accessor: "deleteButton", width: "10%"},
     ]
 

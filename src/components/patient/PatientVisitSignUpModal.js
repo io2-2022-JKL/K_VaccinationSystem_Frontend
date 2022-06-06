@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Modal } from "@mui/material";
+import { getDialogActionsUtilityClass, Modal } from "@mui/material";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
 import { useState } from 'react';
@@ -11,32 +11,30 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import ApiConnection from "../../logic/api/ApiConnection";
+import useLogin from '../../logic/useLogin.js'
 
+export function PatientVisitSignUpModal(props) {
 
-export function AdminAddDoctorModal(props) {
+    const {GetId} = useLogin();
     const [open, setOpen] = useState(false);
-    const [center, setCenter] = useState('');
-
-    const instance = ApiConnection("/admin/doctors/addDoctor");
+    const [vaccine, setVaccine] = useState(props.data.availableVaccines[0].vaccineId)
 
     const handleClose = () => {
-
         setOpen(false);
     }
 
     const style = modalStyle()
 
     const handleChange = (event) => {
-        setCenter(event.target.value);
+        setVaccine(event.target.value);
       };
 
-    const addDoctor = (patient, center) =>
+    const signUp = async () =>
     {
-        console.log([patient, center])
-        instance.post(
-            "/admin/doctors/addDoctor", {
-                "patientId": patient,
-                "vaccinationCenterId": center
+        const instance = ApiConnection("/patient/timeSlots/Book/");
+        await instance.post(
+            "/patient/timeSlots/Book/"+ GetId() +
+            "/"+props.data.timeSlotId+"/"+vaccine, {
             })
             handleClose()
             window.location.reload(false);
@@ -44,7 +42,7 @@ export function AdminAddDoctorModal(props) {
 
     return (
         <>
-        <Button onClick={() => setOpen(true)}>Doktoryzuj</Button>
+        <Button onClick={() => setOpen(true)}>Zapisz się</Button>
         <Modal
             open={open}
             onClose={handleClose}
@@ -53,29 +51,29 @@ export function AdminAddDoctorModal(props) {
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h2" component="h2">
-                    Dodaj doktora {props.data.firstName} {props.data.lastName}
+                    Zapisz się
                 </Typography>
                 <Box sx={{ minWidth: 120, minHeight: 50 }}>
                 <FormControl fullWidth variant="standard" size="big">
-                    <InputLabel id="select-center-label">Centrum Szczepień</InputLabel>
+                    <InputLabel id="select-vaccine-label">Szczepionka</InputLabel>
                     <Select
-                        labelId="select-center-label"
-                        id="select-center"
-                        value={center}
+                        labelId="select-vaccine-label"
+                        id="select-vaccine"
+                        value={vaccine}
                         defaultValue={"none"}
-                        label="Centrum"
+                        label="Szzepionka"
                         onChange={handleChange}
                         >
-                    {props.centers.map((record) => (
-                        <MenuItem key={record.name} value={record.id}>
-                        {record.name}, {record.street}, {record.city}
+                    {props.data.availableVaccines.map((record) => (
+                        <MenuItem key={record.vaccineId} value={record.vaccineId}>
+                        {record.name}, {record.company}
                         </MenuItem>
                         ))}
                     </Select>
                 </FormControl>
                 </Box>
-                <Button onClick={() => addDoctor(props.data.id, center)}>
-                        Doktoryzuj
+                <Button onClick={() => signUp()}>
+                        Zapisz się
                 </Button>
             </Box>
         </Modal>

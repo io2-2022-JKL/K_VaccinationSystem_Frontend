@@ -31,12 +31,18 @@ export default function PatientDashboard() {
         setPatientData(patient)
         const r = await instance.get(
             "/patient/appointments/formerAppointments/" + GetId()
-        )
-        for(let i = 0; i < r.data.length; i++)
+        ).catch((error) =>{
+            if(error.response.status === 404)
+                setExist(false)
+        })
+        if ( typeof r !== 'undefined')
         {
-            r.data[i].detailsButton = <PatientIncomingVisitModal data={r.data[i]}/>
+            for(let i = 0; i < r.data.length; i++)
+            {
+                r.data[i].detailsButton = <PatientIncomingVisitModal data={r.data[i]}/>
+            }
+            setTableData(r.data)
         }
-        setTableData(r.data)
         setLoading(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

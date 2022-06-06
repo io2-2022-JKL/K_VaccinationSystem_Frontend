@@ -19,7 +19,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 // prop-types is a library for typechecking of props.
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -58,7 +58,7 @@ function DashboardLayout({ children }) {
 
 // Typechecking props for the DashboardLayout
 DashboardLayout.propTypes = {
-  children: PropTypes.node.isRequired,
+  //children: PropTypes.node.isRequired,
 };
 
 export default DashboardLayout;

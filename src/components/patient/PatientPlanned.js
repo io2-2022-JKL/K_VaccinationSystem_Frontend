@@ -25,22 +25,20 @@ export default function PatientDashboard() {
     const [visitsExist, setExist] = useState(true);
 
     const instance = ApiConnection("/patient/appointments/incomingAppointments/");
-    const instance2 = ApiConnection("/patient/info/");
 
-    useEffect(async () => {
+    useEffect(() => {
         updateData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
     const updateData = async () => {
-        const instance = ApiConnection("/patient/appointments/incomingAppointments/");
         const instance2 = ApiConnection("/patient/info/");
         const p = await instance2.get("/patient/info/" + GetId())
         const patient = new Patient(p.data)
         setPatientData(patient)
         const r = await instance.get("/patient/appointments/incomingAppointments/" + GetId()).catch((error) =>{
-            if(error.response.status == 404)
+            if(error.response.status === 404)
                 setExist(false)
         })
         if ( typeof r !== 'undefined')

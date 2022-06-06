@@ -23,6 +23,7 @@ export default function PatientDashboard() {
     useEffect( async () => {
         const instance = ApiConnection("/patient/certificates/")
         const instance2 = ApiConnection("/patient/info/")
+        setLoading(false)
         const p = await instance2.get("/patient/info/" + GetId())
         const patient = new Patient(p.data)
         setPatientData(patient)
@@ -35,18 +36,17 @@ export default function PatientDashboard() {
         if ( typeof r !== 'undefined')
         {
             setTableData(r.data)
-            setLoading(false)
         }
+        setLoading(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     //const patient = new Patient(patientData);
 
     const tableColumns = [
-        {Header: "Szczepionka", accessor: "Vaccine", width: "25%"},
-        {Header: "Od", accessor: "from", width: "25%"},
-        {Header: "Do", accessor: "to", width: "25%"},
-        {Header: "", accessor: "download", width: "25%"},
+        {Header: "Szczepionka", accessor: "vaccineName", width: "25%"},
+        {Header: "Wirus", accessor: "virusType", width: "25%"},
+        {Header: "url", accessor: "url", width: "50%"},
     ]
 
     return (
@@ -54,7 +54,6 @@ export default function PatientDashboard() {
             <DashboardNavbar/>
             <MDBox mb={10}/>
             {
-            loading?
                 <Header name={patientData.getFirstName + " " + patientData.getLastName} position={"Pacjent"}>
                 {
                     certificatesExist?
@@ -80,10 +79,7 @@ export default function PatientDashboard() {
                         </Typography>
                     </Grid>
                 }
-                </Header>:
-                <Grid>
-                    <Loader /> 
-                </Grid>
+                </Header>
             }
             <Footer/>
         </DashboardLayout>

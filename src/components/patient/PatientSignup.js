@@ -17,6 +17,7 @@ import Loader from "react-loader";
 import { PatientSignupVisitModal } from "./PatientVisitModal";
 import { Select } from '@mui/material';
 import { MenuItem } from '@mui/material';
+import { PatientVisitSignUpModal } from './PatientVisitSignUpModal';
 
 export default function PatientSignup() {
 
@@ -58,7 +59,6 @@ export default function PatientSignup() {
              +
             "&virus=" + virusFilter;
             url = url.replace(" ", "%20")
-            console.log(url)
         return url;
     }
 
@@ -77,7 +77,7 @@ export default function PatientSignup() {
 
     const configureTableData = (data) => {
         for (let i = 0; i < data.length; i++) {
-            data[i].signInButton = <Button onClick={() => signIn(data[i].timeSlotId, data[i].availableVaccines[0].vaccineId)}>Wybierz</Button>;
+            data[i].signInButton = <PatientVisitSignUpModal data={data[i]}/>;
             data[i].detailsButton = <PatientSignupVisitModal data={data[i]}/>
         }
         setTableData(data);

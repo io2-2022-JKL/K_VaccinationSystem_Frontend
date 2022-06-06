@@ -56,7 +56,6 @@ export default function AdminVaccineeditModal(props) {
         maxPatientAge,
         active) =>
     {
-        console.log(props.viruses)
         await instance.post(
             "/admin/vaccines/editVaccine", {
                 "vaccineId": vaccineId,
