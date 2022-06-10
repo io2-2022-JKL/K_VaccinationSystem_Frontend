@@ -37,12 +37,12 @@ function RegisterComponent(props) {
     conn.post(
         "/register",
         {
-          pesel: pesel,
+          PESEL: pesel,
           mail: email,
           password: password,
           firstName: name,
           lastName: surname,
-          dateOfBirth: birthday,
+          dateOfBirth: birthday.slice(8,10)+"-"+birthday.slice(5,8)+birthday.slice(0,4),
           phoneNumber: phone,
         }).then(r => {
       if (r.status === 200) {
@@ -85,7 +85,7 @@ function RegisterComponent(props) {
                   id="date"
                   label="Data urodzenia"
                   type="date"
-                  defaultValue="2000-05-09"
+                  defaultValue="2000-01-01"
                   onChange={e => setBirthDay(e.target.value)}
                   InputLabelProps={{
                     shrink: true,

@@ -28,8 +28,8 @@ export default function PatientSignup() {
     const [fromDate, setFromDate] = useState("2010-12-09");
     const [toDate, setToDate] = useState("2023-05-09");
     const [open, setOpen] = useState(true);
-    const [cityFilter, setCityFilter] = useState("Warszawa");
-    const [virusFilter, setVirusFilter] = useState("SARS COVID-19");
+    const [cityFilter, setCityFilter] = useState("");
+    const [virusFilter, setVirusFilter] = useState("");
     const [patientData, setPatientData] = useState([]);
     const [viruses, setViruses] = useState([])
     const [cities, setCities] = useState([])
@@ -100,6 +100,8 @@ export default function PatientSignup() {
         setViruses(v.data)
         setPatientData(r.data)
         setLoading(false)
+        setCityFilter(c.data[0].city)
+        setVirusFilter(v.data[0].virus)
     }, [])
 
     const patient = new Patient(patientData);

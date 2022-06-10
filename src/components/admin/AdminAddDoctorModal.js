@@ -30,16 +30,16 @@ export function AdminAddDoctorModal(props) {
         setCenter(event.target.value);
       };
 
-    const addDoctor = (patient, center) =>
+    const addDoctor = async (patient, center) =>
     {
         console.log([patient, center])
-        instance.post(
+        await instance.post(
             "/admin/doctors/addDoctor", {
                 "patientId": patient,
                 "vaccinationCenterId": center
             })
-            handleClose()
-            window.location.reload(false);
+        handleClose()
+        window.location.reload(false);
     }
 
     return (

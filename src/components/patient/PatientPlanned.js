@@ -96,7 +96,7 @@ export default function PatientDashboard() {
                     justify="center"
                     style={{ minHeight: 30 }}>
                     <Typography>
-                        404 nie ma wizyt
+                        Nie masz żadnych przyszłych wizyt
                     </Typography>
                 </Grid>
             }
