@@ -17,7 +17,6 @@ const useLogin = () => {
     }
 
     const LogIn = (token, id, role) => {
-        console.log(token, role);
         localStorage.setItem(role + "Token", token);
         localStorage.setItem("id", id);
     }

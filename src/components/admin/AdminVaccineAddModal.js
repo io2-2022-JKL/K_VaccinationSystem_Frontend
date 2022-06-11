@@ -60,11 +60,11 @@ export default function AdminVaccineAddModal(props) {
                 "virus": virus,
                 "name": name,
                 "company": company,
-                "numberOfDoses": numberOfDoses,
-                "minDaysBetweenDoses": minDaysBetweenDoses,
-                "maxDaysBetweenDoses": maxDaysBetweenDoses,
-                "maxPatientAge": maxPatientAge,
-                "minPatientAge": minPatientAge,
+                "numberOfDoses": parseInt(numberOfDoses,10),
+                "minDaysBetweenDoses": parseInt(minDaysBetweenDoses,10),
+                "maxDaysBetweenDoses": parseInt(maxDaysBetweenDoses,10),
+                "maxPatientAge": parseInt(maxPatientAge,10),
+                "minPatientAge": parseInt(minPatientAge,10),
                 "active": active,
             })
         handleClose()
@@ -84,7 +84,7 @@ export default function AdminVaccineAddModal(props) {
                 <Typography id="modal-modal-title" variant="h2" component="h2">
                     Dodaj nową szczepionkę
                 </Typography>
-                <Box fullWidth>
+                <Box>
                     <Box fullWidthsx={{pl:4, pr:4, pt:2, pd:2}}>
                         <TextField fullWidth
                             id="name" 
@@ -111,7 +111,7 @@ export default function AdminVaccineAddModal(props) {
                             onChange={handlevirus}
                             >
                             {props.viruses.map((record) => (
-                                <MenuItem value={record.virus}>
+                                <MenuItem key={record.virus} value={record.virus}>
                                 {record.virus}
                                 </MenuItem>
                                 ))}

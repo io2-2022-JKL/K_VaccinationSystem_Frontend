@@ -42,24 +42,24 @@ export default class Appointment
 
     toTableData() {
         const NA = "NA";
-        let result = [];
+        let result = new Object();
 
         this._id 
-        ? result = [...result, {appointmentId: this._id}] 
-        : result = [...result, {appointmentId: NA}];
+        ? result.appointmentId = this._id
+        : result.appointmentId = NA
 
         this._whichDose 
-        ? result = [...result, {whichDose: this._whichDose}] 
-        : result = [...result, {whichDose: NA}];
+        ? result.whichDose = this._whichDose
+        : result.whichDose = NA
 
         this._visitState 
-        ? result = [...result, {visitState: this._visitState}] 
-        : result = [...result, {visitState: NA}];
+        ? result.visitState = this._visitState
+        : result.visitState = NA
         
         this._certifyState 
-        ? result = [...result, {certifyState: this._certifyState}] 
-        : result = [...result, {certifyState: NA}];
+        ? result.certifyState = this._certifyState
+        : result.certifyState = NA
 
-        result = [...result, ...this._timeSlot.toTableData(), ...this._patient.toTableData(), ...this._vaccine.toTableData()];
+        
     }
 }

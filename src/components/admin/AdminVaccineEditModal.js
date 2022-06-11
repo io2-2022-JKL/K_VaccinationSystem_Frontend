@@ -86,8 +86,8 @@ export default function AdminVaccineeditModal(props) {
                 <Typography id="modal-modal-title" variant="h2" component="h2">
                     Zmodyfikuj dane szczepionki {props.data.name}
                 </Typography>
-                <Box fullWidth>
-                    <Box fullWidthsx={{pl:4, pr:4, pt:2, pd:2}}>
+                <Box>
+                    <Box sx={{pl:4, pr:4, pt:2, pd:2}}>
                         <TextField fullWidth
                             id="name" 
                             label="Nazwa" 
@@ -95,7 +95,7 @@ export default function AdminVaccineeditModal(props) {
                             defaultValue={name} 
                             onChange={handleName}/>
                     </Box>
-                    <Box fullWidthsx={{pl:4, pr:4, pt:2, pd:2}}>
+                    <Box sx={{pl:4, pr:4, pt:2, pd:2}}>
                         <TextField fullWidth
                             id="last_name" 
                             label="Firma" 
@@ -103,7 +103,7 @@ export default function AdminVaccineeditModal(props) {
                             defaultValue={company} 
                             onChange={handlecompany}/>
                     </Box>
-                    <Box fullWidthsx={{pl:4, pr:4, pt:2, pd:2}}>
+                    <Box sx={{pl:4, pr:4, pt:2, pd:2}}>
                         <Select
                             variant="standard"
                             fullWidth
@@ -113,13 +113,13 @@ export default function AdminVaccineeditModal(props) {
                             onChange={handlevirus}
                             >
                             {props.viruses.map((record) => (
-                                <MenuItem value={record.virus}>
+                                <MenuItem key={record.virus} value={record.virus}>
                                 {record.virus}
                                 </MenuItem>
                                 ))}
                         </Select>
                     </Box>
-                    <Box fullWidthsx={{pl:4, pr:4, pt:2, pd:2}}>
+                    <Box sx={{pl:4, pr:4, pt:2, pd:2}}>
                         <TextField fullWidth
                             id="numberOfDoses" 
                             label="Ilość dawek" 
@@ -127,7 +127,7 @@ export default function AdminVaccineeditModal(props) {
                             defaultValue={numberOfDoses} 
                             onChange={handlenumberOfDoses}/>
                     </Box>
-                    <Grid fullWidth sx={{pl:4, pr:4, pt:2, pd:2}} container>
+                    <Grid sx={{pl:4, pr:4, pt:2, pd:2}} container>
                         <TextField 
                             id="min_days" 
                             label="Dni pomiędzy od" 

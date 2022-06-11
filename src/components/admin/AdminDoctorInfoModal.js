@@ -33,7 +33,7 @@ export function AdminDoctorInfoModal(props) {
                     <div>Mail: {props.data.mail}</div>
                     <div>Nr telefonu: {props.data.phoneNumber}</div>
                     <div>Centrum szczepień: {props.data.name}, {props.data.city}, {props.data.street}</div>
-                    <div>Data Urodzenia: {props.data.dateOfBirth.slice(0,10)}</div>
+                    <div>Data Urodzenia: {props.data.dateOfBirth}</div>
                 </Typography>
             </Box>
         </Modal>

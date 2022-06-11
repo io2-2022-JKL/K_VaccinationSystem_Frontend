@@ -16,6 +16,7 @@ import useLogin from "../../logic/useLogin";
 import Loader from "react-loader";
 import { PatientIncomingVisitModal } from './PatientVisitModal';
 import { Typography } from '@mui/material';
+import Appointment from 'models/Appointment';
 
 export default function PatientDashboard() {
 
@@ -37,18 +38,18 @@ export default function PatientDashboard() {
         const instance2 = ApiConnection("/patient/info/");
         const p = await instance2.get("/patient/info/" + GetId())
         const patient = new Patient(p.data)
-        setPatientData(patient)
-        const r = await instance.get("/patient/appointments/incomingAppointments/" + GetId()).catch((error) =>{
+        setPatientData(patient.toTableData())
+        const v = await instance.get("/patient/appointments/incomingAppointments/" + GetId()).catch((error) =>{
             if(error.response.status === 404)
                 setExist(false)
         })
-        if ( typeof r !== 'undefined')
+        if ( typeof v !== 'undefined')
         {
-            for( let i = 0; i < r.data.length; i++)
+            for( let i = 0; i < v.data.length; i++)
             {
-                r.data[i].detailsButton = <PatientIncomingVisitModal data={r.data[i]}/>
+                v.data[i].detailsButton = <PatientIncomingVisitModal data={v.data[i]}/>
             }
-            setTableData(r.data)
+            setTableData(v.data)
         }
         setLoading(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,7 +64,7 @@ export default function PatientDashboard() {
             {
                 loading?
                 <Loader/>:
-            <Header name={patientData.getFirstName + " " + patientData.getLastName} position={"Pacjent"}>
+            <Header name={patientData.firstName + " " + patientData.lastName} position={"Pacjent"}>
                 <MDBox mt={5} mb={3}>
                     <Grid container spacing={1}>
                         <Grid item xs={12} md={6} xl={4} sx={{display: "flex"}}>
@@ -75,13 +76,12 @@ export default function PatientDashboard() {
                                 title="Informacje o pacjencie"
                                 description=""
                                 info={{
-                                    "Imie i Nazwisko": patientData.getFirstName + " " + patientData.getLastName,
-                                    "Pesel": patientData.getPesel,
-                                    "Data urodzenia": patientData.getDateOfBirth,
-                                    "Email": patientData.getMail,
-                                    "Numer telefonu": patientData.getPhoneNumber,
+                                    "Imie i Nazwisko": patientData.firstName + " " + patientData.lastName,
+                                    "Pesel": patientData.pesel,
+                                    "Data urodzenia": patientData.dateOfBirth,
+                                    "Email": patientData.mail,
+                                    "Numer telefonu": patientData.phoneNumber,
                                 }}
-                                action={{route: "", tooltip: "Edit Profile"}}
                                 shadow={false}
                             />
                             }

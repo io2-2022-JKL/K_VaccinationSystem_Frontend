@@ -14,6 +14,7 @@ import Loader from "react-loader";
 import { AdminPatientInfoModal } from './AdminPatientInfoModal';
 import { AdminAddDoctorModal } from './AdminAddDoctorModal.js';
 import AdminPatientEditModal from './AdminPatientEditModal';
+import Patient from '../../models/Patient';
 
 export default function AdminPatientList() {
 
@@ -36,18 +37,23 @@ export default function AdminPatientList() {
         const c = await centerInstance.get(
             "/admin/vaccinationCenters"
         )
-        for (let i = 0; i < r.data.length; i++) {
-            r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].patientId)} color={"error"}>Usuń</Button>
-            r.data[i].detailsButton = <AdminPatientInfoModal data={r.data[i]}/>
-            r.data[i].doctorButton = <AdminAddDoctorModal data={r.data[i]} centers={c.data}/>
-            r.data[i].modifyButton = <AdminPatientEditModal data={r.data[i]}/>
+        let patients = [];
+        r.data.forEach(d => {
+            let patient = new Patient(d)
+            if(d.active)patients.push(patient.toTableData())
+        });
+        for (let i = 0; i < patients.length; i++) {
+            patients[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].id)} color={"error"}>Usuń</Button>
+            patients[i].detailsButton = <AdminPatientInfoModal data={r.data[i]}/>
+            patients[i].doctorButton = <AdminAddDoctorModal data={r.data[i]} centers={c.data}/>
+            patients[i].modifyButton = <AdminPatientEditModal data={r.data[i]}/>
         }
-        setTableData(r.data)
+        setTableData(patients)
         setLoading(false)
     }
 
     const handleCancellation = (id) => {
-        const url = "/admin/deletePatient/" + id
+        const url = "/admin/patients/deletePatient/" + id
         deleteInstance.delete(
             url
         ).then(r => {

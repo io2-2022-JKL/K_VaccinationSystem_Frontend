@@ -53,27 +53,27 @@ export default class VaccintationCenter
 
     toTableData() {
         const NA = "NA";
-        let result = [];
+        let result = new Object();
 
         this._name 
-        ? result = [...result, { centerName: this._name }] 
-        : result = [...result, { centerName: NA }];
+        ? result.name = this._name
+        : result.name = NA
 
         this._city 
-        ? result = [...result, { centerCity: this._city }] 
-        : result = [...result, { centerCity: NA }];
+        ? result.city = this._city
+        : result.city = NA
 
         this._address 
-        ? result = [...result, { centerAdress: this._address }] 
-        : result = [...result, { centerAdress: NA }];
+        ? result.street = this._address
+        : result.street = NA
 
         this._active 
-        ? result = [...result, { centerActive: this._active }] 
-        : result = [...result, { centerActive: NA }];
+        ? result.active = true
+        : result.active = false
 
         this._id 
-        ? result = [...result, { centerId: this._id }] 
-        : result = [...result, { centerId: NA }];
+        ? result.id = this._id
+        : result.id = NA
         
         return result;
     }

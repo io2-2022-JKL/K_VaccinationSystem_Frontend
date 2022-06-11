@@ -19,7 +19,7 @@ export default function AdminVaccinationCenterEditModal(props) {
 
     const [open, setOpen] = useState(false);
     const [vaccines, setVaccines] = useState([]);
-    const [selectedVaccines, setSelectedVaccines] = useState([])
+    const [selectedVaccines, setSelectedVaccines] = useState([]);
     const [name, setName] = useState(props.data.name);
     const [city, setCity] = useState(props.data.city);
     const [street, setStreet] = useState(props.data.street);
@@ -57,11 +57,19 @@ export default function AdminVaccinationCenterEditModal(props) {
     const onEnter = async () =>
     {
         const v = await instanceVaccines.get("/admin/vaccines")
+        v.data = await v.data.filter(function(el,index,arr){
+            return el.active;
+        })
         setVaccines(v.data)
+        let vac = []
+        await props.data.vaccines.forEach(element => {
+            vac.push(element.id)
+        });
+        setSelectedVaccines(vac)
         setOpen(true)
     }
 
-    const handleChange = (event) => {
+    const handleChange = async (event) => {
         const {
           target: { value },
         } = event;
@@ -114,7 +122,7 @@ export default function AdminVaccinationCenterEditModal(props) {
                             id="szczepionki" 
                             label="Szczepionki" 
                             variant="standard"
-                            defaultValue={[]}
+                            defaultValue={selectedVaccines}
                             multiple 
                             onChange={handleChange}>
                                 {vaccines.map((record) => (

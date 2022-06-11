@@ -39,8 +39,13 @@ export function PatientSignupVisitModal(props) {
                     <div>Do: {props.data.to}</div>
                     <div>Centrum: {props.data.vaccinationCenterName}</div>
                     <div>Adres: {props.data.vaccinationCenterStreet}, {props.data.vaccinationCenterCity}</div>
-                    {/*<div>Możliwe szczepienia: {props.data.availableVaccines[0].name}</div> */}
                     <div>Doktor: {props.data.doctorFirstName} {props.data.doctorLastName}</div>
+                    <div>Możliwe szczepienia: </div>
+                    {props.data.availableVaccines.map((record) => (
+                                    <div>
+                                        {record.name}
+                                    </div>
+                                    ))}
                 </Typography>
             </Box>
         </Modal>
@@ -82,11 +87,11 @@ export function PatientIncomingVisitModal(props) {
                     Szczegóły wizyty
                 </Typography>
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    <div>Data: {props.data.windowBegin.substring(8, 10)}.{props.data.windowBegin.substring(5, 7)}.{props.data.windowBegin.substring(0, 4)}</div>
-                    <div>Godzina: {props.data.windowBegin.substring(11, 16)}-{props.data.windowEnd.substring(11, 16)}</div>
+                    <div>Początek: {props.data.windowBegin}</div>
+                    <div>Koniec: {props.data.windowEnd}</div>
                     <div>Centrum: {props.data.vaccinationCenterName}</div>
                     <div>Adres: {props.data.vaccinationCenterStreet}, {props.data.vaccinationCenterCity}</div>
-                    <div>Możliwe szczepienia: {props.data.vaccineName}</div>
+                    <div>Szczepionka: {props.data.vaccineName}</div>
                     <div>Doktor: {props.data.doctorFirstName} {props.data.doctorLastName}</div>
                 </Typography>
             </Box>

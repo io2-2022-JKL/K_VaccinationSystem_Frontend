@@ -33,12 +33,14 @@ export default function AdminVaccinesList() {
         const virusInstance = ApiConnection("/viruses")
         const c = await virusInstance.get("/viruses")
         const r = await instance.get("/admin/vaccines")
+        r.data = await r.data.filter(function(el,index,arr){
+            return el.active;
+        })
         for (let i = 0; i < r.data.length; i++) {
             r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].vaccineId)} color={"error"}>Usuń</Button>
             r.data[i].detailsButton = <AdminVaccineInfoModal data={r.data[i]}/>
             r.data[i].editButton = <AdminVaccineEditModal data={r.data[i]} viruses={c.data}/>
         }
-        console.log(r.data)
         setTableData(r.data)
         setViruses(c.data)
         setLoading(false)
@@ -53,7 +55,7 @@ export default function AdminVaccinesList() {
             url
         )
         updateData()
-        setLoading(false)
+        //setLoading(false)
     }
 
     const tableColumns = [

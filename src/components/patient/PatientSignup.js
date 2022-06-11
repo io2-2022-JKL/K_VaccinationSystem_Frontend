@@ -25,8 +25,8 @@ export default function PatientSignup() {
     const [loading, setLoading] = useState(true);
     const [loading2, setLoading2] = useState(true);
     const [tableData, setTableData] = useState([]);
-    const [fromDate, setFromDate] = useState("2010-12-09");
-    const [toDate, setToDate] = useState("2023-05-09");
+    const [fromDate, setFromDate] = useState("2010-12-09T00:00");
+    const [toDate, setToDate] = useState("2023-05-09T23:59");
     const [open, setOpen] = useState(true);
     const [cityFilter, setCityFilter] = useState("");
     const [virusFilter, setVirusFilter] = useState("");
@@ -37,19 +37,6 @@ export default function PatientSignup() {
     const handleClose = () => {
         setOpen(false);
     };
-
-    const signIn = (id, vaccine) => {
-        const instance = ApiConnection("/patient/timeSlots/Filter");
-        const url = "/patient/timeSlots/Book/" + GetId() + "/" + id + "/" + vaccine;
-        instance.post(
-            url
-        ).then(r => {
-            handleFilter()
-        })
-            .finally(() => {
-                setLoading2(false)
-            });
-    }
 
     const createURL = () => {
         let url = "/patient/timeSlots/Filter?" + "city=" + cityFilter +
@@ -63,7 +50,7 @@ export default function PatientSignup() {
     }
 
     const handleFilter = () => {
-        const instance = ApiConnection("/patient/timeSlots/Filter");
+        const instance = ApiConnection("/patient/timeSlots/filter");
         instance.get(
             createURL()
         ).then(r => {
@@ -176,8 +163,8 @@ export default function PatientSignup() {
                                 <TextField
                                     id="datefrom"
                                     label="Data od"
-                                    type="date"
-                                    defaultValue="2010-12-09"
+                                    type="datetime-local"
+                                    defaultValue={fromDate}
                                     onChange={e => setFromDate(e.target.value)}
                                     InputLabelProps={{
                                         shrink: true,
@@ -189,8 +176,8 @@ export default function PatientSignup() {
                                 <TextField
                                     id="dateto"
                                     label="Data do"
-                                    type="date"
-                                    defaultValue="2023-05-09"
+                                    type="datetime-local"
+                                    defaultValue={toDate}
                                     onChange={e => setToDate(e.target.value)}
                                     InputLabelProps={{
                                         shrink: true,

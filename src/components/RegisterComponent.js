@@ -23,7 +23,7 @@ function RegisterComponent(props) {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [pesel, setPesel] = useState("");
-  const [birthday, setBirthDay] = useState("");
+  const [birthday, setBirthDay] = useState("01-01-2000");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +33,6 @@ function RegisterComponent(props) {
   const navigate = useNavigate();
 
   const SubmitData = () => {
-    console.log(birthday)
     conn.post(
         "/register",
         {
@@ -42,7 +41,7 @@ function RegisterComponent(props) {
           password: password,
           firstName: name,
           lastName: surname,
-          dateOfBirth: birthday.slice(8,10)+"-"+birthday.slice(5,8)+birthday.slice(0,4),
+          dateOfBirth: birthday.slice(8)+birthday.slice(4,8)+birthday.slice(0,4),
           phoneNumber: phone,
         }).then(r => {
       if (r.status === 200) {
