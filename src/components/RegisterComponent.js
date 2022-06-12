@@ -31,7 +31,6 @@ function RegisterComponent(props) {
   const navigate = useNavigate();
 
   const SubmitData = () => {
-    console.log(birthday)
     conn.post(
         "/register",
         {
