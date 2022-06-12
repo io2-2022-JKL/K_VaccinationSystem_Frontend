@@ -32,7 +32,6 @@ export function AdminAddDoctorModal(props) {
 
     const addDoctor = async (patient, center) =>
     {
-        console.log([patient, center])
         await instance.post(
             "/admin/doctors/addDoctor", {
                 "patientId": patient,

@@ -91,7 +91,7 @@ export default function DoctorUnconfirmed() {
                                 justify="center"
                                 style={{ minHeight: 30 }}>
                                 <Typography>
-                                    404 nie ma wizyt
+                                    Nie masz wizyt
                                 </Typography>
                             </Grid>
                         }

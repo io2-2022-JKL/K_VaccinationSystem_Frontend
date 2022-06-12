@@ -26,28 +26,27 @@ export default function AdminDoctorTimeSlotsModal(props) {
         const r = await instance.get(
             "/admin/doctors/Timeslots/" + props.data.id
         )
+        r.data = await r.data.filter(function(el,index,arr){
+            return el.active
+        })
         for (let i = 0; i < r.data.length; i++) {
             r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].id)} color={"error"}>Usuń</Button>
         }
         setTimeSlots(r.data)
-        console.log(r.data)
-
         setOpen(true)
     } 
 
     const handleCancellation = async (id) => {
-        const deleteInstance = ApiConnection("/admin/doctors/Timeslots/deleteTimeslots")
+        const deleteInstance = ApiConnection("/admin/doctors/timeSlots/deleteTimeSlots")
         const url = "/admin/doctors/Timeslots/deleteTimeslots"
         const slots = []
         slots[0] = {"id": id}
-        console.log(slots)
 
         await deleteInstance.post(
-            url, {
-                slots
-            }
+            url, [slots[0]]
         )
-        onOpen()
+        handleClose()
+        window.location.reload(false);
     }
 
     const tableColumns = [

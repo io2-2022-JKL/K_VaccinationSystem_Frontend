@@ -54,7 +54,6 @@ export default function AdminVaccineAddModal(props) {
         maxPatientAge,
         active) =>
     {
-        console.log(props.viruses)
         await instance.post(
             "/admin/vaccines/addVaccine", {
                 "virus": virus,

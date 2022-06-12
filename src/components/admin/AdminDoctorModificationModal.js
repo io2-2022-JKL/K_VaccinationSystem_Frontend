@@ -54,14 +54,7 @@ export function AdminDoctorModificationModal(props) {
                 "phoneNumber": phoneNumber,
                 "active": active,
                 "vaccinationCenterID": vaccinationCenterID
-            }).then(function (response) {
-                console.log(response);
-              })
-              .catch(function (error) {
-                console.log(error);
-              })
-
-        console.log(vaccinationCenterID)
+            })
         handleClose()
         window.location.reload(false);
     }

@@ -14,13 +14,13 @@ export default function DoctorEditTimeSlotsModal(props) {
 
     const d = new Date()
     let from = String(d.getFullYear())+"-"+
-                ("0"+String(d.getMonth())).slice(-2)+"-"+
-                ("0"+String(d.getDay())).slice(-2)+"T"+
+                ("0"+String(d.getMonth()+1)).slice(-2)+"-"+
+                ("0"+String(d.getDate())).slice(-2)+"T"+
                 ("0"+String(d.getHours())).slice(-2)+":"+
                 ("0"+String(d.getMinutes())).slice(-2);
     let to = String(d.getFullYear())+"-"+
-                ("0"+String(d.getMonth())).slice(-2)+"-"+
-                ("0"+String(d.getDay())).slice(-2)+"T"+
+                ("0"+String(d.getMonth()+1)).slice(-2)+"-"+
+                ("0"+String(d.getDate())).slice(-2)+"T"+
                 ("0"+String(d.getHours())).slice(-2)+":"+
                 ("0"+String(d.getMinutes())).slice(-2);
 
@@ -46,11 +46,10 @@ export default function DoctorEditTimeSlotsModal(props) {
         let t = to.slice(8,10)+"-"+to.slice(5,7)+"-"+to.slice(0,4)+" "+to.slice(11,16)
         await instance.post(
             "/doctor/timeSlots/modify/" + GetId() + "/" + props.data.id, {
-                "windowBegin": f,
-                "windowEnd": t,
+                "timeFrom": f,
+                "timeTo": t,
             })
-            console.log(f)
-        //handleClose()
+        handleClose()
         //window.location.reload(false);
     }
 

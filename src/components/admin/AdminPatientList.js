@@ -37,6 +37,9 @@ export default function AdminPatientList() {
         const c = await centerInstance.get(
             "/admin/vaccinationCenters"
         )
+        c.data = await c.data.filter(function(el,index,arr){
+            return el.active;
+        })
         let patients = [];
         r.data.forEach(d => {
             let patient = new Patient(d)
@@ -48,7 +51,6 @@ export default function AdminPatientList() {
             patients[i].doctorButton = <AdminAddDoctorModal data={patients[i]} centers={c.data}/>
             patients[i].modifyButton = <AdminPatientEditModal data={patients[i]}/>
         }
-        console.log(patients)
         setTableData(patients)
         setLoading(false)
     }
