@@ -11,7 +11,7 @@ export default class User {
     constructor(user)
     {
         this._id = user.id ? user.id : user.patientAccountId;
-        this._pesel = user.pesel;
+        this._pesel = (user.PESEL===undefined)?user.pesel:user.PESEL;
         this._firstName = user.firstName;
         this._lastName = user.lastName;
         this._dateOfBirth = user.dateOfBirth;
@@ -49,7 +49,7 @@ export default class User {
 
     toTableData() {
         const NA = "NA";
-        let result = new Object();
+        let result = {};
 
         this._firstName 
         ? result.firstName = this._firstName
@@ -60,11 +60,11 @@ export default class User {
         : result.lastName= NA ;
 
         this._pesel 
-        ? result.pesel= this._pesel
-        : result.pesel= NA
+        ? result.PESEL= this._pesel
+        : result.PESEL= NA
 
         this._dateOfBirth 
-        ? result.dateOfBirth= this._dateOfBirth.slice(0,10)
+        ? result.dateOfBirth= this._dateOfBirth
         : result.dateOfBirth= NA
         
         this._mail 

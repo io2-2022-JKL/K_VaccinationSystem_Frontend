@@ -16,7 +16,7 @@ export default function AdminPatientEditModal(props) {
 
     let firstName = props.data.firstName;
     let lastName = props.data.lastName;
-    let pesel = props.data.pesel;
+    let pesel = props.data.PESEL;
     let mail = props.data.mail;
     let phoneNumber = props.data.phoneNumber;
     let id = props.data.patientId;

@@ -10,7 +10,6 @@ import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
 import Button from "@mui/material/Button";
 import {Typography} from "@mui/material";
-
 import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
 import { AdminDoctorInfoModal } from './AdminDoctorInfoModal';
@@ -35,6 +34,9 @@ export default function AdminDoctorList() {
         )
         if (typeof r !== 'undefined')
         {
+            r.data.forEach(element => {
+                if(element.PESEL===undefined) element.PESEL = element.pesel
+            });
             const c = await centerInstance.get(
                 "/admin/vaccinationCenters"
             )
@@ -46,6 +48,7 @@ export default function AdminDoctorList() {
             }
             setTableData(r.data)
             setLoading(false)
+            console.log(r.data)
         }
     }
 
@@ -69,7 +72,7 @@ export default function AdminDoctorList() {
     const tableColumns = [
         {Header: "Imię", accessor: "firstName", width: "15%"},
         {Header: "Nazwisko", accessor: "lastName", width: "15%"},
-        {Header: "Pesel", accessor: "pesel", width: "15%"},
+        {Header: "Pesel", accessor: "PESEL", width: "15%"},
         {Header: "Edycja", accessor: "editButton", width: "10%"},
         {Header: "Info", accessor: "detailsButton", width: "15%"},
         {Header: "Sloty", accessor: "timeSlotButton", width: "10%"},

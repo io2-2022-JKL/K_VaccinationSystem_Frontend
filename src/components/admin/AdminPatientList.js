@@ -43,10 +43,10 @@ export default function AdminPatientList() {
             if(d.active)patients.push(patient.toTableData())
         });
         for (let i = 0; i < patients.length; i++) {
-            patients[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].id)} color={"error"}>Usuń</Button>
-            patients[i].detailsButton = <AdminPatientInfoModal data={r.data[i]}/>
-            patients[i].doctorButton = <AdminAddDoctorModal data={r.data[i]} centers={c.data}/>
-            patients[i].modifyButton = <AdminPatientEditModal data={r.data[i]}/>
+            patients[i].deleteButton = <Button onClick={() => handleCancellation(patients[i].id)} color={"error"}>Usuń</Button>
+            patients[i].detailsButton = <AdminPatientInfoModal data={patients[i]}/>
+            patients[i].doctorButton = <AdminAddDoctorModal data={patients[i]} centers={c.data}/>
+            patients[i].modifyButton = <AdminPatientEditModal data={patients[i]}/>
         }
         setTableData(patients)
         setLoading(false)
@@ -67,7 +67,7 @@ export default function AdminPatientList() {
     const tableColumns = [
         {Header: "Imię", accessor: "firstName", width: "10%"},
         {Header: "Nazwisko", accessor: "lastName", width: "10%"},
-        {Header: "Pesel", accessor: "pesel", width: "15%"},
+        {Header: "Pesel", accessor: "PESEL", width: "15%"},
         {Header: "Info", accessor: "detailsButton", width: "15%"},
         {Header: "Modyfikuj", accessor: "modifyButton", width: "15%"},
         {Header: "Doktoryzuj", accessor: "doctorButton", width: "10%"},
