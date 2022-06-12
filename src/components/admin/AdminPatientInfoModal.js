@@ -29,7 +29,7 @@ export function AdminPatientInfoModal(props) {
                 </Typography>
                 <Typography id="modal-modal-description" sx={{ mt: 2 }} variant="subtitle2">
                     <div>Imię: {props.data.firstName} {props.data.lastName}</div>
-                    <div>PESEL: {props.data.pesel}</div>
+                    <div>PESEL: {props.data.PESEL}</div>
                     <div>Mail: {props.data.mail}</div>
                     <div>Nr telefonu: {props.data.phoneNumber}</div>
                     <div>Data urodzenia: {props.data.dateOfBirth.slice(0,10)}</div>

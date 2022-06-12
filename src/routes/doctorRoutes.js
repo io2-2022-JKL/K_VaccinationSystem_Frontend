@@ -2,7 +2,6 @@ import Icon from "@mui/material/Icon";
 import DoctorAvailability from "components/doctor/DoctorAvalibility";
 import DoctorDashboard from "components/doctor/DoctorDashboard";
 import DoctorHistory from "components/doctor/DoctorHistory";
-import DoctorPlanned from "components/doctor/DoctorPlanned";
 import DoctorUnconfirmed from "components/doctor/DoctorUnconfirmed";
 
 const doctorRoutes = [
@@ -31,18 +30,10 @@ const doctorRoutes = [
     },
     {
         type: "collapse",
-        name: "Zaplanowane",
-        key: "planned",
+        name: "Szczepienia",
+        key: "vaccinations",
         icon: <Icon fontSize="small">assignment_ind_icon</Icon>,
-        route: "/doctor/planned",
-        component: <DoctorPlanned />,
-    },
-    {
-        type: "collapse",
-        name: "Niepotwierdzone",
-        key: "unconfirmed",
-        icon: <Icon fontSize="small">flaky_rounded_icon</Icon>,
-        route: "/doctor/unconfirmed",
+        route: "/doctor/vaccinations",
         component: <DoctorUnconfirmed />,
     },
 ];

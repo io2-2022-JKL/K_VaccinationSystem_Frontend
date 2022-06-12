@@ -27,7 +27,7 @@ export function AdminVaccineInfoModal(props) {
                 <Typography id="modal-modal-title" variant="h2" component="h2">
                     Informacje o szczepionce
                 </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }} variant="subtitle2" component="subtitle2">
+                <Typography id="modal-modal-description" sx={{ mt: 2 }} variant="subtitle2">
                     <div>Nazwa: {props.data.name}</div>
                     <div>Firma: {props.data.company}</div>
                     <div>Choroba: {props.data.virus}</div>

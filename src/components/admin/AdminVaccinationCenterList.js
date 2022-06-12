@@ -13,6 +13,7 @@ import { AdminVaccinationCenterInfoModal } from "./AdminVaccinationCenterModals"
 import { Button } from '@mui/material';
 import AdminVaccinationCenterAddModal from './AdminVaccinationCenterAddModal';
 import { Box } from '@mui/material';
+import AdminVaccinationCenterEditModal from './AdminVaccinationCenterEditModal';
 
 export default function AdminVaccinationCenterList() {
 
@@ -25,13 +26,16 @@ export default function AdminVaccinationCenterList() {
 
     const updateData = async () =>
     {
-        const instance = ApiConnection("/admin/vaccinationCenters/");
+        const instance = ApiConnection("/admin/vaccinationCenters/")
         const r = await instance.get("/admin/vaccinationCenters")
+        r.data = await r.data.filter(function(el, index, arr){
+            return el.active;
+        })
         for (let i = 0; i < r.data.length; i++) {
             r.data[i].detailsButton = <AdminVaccinationCenterInfoModal data={r.data[i]}/>
-            r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].id)} color={"error"}>Usuń</Button>
+            r.data[i].editButton = <AdminVaccinationCenterEditModal data={r.data[i]}/>
+            r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].id)}>Usuń</Button>
         }
-        console.log(r.data)
         setTableData(r.data)
         setLoading(false)
     }
@@ -48,9 +52,10 @@ export default function AdminVaccinationCenterList() {
 
     const tableColumns = [
         {Header: "Nazwa centrum", accessor: "name", width: "20%"},
-        {Header: "Adres", accessor: "address", width: "20%"},
-        {Header: "Miasto", accessor: "city", width: "25%"},
-        {Header: "Info", accessor: "detailsButton", width: "25%"},
+        {Header: "Adres", accessor: "street", width: "20%"},
+        {Header: "Miasto", accessor: "city", width: "20%"},
+        {Header: "Info", accessor: "detailsButton", width: "15%"},
+        {Header: "Edytuj", accessor: "editButton", width: "15%"},
         {Header: "Usuń", accessor: "deleteButton", width: "10%"},
     ]
 

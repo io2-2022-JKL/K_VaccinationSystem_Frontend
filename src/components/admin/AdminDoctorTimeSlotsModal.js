@@ -7,13 +7,10 @@ import { Button } from "@mui/material";
 import { modalStyle } from "../../styles/modal.css";
 import "../../styles/global.css"
 import ApiConnection from "../../logic/api/ApiConnection";
-import { TextField } from '@mui/material';
-import useLogin from 'logic/useLogin';
 import DataTable from "../../examples/Tables/DataTable";
 
 export default function AdminDoctorTimeSlotsModal(props) {
 
-    const {GetId} = useLogin();
     const [open, setOpen] = useState(false);
     const [timeSlots, setTimeSlots] = useState([])
 

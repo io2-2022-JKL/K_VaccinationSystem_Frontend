@@ -17,18 +17,19 @@ import Loader from "react-loader";
 import { PatientSignupVisitModal } from "./PatientVisitModal";
 import { Select } from '@mui/material';
 import { MenuItem } from '@mui/material';
+import { PatientVisitSignUpModal } from './PatientVisitSignUpModal';
 
 export default function PatientSignup() {
 
-    const {GetId} = useLogin();
+    const {GetId, isLoggedIn} = useLogin();
     const [loading, setLoading] = useState(true);
     const [loading2, setLoading2] = useState(true);
     const [tableData, setTableData] = useState([]);
-    const [fromDate, setFromDate] = useState("2010-12-09");
-    const [toDate, setToDate] = useState("2023-05-09");
+    const [fromDate, setFromDate] = useState("2010-12-09T00:00");
+    const [toDate, setToDate] = useState("2023-05-09T23:59");
     const [open, setOpen] = useState(true);
-    const [cityFilter, setCityFilter] = useState("Warszawa");
-    const [virusFilter, setVirusFilter] = useState("SARS COVID-19");
+    const [cityFilter, setCityFilter] = useState("");
+    const [virusFilter, setVirusFilter] = useState("");
     const [patientData, setPatientData] = useState([]);
     const [viruses, setViruses] = useState([])
     const [cities, setCities] = useState([])
@@ -36,19 +37,6 @@ export default function PatientSignup() {
     const handleClose = () => {
         setOpen(false);
     };
-
-    const signIn = (id, vaccine) => {
-        const instance = ApiConnection("/patient/timeSlots/Filter");
-        const url = "/patient/timeSlots/Book/" + GetId() + "/" + id + "/" + vaccine;
-        instance.post(
-            url
-        ).then(r => {
-            handleFilter()
-        })
-            .finally(() => {
-                setLoading2(false)
-            });
-    }
 
     const createURL = () => {
         let url = "/patient/timeSlots/Filter?" + "city=" + cityFilter +
@@ -58,12 +46,11 @@ export default function PatientSignup() {
              +
             "&virus=" + virusFilter;
             url = url.replace(" ", "%20")
-            console.log(url)
         return url;
     }
 
     const handleFilter = () => {
-        const instance = ApiConnection("/patient/timeSlots/Filter");
+        const instance = ApiConnection("/patient/timeSlots/filter");
         instance.get(
             createURL()
         ).then(r => {
@@ -77,7 +64,7 @@ export default function PatientSignup() {
 
     const configureTableData = (data) => {
         for (let i = 0; i < data.length; i++) {
-            data[i].signInButton = <Button onClick={() => signIn(data[i].timeSlotId, data[i].availableVaccines[0].vaccineId)}>Wybierz</Button>;
+            data[i].signInButton = <PatientVisitSignUpModal data={data[i]}/>;
             data[i].detailsButton = <PatientSignupVisitModal data={data[i]}/>
         }
         setTableData(data);
@@ -87,8 +74,15 @@ export default function PatientSignup() {
         const instance2 = ApiConnection("/patient/info/")
         const instanceViruses = ApiConnection("/viruses")
         const instacneCities = ApiConnection("/cities")
+        let id = GetId()
+        if(isLoggedIn("/doctor"))
+        {
+            const instanceDoctor = ApiConnection("/doctor/info")
+            const d = await instanceDoctor.get("doctor/info/" + GetId())
+            id = d.data.patientAccountId
+        }
         const r = await instance2.get(
-            "/patient/info/" + GetId()
+            "/patient/info/" + id
         )
         const v = await instanceViruses.get(
             "/viruses"
@@ -100,6 +94,8 @@ export default function PatientSignup() {
         setViruses(v.data)
         setPatientData(r.data)
         setLoading(false)
+        setCityFilter(c.data[0].city)
+        setVirusFilter(v.data[0].virus)
     }, [])
 
     const patient = new Patient(patientData);
@@ -174,8 +170,8 @@ export default function PatientSignup() {
                                 <TextField
                                     id="datefrom"
                                     label="Data od"
-                                    type="date"
-                                    defaultValue="2010-12-09"
+                                    type="datetime-local"
+                                    defaultValue={fromDate}
                                     onChange={e => setFromDate(e.target.value)}
                                     InputLabelProps={{
                                         shrink: true,
@@ -187,8 +183,8 @@ export default function PatientSignup() {
                                 <TextField
                                     id="dateto"
                                     label="Data do"
-                                    type="date"
-                                    defaultValue="2023-05-09"
+                                    type="datetime-local"
+                                    defaultValue={toDate}
                                     onChange={e => setToDate(e.target.value)}
                                     InputLabelProps={{
                                         shrink: true,

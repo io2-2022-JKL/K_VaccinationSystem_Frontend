@@ -9,7 +9,6 @@ import "../../styles/global.css"
 import ApiConnection from "../../logic/api/ApiConnection";
 import { TextField } from '@mui/material';
 import { Grid } from '@mui/material';
-import { FormControl } from '@mui/material';
 import { Select } from '@mui/material';
 import { MenuItem } from '@mui/material';
 
@@ -56,7 +55,6 @@ export default function AdminVaccineeditModal(props) {
         maxPatientAge,
         active) =>
     {
-        console.log(props.viruses)
         await instance.post(
             "/admin/vaccines/editVaccine", {
                 "vaccineId": vaccineId,
@@ -87,8 +85,8 @@ export default function AdminVaccineeditModal(props) {
                 <Typography id="modal-modal-title" variant="h2" component="h2">
                     Zmodyfikuj dane szczepionki {props.data.name}
                 </Typography>
-                <Box fullWidth>
-                    <Box fullWidthsx={{pl:4, pr:4, pt:2, pd:2}}>
+                <Box>
+                    <Box sx={{pl:4, pr:4, pt:2, pd:2}}>
                         <TextField fullWidth
                             id="name" 
                             label="Nazwa" 
@@ -96,7 +94,7 @@ export default function AdminVaccineeditModal(props) {
                             defaultValue={name} 
                             onChange={handleName}/>
                     </Box>
-                    <Box fullWidthsx={{pl:4, pr:4, pt:2, pd:2}}>
+                    <Box sx={{pl:4, pr:4, pt:2, pd:2}}>
                         <TextField fullWidth
                             id="last_name" 
                             label="Firma" 
@@ -104,7 +102,7 @@ export default function AdminVaccineeditModal(props) {
                             defaultValue={company} 
                             onChange={handlecompany}/>
                     </Box>
-                    <Box fullWidthsx={{pl:4, pr:4, pt:2, pd:2}}>
+                    <Box sx={{pl:4, pr:4, pt:2, pd:2}}>
                         <Select
                             variant="standard"
                             fullWidth
@@ -114,13 +112,13 @@ export default function AdminVaccineeditModal(props) {
                             onChange={handlevirus}
                             >
                             {props.viruses.map((record) => (
-                                <MenuItem value={record.virus}>
+                                <MenuItem key={record.virus} value={record.virus}>
                                 {record.virus}
                                 </MenuItem>
                                 ))}
                         </Select>
                     </Box>
-                    <Box fullWidthsx={{pl:4, pr:4, pt:2, pd:2}}>
+                    <Box sx={{pl:4, pr:4, pt:2, pd:2}}>
                         <TextField fullWidth
                             id="numberOfDoses" 
                             label="Ilość dawek" 
@@ -128,7 +126,7 @@ export default function AdminVaccineeditModal(props) {
                             defaultValue={numberOfDoses} 
                             onChange={handlenumberOfDoses}/>
                     </Box>
-                    <Grid fullWidth sx={{pl:4, pr:4, pt:2, pd:2}} container>
+                    <Grid sx={{pl:4, pr:4, pt:2, pd:2}} container>
                         <TextField 
                             id="min_days" 
                             label="Dni pomiędzy od" 

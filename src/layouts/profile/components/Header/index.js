@@ -88,6 +88,8 @@ function Header({ children, name, position }) {
 // Setting default props for the Header
 Header.defaultProps = {
   children: "",
+  name: "",
+  position: "",
 };
 
 // Typechecking props for the Header

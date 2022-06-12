@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import '../../styles/patient/patient.css';
 import Patient from '../../models/Patient'
-import '../../models/User';
 import MDBox from "../MDBox";
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
@@ -12,40 +10,49 @@ import DataTable from "../../examples/Tables/DataTable";
 import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
+import { Typography } from '@mui/material';
 
 export default function PatientDashboard() {
 
-    const {GetId} = useLogin();
-    const [loading, setLoading] = useState(true);
-    const [tableData, setTableData] = useState([]);
-    const [patientData, setPatientData] = useState([]);
+    const {isLoggedIn, GetId} = useLogin()
+    const [loading, setLoading] = useState(true)
+    const [tableData, setTableData] = useState([])
+    const [patientData, setPatientData] = useState([])
+    const [certificatesExist, setCertificateExistance] = useState(true)
 
-    useEffect(() => {
-        const instance = ApiConnection("/patient/certificates/");
-        const instance2 = ApiConnection("/patient/info/");
-        instance.get(
-            "/patient/certificates/" + GetId()
-        ).then(r => {
+    useEffect( async () => {
+        const instance = ApiConnection("/patient/certificates/")
+        const instance2 = ApiConnection("/patient/info/")
+        let id = GetId()
+        if(isLoggedIn("/doctor"))
+        {
+            const instanceDoctor = ApiConnection("/doctor/info")
+            const d = await instanceDoctor.get("doctor/info/" + GetId())
+            id = d.data.patientAccountId;
+        }
+        const p = await instance2.get("/patient/info/" + id)
+        const patient = new Patient(p.data)
+        setPatientData(patient)
+        const r = await instance.get(
+            "/patient/certificates/" + id
+        ).catch((error) =>{
+            if(error.response.status === 404)
+                setCertificateExistance(false)
+        })
+        if ( typeof r !== 'undefined')
+        {
             setTableData(r.data)
-        })
-        instance2.get(
-            "/patient/info/" + GetId()
-        ).then(r => {
-            setPatientData(r.data)
-        })
-            .finally(() => {
-                setLoading(false)
-            });
+        }
+        setLoading(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const patient = new Patient(patientData);
+    //const patient = new Patient(patientData);
 
     const tableColumns = [
-        {Header: "Szczepionka", accessor: "Vaccine", width: "25%"},
-        {Header: "Od", accessor: "from", width: "25%"},
-        {Header: "Do", accessor: "to", width: "25%"},
-        {Header: "", accessor: "download", width: "25%"},
+        {Header: "Szczepionka", accessor: "vaccineName", width: "25%"},
+        {Header: "Wirus", accessor: "virusType", width: "25%"},
+        {Header: "url", accessor: "url", width: "50%"},
     ]
 
     return (
@@ -53,15 +60,31 @@ export default function PatientDashboard() {
             <DashboardNavbar/>
             <MDBox mb={10}/>
             {
-                loading?
-                <Grid>
-                    <Loader /> 
-                </Grid> 
-                :
-                <Header name={patient.getFirstName + " " + patient.getLastName} position={"Pacjent"}>
-                    <MDBox mt={5} mb={3}>
-                        <DataTable table={{columns: tableColumns, rows: tableData}}/>
-                    </MDBox>
+                <Header name={patientData.getFirstName + " " + patientData.getLastName} position={"Pacjent"}>
+                {
+                    certificatesExist?
+                        loading?
+                        <Grid>
+                            <Loader /> 
+                        </Grid> 
+                        :
+                            <MDBox mt={5} mb={3}>
+                                <DataTable table={{columns: tableColumns, rows: tableData}}/>
+                            </MDBox> 
+                    :
+                    <Grid
+                        container
+                        spacing={0}
+                        direction="column"
+                        alignContent="center"
+                        alignItems="center"
+                        justify="center"
+                        style={{ minHeight: 30 }}>
+                        <Typography>
+                            Nie masz żadnych certyfikatów
+                        </Typography>
+                    </Grid>
+                }
                 </Header>
             }
             <Footer/>

@@ -13,9 +13,9 @@ import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import DoctorAddTimeSlotsModal from './DoctorAddTimeSlotsModal';
 import { Button } from '@mui/material';
-
 import Loader from "react-loader";
 import DoctorEditTimeSlotsModal from './DoctorEditTimeSlotModal';
+import { Typography } from '@mui/material';
 
 export default function DoctorAvalibility() {
 
@@ -23,7 +23,7 @@ export default function DoctorAvalibility() {
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
     const [patientData, setPatientData] = useState([]);
-    const [vaccinesExist, setExistance] = useState(true)
+    const [timeExist, setExist] = useState(true)
 
     useEffect(async () => {
         updateData()
@@ -31,16 +31,24 @@ export default function DoctorAvalibility() {
 
     const updateData = async () => {
         const instance = ApiConnection("/doctor/timeSlots/");
-        const instance2 = ApiConnection("/patient/info/");
-        const c = await instance2.get("/patient/info/" + GetId())
+        const instancePatient = ApiConnection("/patient/info/");
+        const instanceDoctor = ApiConnection("/doctor/info")
+        const d = await instanceDoctor.get("/doctor/info/" + GetId())
+        const c = await instancePatient.get("/patient/info/" + d.data.patientAccountId)
         setPatientData(c.data)
-        const r = await instance.get("/doctor/timeSlots/" + GetId())
-        for (let i = 0; i < r.data.length; i++)
+        const r = await instance.get("/doctor/timeSlots/" + GetId()).catch((error) =>{
+            if(error.response.status === 404)
+                setExist(false)
+        })
+        if ( typeof r !== 'undefined')
         {
-            r.data[i].deleteButton = <Button onClick={() => handleCancellation(GetId(), r.data[i].id)} color={"error"}>Usuń</Button>
-            r.data[i].editButton = <DoctorEditTimeSlotsModal data={r.data[i]}/>
+            for (let i = 0; i < r.data.length; i++)
+            {
+                r.data[i].deleteButton = <Button onClick={() => handleCancellation(GetId(), r.data[i].id)} color={"error"}>Usuń</Button>
+                r.data[i].editButton = <DoctorEditTimeSlotsModal data={r.data[i]}/>
+            }
+            setTableData(r.data)
         }
-        setTableData(r.data)
         setLoading(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }
@@ -48,7 +56,7 @@ export default function DoctorAvalibility() {
     const handleCancellation = async (id, slotId) => {
         const deleteInstance = ApiConnection("/doctor/timeSlot/delete")
         setLoading(true)
-        setExistance(true)
+        setExist(true)
         const url = "/doctor/timeSlot/delete/" + id
         await deleteInstance.post(
             url, {
@@ -70,21 +78,33 @@ export default function DoctorAvalibility() {
         <DashboardLayout>
             <DashboardNavbar/>
             <MDBox mb={10}/>
+            <Header name={patientData.firstName + " " + patientData.lastName} position={"Lekarz"}>
             {
-                loading?
+                timeExist?
+                    loading?
                     <Grid>
-                        <Loader />
-                    </Grid>
+                        <Loader /> 
+                    </Grid> 
                     :
-                    <Header name={patientData.firstName + " " + patientData.lastName} position={"Lekarz"}>
-                        <MDBox mt={5} mb={3}>
-                            <DataTable table={{columns: tableColumns, rows: tableData}}/>
-                        </MDBox>
-                        <Grid>
-                            <DoctorAddTimeSlotsModal/>
-                        </Grid>
-                    </Header>
+                    <MDBox mt={5} mb={3}>
+                        <DataTable table={{columns: tableColumns, rows: tableData}}/>
+                    </MDBox>
+                :
+                    <Grid
+                        container
+                        spacing={0}
+                        direction="column"
+                        alignContent="center"
+                        alignItems="center"
+                        justify="center"
+                        style={{ minHeight: 30 }}>
+                        <Typography>
+                            404 nie ma slotów
+                        </Typography>
+                    </Grid>
             }
+            <DoctorAddTimeSlotsModal/>
+            </Header>
             <Footer/>
         </DashboardLayout>
     )

@@ -15,6 +15,7 @@ import ApiConnection from "../../logic/api/ApiConnection";
 import useLogin from "../../logic/useLogin";
 import Loader from "react-loader";
 import { PatientIncomingVisitModal } from './PatientVisitModal';
+import { Typography } from '@mui/material';
 
 export default function PatientDashboard() {
 
@@ -26,27 +27,42 @@ export default function PatientDashboard() {
     ]
 
     const {GetId} = useLogin();
+    const {isLoggedIn} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
     const [patientData, setPatientData] = useState([]);
+    const [visitsExist, setExist] = useState(true);
 
     useEffect(async () => {
         const instance = ApiConnection("/patient/appointments/incomingAppointments/");
         const instance2 = ApiConnection("/patient/info/");
-        const r = await instance.get("/patient/appointments/incomingAppointments/" + GetId())
-        for(let i = 0; i < r.data.length; i++)
+        let id = GetId()
+        if(isLoggedIn("/doctor"))
         {
-            r.data[i].detailsButton = <PatientIncomingVisitModal data={r.data[i]}/>
+            const instanceDoctor = ApiConnection("/doctor/info")
+            const d = await instanceDoctor.get("doctor/info/" + GetId())
+            id = d.data.patientAccountId;
         }
-        setTableData(r.data)
-        const c = await instance2.get("/patient/info/" + GetId())
-        setPatientData(c.data)
+        const p = await instance2.get("/patient/info/" + id)
+        const patient = new Patient(p.data)
+        setPatientData(patient.toTableData())
+        const v = await instance.get("/patient/appointments/incomingAppointments/" + id).catch((error) =>{
+            if(error.response.status === 404)
+                setExist(false)
+        })
+        if ( typeof v !== 'undefined')
+        {
+            for( let i = 0; i < v.data.length; i++)
+            {
+                v.data[i].detailsButton = <PatientIncomingVisitModal data={v.data[i]}/>
+            }
+            setTableData(v.data)
+        }
         setLoading(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
-    const patient = new Patient(patientData);
 
     return (
         <DashboardLayout>
@@ -55,7 +71,7 @@ export default function PatientDashboard() {
             {
                 loading?
                 <Loader/>:
-            <Header name={patient.getFirstName + " " + patient.getLastName} position={"Pacjent"}>
+            <Header name={patientData.firstName + " " + patientData.lastName} position={"Pacjent"}>
                 <MDBox mt={5} mb={3}>
                     <Grid container spacing={1}>
                         <Grid item xs={12} md={6} xl={4} sx={{display: "flex"}}>
@@ -67,27 +83,40 @@ export default function PatientDashboard() {
                                 title="Informacje o pacjencie"
                                 description=""
                                 info={{
-                                    "Imie i Nazwisko": patient.getFirstName + " " + patient.getLastName,
-                                    "Pesel": patient.getPesel,
-                                    "Data urodzenia": patient.getDateOfBirth,
-                                    "Email": patient.getMail,
-                                    "Numer telefonu": patient.getPhoneNumber,
+                                    "Imie i Nazwisko": patientData.firstName + " " + patientData.lastName,
+                                    "Pesel": patientData.PESEL,
+                                    "Data urodzenia": patientData.dateOfBirth,
+                                    "Email": patientData.mail,
+                                    "Numer telefonu": patientData.phoneNumber,
                                 }}
-                                action={{route: "", tooltip: "Edit Profile"}}
                                 shadow={false}
                             />
                             }
                             <Divider orientation="vertical" sx={{mx: 0}}/>
                         </Grid>
                         {
-                            loading ?
+                            visitsExist?
+                                loading?
                                 <Grid>
                                     <Loader /> 
-                                </Grid>
+                                </Grid> 
                                 :
-                                <Grid item xs={12} xl={8}>
-                                    <DataTable table={{columns: tableColumns, rows: tableData}}/>
-                                </Grid>
+                                    <MDBox mt={5} mb={3}>
+                                        <DataTable table={{columns: tableColumns, rows: tableData}}/>
+                                    </MDBox>
+                            :
+                            <Grid
+                                container
+                                spacing={0}
+                                direction="column"
+                                alignContent="center"
+                                alignItems="center"
+                                justify="center"
+                                style={{ minHeight: 30 }}>
+                                <Typography>
+                                    Nie masz żadnych nadchodzących wizyt
+                                </Typography>
+                            </Grid>
                         }
                     </Grid>
                 </MDBox>
@@ -97,6 +126,3 @@ export default function PatientDashboard() {
         </DashboardLayout>
     )
 }
-
-
-

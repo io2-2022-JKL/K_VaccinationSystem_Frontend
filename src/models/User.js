@@ -11,7 +11,7 @@ export default class User {
     constructor(user)
     {
         this._id = user.id ? user.id : user.patientAccountId;
-        this._pesel = user.PESEL;
+        this._pesel = (user.PESEL===undefined)?user.pesel:user.PESEL;
         this._firstName = user.firstName;
         this._lastName = user.lastName;
         this._dateOfBirth = user.dateOfBirth;
@@ -49,43 +49,43 @@ export default class User {
 
     toTableData() {
         const NA = "NA";
-        let result = [];
+        let result = {};
 
         this._firstName 
-        ? result = [...result, { patientFirstName: this._firstName }] 
-        : result = [...result, { patientFirstName: NA }];
+        ? result.firstName = this._firstName
+        : result.firstName = NA ;
 
         this._lastName 
-        ? result = [...result, { patientLastName: this._lastName }] 
-        : result = [...result, { patientLastName: NA }];
+        ? result.lastName= this._lastName  
+        : result.lastName= NA ;
 
         this._pesel 
-        ? result = [...result, { pesel: this._pesel }] 
-        : result = [...result, { pesel: NA }];
+        ? result.PESEL= this._pesel
+        : result.PESEL= NA
 
         this._dateOfBirth 
-        ? result = [...result, { dateOfBirth: this._dateOfBirth }] 
-        : result = [...result, { dateOfBirth: NA }];
+        ? result.dateOfBirth= this._dateOfBirth
+        : result.dateOfBirth= NA
         
         this._mail 
-        ? result = [...result, { mail: this._mail }] 
-        : result = [...result, { mail: NA }];
+        ? result.mail= this._mail
+        : result.mail= NA
 
         this._phoneNumber 
-        ? result = [...result, { phoneNumber: this._phoneNumber }] 
-        : result = [...result, { phoneNumber: NA }];
+        ? result.phoneNumber= this._phoneNumber
+        : result.phoneNumber= NA
 
         this._active 
-        ? result = [...result, { userActive: this._active }] 
-        : result = [...result, { userActive: NA }];
+        ? result.userActive= true
+        : result.userActive= false
 
         this._id 
-        ? result = [...result, { patientId: this._id }] 
-        : result = [...result, { patientId: NA }];
+        ? result.patientId= this._id
+        : result.patientId= NA
 
         this._id 
-        ? result = [...result, { id: this._id }] 
-        : result = [...result, { id: NA }];
+        ? result.id= this._id
+        : result.id= NA
         
         return result;
     }

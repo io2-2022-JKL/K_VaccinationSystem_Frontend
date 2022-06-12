@@ -14,16 +14,18 @@ import ApiConnection from "../../logic/api/ApiConnection";
 import Button from "@mui/material/Button";
 import Loader from "react-loader";
 import { PatientIncomingVisitModal } from './PatientVisitModal';
+import { Typography } from '@mui/material';
 
 export default function PatientDashboard() {
 
-    const {GetId} = useLogin();
+    const {GetId, isLoggedIn} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
     const [patientData, setPatientData] = useState([]);
+    const [visitsExist, setExist] = useState(true);
+    const [id, setId] = useState(GetId())
 
     const instance = ApiConnection("/patient/appointments/incomingAppointments/");
-    const instance2 = ApiConnection("/patient/info/");
 
     useEffect(() => {
         updateData();
@@ -31,43 +33,37 @@ export default function PatientDashboard() {
     }, [])
 
 
-    const updateData = () => {
-        instance.get(
-            "/patient/appointments/incomingAppointments/" + GetId()
-        ).then(r => {
-            for(let i = 0; i < r.data.length; i++)
+    const updateData = async () => {
+        const instance2 = ApiConnection("/patient/info/");
+        if(isLoggedIn("/doctor"))
+        {
+            const instanceDoctor = ApiConnection("/doctor/info")
+            const d = await instanceDoctor.get("doctor/info/" + GetId())
+            setId(d.data.patientAccountId)
+        }
+        const p = await instance2.get("/patient/info/" + id)
+        const patient = new Patient(p.data)
+        setPatientData(patient)
+        const r = await instance.get("/patient/appointments/incomingAppointments/" + id).catch((error) =>{
+            if(error.response.status === 404)
+                setExist(false)
+        })
+        if ( typeof r !== 'undefined')
+        {
+            for( let i = 0; i < r.data.length; i++)
             {
                 r.data[i].button = <Button onClick={() => handleCancellation(r.data[i].appointmentId)} color={"error"}>Anuluj</Button>
                 r.data[i].detailsButton = <PatientIncomingVisitModal data={r.data[i]}/>
             }
             setTableData(r.data)
-        })
-            .finally(() => {
-                //setLoading(false)
-            });
-        instance2.get(
-            "/patient/info/" + GetId()
-        ).then(r => {
-            setPatientData(r.data)
-        })
-            .finally(() => {
-                setLoading(false)
-            });
+            setLoading(false)
+        }
     }
 
-    const patient = new Patient(patientData);
-
-    const handleCancellation = (id) => {
-        const url = "/patient/appointments/incomingAppointments/cancelAppointments/" + GetId() + "/" + id
-
-        instance.delete(
-            url
-        ).then(r => {
-            updateData()
-        })
-            .finally(() => {
-                setLoading(false)
-            });
+    const handleCancellation = async (visitId) => {
+        const url = "/patient/appointments/incomingAppointments/cancelAppointments/" + id + "/" + visitId
+        await instance.delete(url)
+        updateData()
     }
 
     const tableColumns = [
@@ -86,18 +82,32 @@ export default function PatientDashboard() {
         <DashboardLayout>
             <DashboardNavbar/>
             <MDBox mb={10}/>
+            <Header name={patientData.getFirstName + " " + patientData.getLastName} position={"Pacjent"}>
             {
-                loading?
-                <Grid>
-                    <Loader /> 
-                </Grid> 
-                :
-                <Header name={patient.getFirstName + " " + patient.getLastName} position={"Pacjent"}>
+                visitsExist?
+                    loading?
+                    <Grid>
+                        <Loader /> 
+                    </Grid> 
+                    :
                     <MDBox mt={5} mb={3}>
                         <DataTable table={{columns: tableColumns, rows: tableData}}/>
                     </MDBox>
-                </Header>
+                :
+                <Grid
+                    container
+                    spacing={0}
+                    direction="column"
+                    alignContent="center"
+                    alignItems="center"
+                    justify="center"
+                    style={{ minHeight: 30 }}>
+                    <Typography>
+                        Nie masz żadnych przyszłych wizyt
+                    </Typography>
+                </Grid>
             }
+            </Header>
             <Footer/>
         </DashboardLayout>
     )

@@ -13,8 +13,6 @@ import MDButton from "components/MDButton";
 // Authentication layout components
 import CoverLayout from "layouts/authentication/components/CoverLayout";
 
-// Images
-import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 import {TextField} from "@mui/material";
 import {useState} from "react";
 import ApiConnection from "../logic/api/ApiConnection";
@@ -23,7 +21,7 @@ function RegisterComponent(props) {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [pesel, setPesel] = useState("");
-  const [birthday, setBirthDay] = useState("");
+  const [birthday, setBirthDay] = useState("01-01-2000");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -37,12 +35,12 @@ function RegisterComponent(props) {
     conn.post(
         "/register",
         {
-          pesel: pesel,
+          PESEL: pesel,
           mail: email,
           password: password,
           firstName: name,
           lastName: surname,
-          dateOfBirth: birthday,
+          dateOfBirth: birthday.slice(6,10)+birthday.slice(2,6)+birthday.slice(0,2)+"T00:00.000Z",
           phoneNumber: phone,
         }).then(r => {
       if (r.status === 200) {
@@ -52,7 +50,7 @@ function RegisterComponent(props) {
     })
   }
   return (
-    <CoverLayout image={bgImage}>
+    <CoverLayout>
       <Card>
         <MDBox
           variant="gradient"
@@ -85,7 +83,7 @@ function RegisterComponent(props) {
                   id="date"
                   label="Data urodzenia"
                   type="date"
-                  defaultValue="2000-05-09"
+                  defaultValue="2000-01-01"
                   onChange={e => setBirthDay(e.target.value)}
                   InputLabelProps={{
                     shrink: true,

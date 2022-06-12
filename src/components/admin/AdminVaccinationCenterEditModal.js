@@ -12,46 +12,17 @@ import { Grid } from '@mui/material';
 import { Select } from '@mui/material';
 import { MenuItem } from '@mui/material';
 
-export default function AdminVaccinationCenterAddModal(props) {
+export default function AdminVaccinationCenterEditModal(props) {
 
-    let openingHoursDays = [
-        {
-            from: "00:00",
-            to: "23:59"
-        },
-        {
-            from: "00:00",
-            to: "23:59"
-        },
-        {
-            from: "00:00",
-            to: "23:59"
-        },
-        {
-            from: "00:00",
-            to: "23:59"
-        },
-        {
-            from: "00:00",
-            to: "23:59"
-        },
-        {
-            from: "00:00",
-            to: "23:59"
-        },
-        {
-            from: "00:00",
-            to: "23:59"
-        },
-    ];
+    let openingHoursDays = props.data.openingHoursDays;
     let active = true;
 
     const [open, setOpen] = useState(false);
     const [vaccines, setVaccines] = useState([]);
-    const [selectedVaccines, setSelectedVaccines] = useState([])
-    const [name, setName] = useState("");
-    const [city, setCity] = useState("");
-    const [street, setStreet] = useState("");
+    const [selectedVaccines, setSelectedVaccines] = useState([]);
+    const [name, setName] = useState(props.data.name);
+    const [city, setCity] = useState(props.data.city);
+    const [street, setStreet] = useState(props.data.street);
 
     const instance = ApiConnection("/admin/vaccinationCenters/addVaccinationCenter");
 
@@ -68,7 +39,8 @@ export default function AdminVaccinationCenterAddModal(props) {
     let addCenter = async () =>
     {
         await instance.post(
-            "/admin/vaccinationCenters/addVaccinationCenter", {
+            "/admin/vaccinationCenters/editVaccinationCenter", {
+                "id": props.data.id,
                 "street": street,
                 "name": name,
                 "city": city,
@@ -85,12 +57,19 @@ export default function AdminVaccinationCenterAddModal(props) {
     const onEnter = async () =>
     {
         const v = await instanceVaccines.get("/admin/vaccines")
+        v.data = await v.data.filter(function(el,index,arr){
+            return el.active;
+        })
         setVaccines(v.data)
+        let vac = []
+        await props.data.vaccines.forEach(element => {
+            vac.push(element.id)
+        });
+        setSelectedVaccines(vac)
         setOpen(true)
-        console.log(vaccines)
     }
 
-    const handleChange = (event) => {
+    const handleChange = async (event) => {
         const {
           target: { value },
         } = event;
@@ -102,7 +81,7 @@ export default function AdminVaccinationCenterAddModal(props) {
 
     return (
         <>
-        <Button onClick={onEnter}>Utwórz</Button>
+        <Button onClick={onEnter}>Edytuj</Button>
         <Modal
             open={open}
             onClose={handleClose}
@@ -143,7 +122,7 @@ export default function AdminVaccinationCenterAddModal(props) {
                             id="szczepionki" 
                             label="Szczepionki" 
                             variant="standard"
-                            defaultValue={[]}
+                            defaultValue={selectedVaccines}
                             multiple 
                             onChange={handleChange}>
                                 {vaccines.map((record) => (
@@ -256,7 +235,7 @@ export default function AdminVaccinationCenterAddModal(props) {
                     </Grid>
                 </Box>
                 <Button onClick={() => addCenter()}>
-                        Utwórz
+                        Edytuj
                 </Button>
             </Box>
         </Modal>
