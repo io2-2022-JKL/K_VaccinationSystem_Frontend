@@ -11,44 +11,59 @@ import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
 import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
+import DoctorAddTimeSlotsModal from './DoctorAddTimeSlotsModal';
+import { Button } from '@mui/material';
 
 import Loader from "react-loader";
+import DoctorEditTimeSlotsModal from './DoctorEditTimeSlotModal';
 
 export default function DoctorAvalibility() {
 
     const {GetId} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
-    const [doctorData, setDoctorData] = useState([]);
+    const [patientData, setPatientData] = useState([]);
+    const [vaccinesExist, setExistance] = useState(true)
 
-    useEffect(() => {
-        const instance = ApiConnection("/patient/appointments/formerAppointments/");
-        const instance2 = ApiConnection("/patient/info/");
-        instance.get(
-            "/patient/appointments/formerAppointments/" + GetId()
-        ).then(r => {
-            setTableData(r.data)
-        })
-            .finally(() => {
-                //setLoading(false)
-            });
-        instance2.get(
-            "/patient/info/" + GetId()
-        ).then(r => {
-            setDoctorData(r.data)
-        })
-            .finally(() => {
-                setLoading(false)
-            });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(async () => {
+        updateData()
     }, [])
 
-    const doctor = new Patient(doctorData);
+    const updateData = async () => {
+        const instance = ApiConnection("/doctor/timeSlots/");
+        const instance2 = ApiConnection("/patient/info/");
+        const c = await instance2.get("/patient/info/" + GetId())
+        setPatientData(c.data)
+        const r = await instance.get("/doctor/timeSlots/" + GetId())
+        for (let i = 0; i < r.data.length; i++)
+        {
+            r.data[i].deleteButton = <Button onClick={() => handleCancellation(GetId(), r.data[i].id)} color={"error"}>Usuń</Button>
+            r.data[i].editButton = <DoctorEditTimeSlotsModal data={r.data[i]}/>
+        }
+        setTableData(r.data)
+        setLoading(false)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
+
+    const handleCancellation = async (id, slotId) => {
+        const deleteInstance = ApiConnection("/doctor/timeSlot/delete")
+        setLoading(true)
+        setExistance(true)
+        const url = "/doctor/timeSlot/delete/" + id
+        await deleteInstance.post(
+            url, {
+                "slots": [slotId]
+            }
+        )
+        updateData()
+        setLoading(false)
+    }
 
     const tableColumns = [
-        {Header: "Nazwa szczepionki", accessor: "vaccineName", width: "50%"},
-        {Header: "Wirus", accessor: "vaccineVirus", width: "25%"},
-        {Header: "Data", accessor: "windowBegin", width: "25%"},
+        {Header: "Od", accessor: "from", width: "25%"},
+        {Header: "Do", accessor: "to", width: "25%"},
+        {Header: "Edytuj", accessor: "editButton", width: "25%"},
+        {Header: "Usuń", accessor: "deleteButton", width: "25%"},
     ]
 
     return (
@@ -61,10 +76,13 @@ export default function DoctorAvalibility() {
                         <Loader />
                     </Grid>
                     :
-                    <Header name={doctor.getFirstName + " " + doctor.getLastName} position={"Lekarz"}>
+                    <Header name={patientData.firstName + " " + patientData.lastName} position={"Lekarz"}>
                         <MDBox mt={5} mb={3}>
                             <DataTable table={{columns: tableColumns, rows: tableData}}/>
                         </MDBox>
+                        <Grid>
+                            <DoctorAddTimeSlotsModal/>
+                        </Grid>
                     </Header>
             }
             <Footer/>
