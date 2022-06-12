@@ -14,13 +14,13 @@ export default function DoctorAddTimeSlotsModal(props) {
 
     const d = new Date()
     let from = String(d.getFullYear())+"-"+
-                ("0"+String(d.getMonth())).slice(-2)+"-"+
-                ("0"+String(d.getDay())).slice(-2)+"T"+
+                ("0"+String(d.getMonth()+1)).slice(-2)+"-"+
+                ("0"+String(d.getDate())).slice(-2)+"T"+
                 ("0"+String(d.getHours())).slice(-2)+":"+
                 ("0"+String(d.getMinutes())).slice(-2);
     let to = String(d.getFullYear())+"-"+
-                ("0"+String(d.getMonth())).slice(-2)+"-"+
-                ("0"+String(d.getDay())).slice(-2)+"T"+
+                ("0"+String(d.getMonth()+1)).slice(-2)+"-"+
+                ("0"+String(d.getDate())).slice(-2)+"T"+
                 ("0"+String(d.getHours())).slice(-2)+":"+
                 ("0"+String(d.getMinutes())).slice(-2);
     let minutes = "3";

@@ -85,6 +85,9 @@ export default function AdminVaccinationCenterAddModal(props) {
     const onEnter = async () =>
     {
         const v = await instanceVaccines.get("/admin/vaccines")
+        v.data = v.data.filter(function(el,index,arr){
+            return el.active;
+        })
         setVaccines(v.data)
         setOpen(true)
         console.log(vaccines)
