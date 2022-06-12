@@ -27,6 +27,7 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import Icon from "@mui/material/Icon";
+import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -49,17 +50,17 @@ import {
   useMaterialUIController,
   setTransparentNavbar,
   setMiniSidenav,
-  setOpenConfigurator,
 } from "context";
 import useLogin from "../../../logic/useLogin";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useMaterialUIController();
-  const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
+  const { miniSidenav, transparentNavbar, fixedNavbar, darkMode } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
   const {LogOut} = useLogin();
+  const {isLoggedIn} = useLogin();
 
   useEffect(() => {
     // Setting the navbar type
@@ -88,7 +89,19 @@ function DashboardNavbar({ absolute, light, isMini }) {
   }, [dispatch, fixedNavbar]);
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
-  const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
+  const handleAccountSwitching = () => {
+    if(isLoggedIn("/doctor"))
+    {
+      console.log(route)
+      if(route.includes('doctor'))
+        {
+          console.log(route);
+          navigate("/patient")
+        }
+      else
+        navigate("/doctor")
+    }
+  }
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
 
@@ -149,6 +162,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 onClick={handleLogout}>
                 <Icon sx={iconsStyle}>account_circle</Icon>
               </IconButton>
+
               <IconButton
                 size="small"
                 disableRipple
@@ -160,15 +174,22 @@ function DashboardNavbar({ absolute, light, isMini }) {
                   {miniSidenav ? "menu_open" : "menu"}
                 </Icon>
               </IconButton>
-              <IconButton
-                size="small"
-                disableRipple
-                color="inherit"
-                sx={navbarIconButton}
-                onClick={handleConfiguratorOpen}
-              >
-                <Icon sx={iconsStyle}>settings</Icon>
-              </IconButton>
+
+              {
+                isLoggedIn("/doctor")?
+                  <IconButton
+                    size="small"
+                    disableRipple
+                    color="inherit"
+                    sx={navbarIconButton}
+                    onClick={handleAccountSwitching}
+                  >
+                    <SwitchAccountIcon sx={iconsStyle}/>
+                  </IconButton>
+                :
+                  <></>
+              }
+              
               <IconButton
                 size="small"
                 disableRipple

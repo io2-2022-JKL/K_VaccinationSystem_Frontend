@@ -28,6 +28,7 @@ export default function PatientDashboard() {
     ]
 
     const {GetId} = useLogin();
+    const {isLoggedIn} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
     const [patientData, setPatientData] = useState([]);
@@ -36,10 +37,18 @@ export default function PatientDashboard() {
     useEffect(async () => {
         const instance = ApiConnection("/patient/appointments/incomingAppointments/");
         const instance2 = ApiConnection("/patient/info/");
-        const p = await instance2.get("/patient/info/" + GetId())
+        let id = GetId()
+        if(isLoggedIn("/doctor"))
+        {
+            console.log("is doctor")
+            const instanceDoctor = ApiConnection("/doctor/info")
+            const d = await instanceDoctor.get("doctor/info/" + GetId())
+            id = d.data.patientAccountId;
+        }
+        const p = await instance2.get("/patient/info/" + id)
         const patient = new Patient(p.data)
         setPatientData(patient.toTableData())
-        const v = await instance.get("/patient/appointments/incomingAppointments/" + GetId()).catch((error) =>{
+        const v = await instance.get("/patient/appointments/incomingAppointments/" + id).catch((error) =>{
             if(error.response.status === 404)
                 setExist(false)
         })
@@ -77,7 +86,7 @@ export default function PatientDashboard() {
                                 description=""
                                 info={{
                                     "Imie i Nazwisko": patientData.firstName + " " + patientData.lastName,
-                                    "Pesel": patientData.pesel,
+                                    "Pesel": patientData.PESEL,
                                     "Data urodzenia": patientData.dateOfBirth,
                                     "Email": patientData.mail,
                                     "Numer telefonu": patientData.phoneNumber,
