@@ -40,7 +40,6 @@ export default function PatientDashboard() {
         let id = GetId()
         if(isLoggedIn("/doctor"))
         {
-            console.log("is doctor")
             const instanceDoctor = ApiConnection("/doctor/info")
             const d = await instanceDoctor.get("doctor/info/" + GetId())
             id = d.data.patientAccountId;

@@ -92,10 +92,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const handleAccountSwitching = () => {
     if(isLoggedIn("/doctor"))
     {
-      console.log(route)
       if(route.includes('doctor'))
         {
-          console.log(route);
           navigate("/patient")
         }
       else

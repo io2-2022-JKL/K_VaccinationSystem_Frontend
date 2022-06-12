@@ -21,7 +21,7 @@ import { PatientVisitSignUpModal } from './PatientVisitSignUpModal';
 
 export default function PatientSignup() {
 
-    const {GetId} = useLogin();
+    const {GetId, isLoggedIn} = useLogin();
     const [loading, setLoading] = useState(true);
     const [loading2, setLoading2] = useState(true);
     const [tableData, setTableData] = useState([]);
@@ -74,8 +74,15 @@ export default function PatientSignup() {
         const instance2 = ApiConnection("/patient/info/")
         const instanceViruses = ApiConnection("/viruses")
         const instacneCities = ApiConnection("/cities")
+        let id = GetId()
+        if(isLoggedIn("/doctor"))
+        {
+            const instanceDoctor = ApiConnection("/doctor/info")
+            const d = await instanceDoctor.get("doctor/info/" + GetId())
+            id = d.data.patientAccountId
+        }
         const r = await instance2.get(
-            "/patient/info/" + GetId()
+            "/patient/info/" + id
         )
         const v = await instanceViruses.get(
             "/viruses"

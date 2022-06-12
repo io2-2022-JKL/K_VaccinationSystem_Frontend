@@ -53,7 +53,7 @@ export default class VaccintationCenter
 
     toTableData() {
         const NA = "NA";
-        let result = new Object();
+        let result = {}
 
         this._name 
         ? result.name = this._name

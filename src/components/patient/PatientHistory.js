@@ -17,7 +17,7 @@ import { Typography } from '@mui/material';
 
 export default function PatientDashboard() {
 
-    const {GetId} = useLogin();
+    const {isLoggedIn, GetId} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
     const [patientData, setPatientData] = useState([]);
@@ -26,11 +26,18 @@ export default function PatientDashboard() {
     useEffect(async () => {
         const instance = ApiConnection("/patient/appointments/formerAppointments/");
         const instance2 = ApiConnection("/patient/info/");
-        const p = await instance2.get("/patient/info/" + GetId())
+        let id = GetId()
+        if(isLoggedIn("/doctor"))
+        {
+            const instanceDoctor = ApiConnection("/doctor/info")
+            const d = await instanceDoctor.get("doctor/info/" + GetId())
+            id = d.data.patientAccountId;
+        }
+        const p = await instance2.get("/patient/info/" + id)
         const patient = new Patient(p.data)
         setPatientData(patient)
         const r = await instance.get(
-            "/patient/appointments/formerAppointments/" + GetId()
+            "/patient/appointments/formerAppointments/" + id
         ).catch((error) =>{
             if(error.response.status === 404)
                 setExist(false)

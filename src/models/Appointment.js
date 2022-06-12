@@ -42,7 +42,7 @@ export default class Appointment
 
     toTableData() {
         const NA = "NA";
-        let result = new Object();
+        let result = {}
 
         this._id 
         ? result.appointmentId = this._id

@@ -15,7 +15,7 @@ import useLogin from '../../logic/useLogin.js'
 
 export function PatientVisitSignUpModal(props) {
 
-    const {GetId} = useLogin();
+    const {GetId, isLoggedIn} = useLogin();
     const [open, setOpen] = useState(false);
     const [vaccine, setVaccine] = useState(props.data.availableVaccines[0].vaccineId)
 
@@ -32,8 +32,15 @@ export function PatientVisitSignUpModal(props) {
     const signUp = async () =>
     {
         const instance = ApiConnection("/patient/timeSlots/Book/");
+        let id = GetId()
+        if(isLoggedIn("/doctor"))
+        {
+            const instanceDoctor = ApiConnection("/doctor/info");
+            const d = await instanceDoctor.get("doctor/info/" + GetId())
+            id = d.data.patientAccountId;
+        }
         await instance.post(
-            "/patient/timeSlots/Book/"+ GetId() +
+            "/patient/timeSlots/Book/"+ id +
             "/"+props.data.timeSlotId+"/"+vaccine, {
             })
             handleClose()

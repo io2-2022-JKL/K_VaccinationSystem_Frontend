@@ -18,11 +18,12 @@ import { Typography } from '@mui/material';
 
 export default function PatientDashboard() {
 
-    const {GetId} = useLogin();
+    const {GetId, isLoggedIn} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
     const [patientData, setPatientData] = useState([]);
     const [visitsExist, setExist] = useState(true);
+    const [id, setId] = useState(GetId())
 
     const instance = ApiConnection("/patient/appointments/incomingAppointments/");
 
@@ -34,10 +35,16 @@ export default function PatientDashboard() {
 
     const updateData = async () => {
         const instance2 = ApiConnection("/patient/info/");
-        const p = await instance2.get("/patient/info/" + GetId())
+        if(isLoggedIn("/doctor"))
+        {
+            const instanceDoctor = ApiConnection("/doctor/info")
+            const d = await instanceDoctor.get("doctor/info/" + GetId())
+            setId(d.data.patientAccountId)
+        }
+        const p = await instance2.get("/patient/info/" + id)
         const patient = new Patient(p.data)
         setPatientData(patient)
-        const r = await instance.get("/patient/appointments/incomingAppointments/" + GetId()).catch((error) =>{
+        const r = await instance.get("/patient/appointments/incomingAppointments/" + id).catch((error) =>{
             if(error.response.status === 404)
                 setExist(false)
         })
@@ -53,8 +60,8 @@ export default function PatientDashboard() {
         }
     }
 
-    const handleCancellation = async (id) => {
-        const url = "/patient/appointments/incomingAppointments/cancelAppointments/" + GetId() + "/" + id
+    const handleCancellation = async (visitId) => {
+        const url = "/patient/appointments/incomingAppointments/cancelAppointments/" + id + "/" + visitId
         await instance.delete(url)
         updateData()
     }
