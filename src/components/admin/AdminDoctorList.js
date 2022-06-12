@@ -51,6 +51,7 @@ export default function AdminDoctorList() {
             }
             setTableData(r.data)
             setLoading(false)
+            console.log(r.data)
         }
     }
 
