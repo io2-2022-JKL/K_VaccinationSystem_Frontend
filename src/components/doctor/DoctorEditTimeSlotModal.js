@@ -49,7 +49,8 @@ export default function DoctorEditTimeSlotsModal(props) {
                 "windowBegin": f,
                 "windowEnd": t,
             })
-        //handleClose()
+            console.log(f)
+        handleClose()
         //window.location.reload(false);
     }
 

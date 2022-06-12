@@ -56,10 +56,11 @@ export default function PatientDashboard() {
 
 
     const tableColumns = [
-        {Header: "Nazwa szczepionki", accessor: "vaccineName", width: "25%"},
-        {Header: "Wirus", accessor: "vaccineVirus", width: "25%"},
-        {Header: "Data", accessor: "windowBegin", width: "25%"},
-        {Header: "Szczegóły", accessor: "detailsButton", width: "25%"},
+        {Header: "Nazwa szczepionki", accessor: "vaccineName", width: "20%"},
+        {Header: "Wirus", accessor: "vaccineVirus", width: "20%"},
+        {Header: "Data", accessor: "windowBegin", width: "20%"},
+        {Header: "Status", accessor: "visitState", width: "20%"},
+        {Header: "Szczegóły", accessor: "detailsButton", width: "20%"},
     ]
 
     return (
