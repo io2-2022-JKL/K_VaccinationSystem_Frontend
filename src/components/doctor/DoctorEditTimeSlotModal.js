@@ -46,10 +46,9 @@ export default function DoctorEditTimeSlotsModal(props) {
         let t = to.slice(8,10)+"-"+to.slice(5,7)+"-"+to.slice(0,4)+" "+to.slice(11,16)
         await instance.post(
             "/doctor/timeSlots/modify/" + GetId() + "/" + props.data.id, {
-                "windowBegin": f,
-                "windowEnd": t,
+                "timeFrom": f,
+                "timeTo": t,
             })
-            console.log(f)
         handleClose()
         //window.location.reload(false);
     }

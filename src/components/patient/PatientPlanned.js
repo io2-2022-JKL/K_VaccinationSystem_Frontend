@@ -35,11 +35,12 @@ export default function PatientDashboard() {
 
     const updateData = async () => {
         const instance2 = ApiConnection("/patient/info/");
+        let id = GetId()
         if(isLoggedIn("/doctor"))
         {
             const instanceDoctor = ApiConnection("/doctor/info")
             const d = await instanceDoctor.get("doctor/info/" + GetId())
-            setId(d.data.patientAccountId)
+            id = d.data.patientAccountId
         }
         const p = await instance2.get("/patient/info/" + id)
         const patient = new Patient(p.data)
@@ -56,6 +57,7 @@ export default function PatientDashboard() {
                 r.data[i].detailsButton = <PatientIncomingVisitModal data={r.data[i]}/>
             }
             setTableData(r.data)
+            setId(id)
             setLoading(false)
         }
     }
