@@ -16,7 +16,6 @@ import useLogin from "../../logic/useLogin";
 import Loader from "react-loader";
 import { PatientIncomingVisitModal } from './PatientVisitModal';
 import { Typography } from '@mui/material';
-import Appointment from 'models/Appointment';
 
 export default function PatientDashboard() {
 

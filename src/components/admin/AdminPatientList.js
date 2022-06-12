@@ -48,6 +48,7 @@ export default function AdminPatientList() {
             patients[i].doctorButton = <AdminAddDoctorModal data={patients[i]} centers={c.data}/>
             patients[i].modifyButton = <AdminPatientEditModal data={patients[i]}/>
         }
+        console.log(patients)
         setTableData(patients)
         setLoading(false)
     }

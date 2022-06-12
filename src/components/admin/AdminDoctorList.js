@@ -37,6 +37,9 @@ export default function AdminDoctorList() {
             r.data.forEach(element => {
                 if(element.PESEL===undefined) element.PESEL = element.pesel
             });
+            r.data.filter(function(el,index,arr){
+                return el.active;
+            })
             const c = await centerInstance.get(
                 "/admin/vaccinationCenters"
             )

@@ -20,8 +20,8 @@ export default function AdminPatientEditModal(props) {
     let mail = props.data.mail;
     let phoneNumber = props.data.phoneNumber;
     let id = props.data.patientId;
-    let dateOfBirth = props.data.dateOfBirth;
-    let active = props.data.active;
+    let dateOfBirth = props.data.dateOfBirth.slice(6,10)+props.data.dateOfBirth.slice(2,6)+props.data.dateOfBirth.slice(0,2);
+    let active = props.data.userActive;
 
     const instance = ApiConnection("/admin/patients/editPatient");
 
@@ -42,17 +42,17 @@ export default function AdminPatientEditModal(props) {
     {
         await instance.post(
             "/admin/patients/editPatient", {
-                "patientId": id,
+                "id": id,
                 "pesel": pesel,
                 "firstName": firstName,
                 "lastName": lastName,
                 "mail": mail,
-                "dateOfBirth": dateOfBirth,
+                "dateOfBirth": dateOfBirth.slice(8,10)+dateOfBirth.slice(4,8)+dateOfBirth.slice(0,4),
                 "phoneNumber": phoneNumber,
                 "active": active,
             })
         handleClose()
-        window.location.reload(false);
+        //window.location.reload(false);
     }
 
     return (
@@ -66,7 +66,7 @@ export default function AdminPatientEditModal(props) {
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h2" component="h2">
-                    Zmodyfikuj dane doktora {props.data.firstName} {props.data.lastName}
+                    Zmodyfikuj dane pacjenta {props.data.firstName} {props.data.lastName}
                 </Typography>
                 <Box fullWidth>
                     <Box fullWidth sx={{pl:4, pr:4, pt:2, pd:2}}>

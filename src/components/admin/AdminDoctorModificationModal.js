@@ -21,9 +21,9 @@ export function AdminDoctorModificationModal(props) {
     let mail = props.data.mail;
     let phoneNumber = props.data.phoneNumber;
     let id = props.data.id;
-    let dateOfBirth = props.data.dateOfBirth;
+    let dateOfBirth = props.data.dateOfBirth.slice(6,10)+props.data.dateOfBirth.slice(2,6)+props.data.dateOfBirth.slice(0,2);
     let active = props.data.active;
-    let vaccinationCenterID = props.data.vaccinationCenterID;
+    let vaccinationCenterID = props.data.vaccinationCenterId;
 
     const instance = ApiConnection("/admin/doctors/modifyDoctor");
 
@@ -50,7 +50,7 @@ export function AdminDoctorModificationModal(props) {
                 "firstName": firstName,
                 "lastName": lastName,
                 "mail": mail,
-                "dateOfBirth": dateOfBirth,
+                "dateOfBirth": dateOfBirth.slice(8)+dateOfBirth.slice(4,8)+dateOfBirth.slice(0,4),
                 "phoneNumber": phoneNumber,
                 "active": active,
                 "vaccinationCenterID": vaccinationCenterID
