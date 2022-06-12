@@ -13,8 +13,6 @@ import MDButton from "components/MDButton";
 // Authentication layout components
 import CoverLayout from "layouts/authentication/components/CoverLayout";
 
-// Images
-import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 import {TextField} from "@mui/material";
 import {useState} from "react";
 import ApiConnection from "../logic/api/ApiConnection";
@@ -33,6 +31,7 @@ function RegisterComponent(props) {
   const navigate = useNavigate();
 
   const SubmitData = () => {
+    console.log(birthday)
     conn.post(
         "/register",
         {
@@ -41,7 +40,7 @@ function RegisterComponent(props) {
           password: password,
           firstName: name,
           lastName: surname,
-          dateOfBirth: birthday.slice(8)+birthday.slice(4,8)+birthday.slice(0,4),
+          dateOfBirth: birthday.slice(6,10)+birthday.slice(2,6)+birthday.slice(0,2)+"T00:00.000Z",
           phoneNumber: phone,
         }).then(r => {
       if (r.status === 200) {
@@ -51,7 +50,7 @@ function RegisterComponent(props) {
     })
   }
   return (
-    <CoverLayout image={bgImage}>
+    <CoverLayout>
       <Card>
         <MDBox
           variant="gradient"

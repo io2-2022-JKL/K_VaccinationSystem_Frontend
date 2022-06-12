@@ -65,7 +65,7 @@ export default function DoctorDashboard() {
                                 description=""
                                 info={{
                                     "Imie i Nazwisko": patientData.firstName + " " + patientData.lastName,
-                                    "Pesel": patientData.pesel,
+                                    "Pesel": patientData.PESEL,
                                     "Data urodzenia": patientData.dateOfBirth,
                                     Email: patientData.mail,
                                 }}
