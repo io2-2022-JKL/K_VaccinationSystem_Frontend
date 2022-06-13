@@ -43,7 +43,7 @@ export default function PatientDashboard() {
         if ( typeof r !== 'undefined')
         {
             r.data.forEach(element => {
-                element.linkButton = <Link href={element.url}>Certyfikat</Link>
+                element.linkButton = <Link href={element.url}>Pobierz</Link>
             });
             setTableData(r.data)
         }
