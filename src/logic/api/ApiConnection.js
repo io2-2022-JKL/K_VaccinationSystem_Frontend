@@ -9,6 +9,9 @@ const backends = {
         "j": "https://systemszczepien.azurewebsites.net/",
         "l": "https://vaccinationsystemteaml.azurewebsites.net"
     }
+    let id = localStorage.getItem("backend");
+    if(id === null)
+        localStorage.setItem("backend", "k");
     const url = backends[localStorage.getItem("backend")];
 
     if(token === null)
