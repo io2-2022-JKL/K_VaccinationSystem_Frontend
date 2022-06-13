@@ -9,11 +9,11 @@ const backends = {
         "j": "https://systemszczepien.azurewebsites.net/",
         "l": "https://vaccinationsystemteaml.azurewebsites.net"
     }
-    let id = localStorage.getItem("backend");
-    if(id === null)
-        localStorage.setItem("backend", "k");
-    const url = backends[localStorage.getItem("backend")];
-
+    // let id = localStorage.getItem("backend");
+    // if(id === null)
+    //     localStorage.setItem("backend", "");
+    // const url = backends[localStorage.getItem("backend")];
+    const url = "https://systemszczepien.azurewebsites.net/";
     if(token === null)
     {
         return axios.create({
