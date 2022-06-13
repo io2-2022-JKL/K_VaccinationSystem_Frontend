@@ -11,6 +11,7 @@ import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import Loader from "react-loader";
 import { Typography } from '@mui/material';
+import {Link} from '@mui/material';
 
 export default function PatientDashboard() {
 
@@ -41,6 +42,9 @@ export default function PatientDashboard() {
         })
         if ( typeof r !== 'undefined')
         {
+            r.data.forEach(element => {
+                element.linkButton = <Link href={element.url}>Pobierz</Link>
+            });
             setTableData(r.data)
         }
         setLoading(false)
@@ -52,7 +56,7 @@ export default function PatientDashboard() {
     const tableColumns = [
         {Header: "Szczepionka", accessor: "vaccineName", width: "25%"},
         {Header: "Wirus", accessor: "virusType", width: "25%"},
-        {Header: "url", accessor: "url", width: "50%"},
+        {Header: "Certyfikat", accessor: "linkButton", width: "50%"},
     ]
 
     return (
