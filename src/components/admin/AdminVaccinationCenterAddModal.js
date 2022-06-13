@@ -90,7 +90,6 @@ export default function AdminVaccinationCenterAddModal(props) {
         })
         setVaccines(v.data)
         setOpen(true)
-        console.log(vaccines)
     }
 
     const handleChange = (event) => {
