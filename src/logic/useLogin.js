@@ -26,7 +26,9 @@ const useLogin = () => {
     }
 
     const LogOut = () => {
+        const curr_back = localStorage.getItem("backend")
         localStorage.clear();
+        localStorage.setItem("backend", curr_back)
     }
 
     const GetToken = (APIPath) => {

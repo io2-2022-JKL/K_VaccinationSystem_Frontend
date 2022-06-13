@@ -4,9 +4,13 @@ import useLogin from "../useLogin";
 export default (path) => {
     const {GetToken} = useLogin();
     const token = GetToken(path);
-    const url = "https://systemszczepien.azurewebsites.net/" //zespół j
-    //const url = "https://vaccinationsystemteaml.azurewebsites.net" //zespół l
-    //const url = `https://vaccinationsystemapi.azurewebsites.net` //nasz
+    const backends = {
+        "k": `https://vaccinationsystemapi.azurewebsites.net`,
+        "j": "https://systemszczepien.azurewebsites.net/",
+        "l": "https://vaccinationsystemteaml.azurewebsites.net"
+    }
+    const url = backends[localStorage.getItem("backend")];
+
     if(token === null)
     {
         return axios.create({

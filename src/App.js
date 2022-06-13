@@ -53,6 +53,7 @@ export default function App() {
         whiteSidenav,
         //darkMode,
     } = controller;
+    localStorage.setItem("backend", "k")
     const [onMouseEnter, setOnMouseEnter] = useState(false);
     const { pathname } = useLocation();
     const {isLoggedIn} = useLogin();
