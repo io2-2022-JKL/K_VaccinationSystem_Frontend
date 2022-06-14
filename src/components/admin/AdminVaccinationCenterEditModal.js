@@ -50,6 +50,7 @@ export default function AdminVaccinationCenterEditModal(props) {
             })
         handleClose()
         props.f()
+        props.o(true)
     }
 
     const instanceVaccines = ApiConnection("/admin/vaccines")
