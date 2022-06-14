@@ -70,6 +70,7 @@ export default function AdminVaccineeditModal(props) {
             })
         handleClose()
         props.f()
+        props.o(true)
     }
 
     return (
