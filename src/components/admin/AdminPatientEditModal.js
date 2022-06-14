@@ -53,6 +53,7 @@ export default function AdminPatientEditModal(props) {
             })
         handleClose()
         props.f()
+        props.o(true)
     }
 
     return (
