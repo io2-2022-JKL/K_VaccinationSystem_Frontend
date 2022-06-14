@@ -84,6 +84,8 @@ export default function PatientSignup() {
         const r = await instance2.get(
             "/patient/info/" + id
         )
+        setPatientData(r.data)
+        setLoading2(false)
         const v = await instanceViruses.get(
             "/viruses"
         )
@@ -92,7 +94,6 @@ export default function PatientSignup() {
         )
         setCities(c.data)
         setViruses(v.data)
-        setPatientData(r.data)
         setLoading(false)
         setCityFilter(c.data[0].city)
         setVirusFilter(v.data[0].virus)

@@ -18,9 +18,10 @@ export function LogoutModal() {
 
     const navigate = useNavigate();
   
-    const handleLogout = () => {
+    const handleLogout = async () => {
       LogOut();
       navigate("/login");
+      
     }
 
     const handleClose = () => {

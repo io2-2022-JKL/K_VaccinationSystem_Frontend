@@ -128,7 +128,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
             sx={navbarIconButton} 
             size="small" 
             disableRipple
-            disabled={isLoggedIn("/doctor")}
             onClick={handleAccountSwitching}
             startIcon={<SwitchAccountIcon sx={iconsStyle}/>}
             >
