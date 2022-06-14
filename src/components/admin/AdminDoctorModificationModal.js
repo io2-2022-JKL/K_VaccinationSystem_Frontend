@@ -57,6 +57,7 @@ export function AdminDoctorModificationModal(props) {
             })
         handleClose()
         props.f()
+        props.o(true)
     }
 
     return (

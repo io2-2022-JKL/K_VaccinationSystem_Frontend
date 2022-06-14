@@ -15,12 +15,80 @@ import Loader from "react-loader";
 import { AdminDoctorInfoModal } from './AdminDoctorInfoModal';
 import { AdminDoctorModificationModal } from './AdminDoctorModificationModal'
 import AdminDoctorTimeSlotsModal from './AdminDoctorTimeSlotsModal';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import {Alert } from '@mui/material'
 
 export default function AdminDoctorList() {
 
     const [loading, setLoading] = useState(true)
     const [doctorsExist, setExistance] = useState(true)
     const [tableData, setTableData] = useState([])
+    const [openAdd, setOpenAdd] = useState(false);
+    const [openEdit, setOpenEdit] = useState(false);
+    const [openDelete, setOpenDelete] = useState(false);
+
+    const handleAddSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpenAdd(false);
+      };
+
+    const handleEditSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpenEdit(false);
+      };
+
+    const handleDeleteSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpenDelete(false);
+      };
+
+    const actionAdd = (
+        <>
+          <IconButton
+            size="small"
+
+            color="inherit"
+            onClick={handleAddSnackbarClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </>
+      );
+
+    const actionEdit = (
+        <>
+          <IconButton
+            size="small"
+            color="inherit"
+            onClick={handleEditSnackbarClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </>
+      );
+
+    const actionDelete = (
+        <>
+          <IconButton
+            size="small"
+            color="inherit"
+            onClick={handleDeleteSnackbarClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </>
+      );
 
     const updateData = async () => {
         const instance = ApiConnection("/admin/doctors")
@@ -46,8 +114,8 @@ export default function AdminDoctorList() {
             for (let i = 0; i < r.data.length; i++) {
                 r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].id)} color={"error"}>Usuń</Button>
                 r.data[i].detailsButton = <AdminDoctorInfoModal data={r.data[i]}/>
-                r.data[i].timeSlotButton = <AdminDoctorTimeSlotsModal data={r.data[i]} f={updateData}/>
-                r.data[i].editButton = <AdminDoctorModificationModal data={r.data[i]} centers={c.data} f={updateData}/>
+                r.data[i].timeSlotButton = <AdminDoctorTimeSlotsModal data={r.data[i]} f={updateData} o={setOpenAdd}/>
+                r.data[i].editButton = <AdminDoctorModificationModal data={r.data[i]} centers={c.data} f={updateData} o={setOpenEdit}/>
             }
             setTableData(r.data)
             setLoading(false)
@@ -64,6 +132,7 @@ export default function AdminDoctorList() {
         )
         updateData()
         setLoading(false)
+        setOpenDelete(true)
     }
 
     useEffect(() => {
@@ -114,6 +183,36 @@ export default function AdminDoctorList() {
                     </Typography>
                 </Grid>
             }
+             <Snackbar
+                open={openAdd}
+                autoHideDuration={6000}
+                action={actionAdd}
+                severity="success"
+            >
+                <Alert onClose={handleAddSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                    Usunięto wizytę doktora
+                </Alert>
+            </Snackbar>
+            <Snackbar
+                open={openEdit}
+                autoHideDuration={6000}
+                action={actionEdit}
+                severity="success"
+            >
+                <Alert onClose={handleEditSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                    Dane doktora zostały zmienione
+                </Alert>
+            </Snackbar>
+            <Snackbar
+                open={openDelete}
+                autoHideDuration={6000}
+                action={actionDelete}
+                severity="success"
+            >
+                <Alert onClose={handleDeleteSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                    Doktor został usunięty
+                </Alert>
+            </Snackbar>
             </Header>
             <Footer/>
         </DashboardLayout>
