@@ -15,6 +15,10 @@ import Button from "@mui/material/Button";
 import Loader from "react-loader";
 import { PatientIncomingVisitModal } from './PatientVisitModal';
 import { Typography } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import {Alert} from '@mui/material'
 
 export default function PatientDashboard() {
 
@@ -24,6 +28,7 @@ export default function PatientDashboard() {
     const [patientData, setPatientData] = useState([]);
     const [visitsExist, setExist] = useState(true);
     const [id, setId] = useState(GetId())
+    const [openDelete, setOpenDelete] = useState(false);
 
     const instance = ApiConnection("/patient/appointments/incomingAppointments/");
 
@@ -31,6 +36,26 @@ export default function PatientDashboard() {
         updateData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    const handleDeleteSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpenDelete(false);
+      };
+
+    const actionDelete = (
+        <>
+          <IconButton
+            size="small"
+            color="inherit"
+            onClick={handleDeleteSnackbarClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </>
+      );
 
 
     const updateData = async () => {
@@ -66,6 +91,7 @@ export default function PatientDashboard() {
         const url = "/patient/appointments/incomingAppointments/cancelAppointments/" + id + "/" + visitId
         await instance.delete(url)
         updateData()
+        setOpenDelete(true)
     }
 
     const tableColumns = [
@@ -110,6 +136,16 @@ export default function PatientDashboard() {
                 </Grid>
             }
             </Header>
+            <Snackbar
+                open={openDelete}
+                autoHideDuration={6000}
+                action={actionDelete}
+                severity="success"
+            >
+                <Alert onClose={handleDeleteSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                    Wizyta została odwołana
+                </Alert>
+            </Snackbar>
             <Footer/>
         </DashboardLayout>
     )

@@ -9,9 +9,12 @@ import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
 import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
-import { Button, Table, TableRow, TableCell, TableBody, Typography, Box } from '@mui/material';
+import { Button, Alert, Typography, Box } from '@mui/material';
 import Loader from "react-loader";
 import DoctorConfirmModal from './DoctorConfirmModal';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function DoctorUnconfirmed() {
 
@@ -20,6 +23,47 @@ export default function DoctorUnconfirmed() {
     const [tableData, setTableData] = useState([]);
     const [patientData, setPatientData] = useState([]);
     const [visitsExist, setExist] = useState(true);
+    const [openDelete, setOpenDelete] = useState(false);
+    const [openAdd, setOpenAdd] = useState(false);
+
+    const handleDeleteSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setOpenDelete(false);
+      };
+
+    const handleAddSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAdd(false);
+    };
+
+    const actionDelete = (
+        <>
+            <IconButton
+                size="small"
+                color="inherit"
+                onClick={handleDeleteSnackbarClose}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </>
+      );
+
+    const actionAdd = (
+        <>
+            <IconButton
+                size="small"
+                color="inherit"
+                onClick={handleAddSnackbarClose}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </>
+      );
+
 
     const updateData = async () => {
         const instance = ApiConnection("/doctor/incomingAppointments/");
@@ -37,7 +81,7 @@ export default function DoctorUnconfirmed() {
             for (let i = 0; i < r.data.length; i++)
             {
                 r.data[i].deleteButton = <Button onClick={()=>{handleCancellation(r.data[i].appointmentId)}}>Odowołaj</Button>
-                r.data[i].confirmButton = <DoctorConfirmModal data={r.data[i]} f={updateData}/>
+                r.data[i].confirmButton = <DoctorConfirmModal data={r.data[i]} f={updateData} o={setOpenAdd}/>
             }
             setTableData(r.data) 
         }
@@ -55,6 +99,7 @@ export default function DoctorUnconfirmed() {
             "/doctor/vaccinate/vaccinationDidNotHappen/"+GetId()+"/"+id, {
             })
         updateData()
+        setOpenDelete(true)
     }
 
     const tableColumns = [
@@ -104,6 +149,26 @@ export default function DoctorUnconfirmed() {
                         }
                     </Grid>
                 </Box>
+                <Snackbar
+                open={openDelete}
+                autoHideDuration={6000}
+                action={actionDelete}
+                severity="success"
+            >
+                <Alert onClose={handleDeleteSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                    Wizyta została odwołana
+                </Alert>
+            </Snackbar>
+            <Snackbar
+                open={openAdd}
+                autoHideDuration={6000}
+                action={actionAdd}
+                severity="success"
+            >
+                <Alert onClose={handleAddSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                    Wizyta została potwierdzona
+                </Alert>
+            </Snackbar>
             </Header>
             <Footer/>
         </DashboardLayout>

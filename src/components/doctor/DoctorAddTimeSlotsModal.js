@@ -69,7 +69,7 @@ export default function DoctorAddTimeSlotsModal(props) {
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h2" component="h2">
-                    Dodaj nowe TimeSloty
+                    Dodaj nowe wizyty
                 </Typography>
                 <Box fullWidth>
                     <TextField

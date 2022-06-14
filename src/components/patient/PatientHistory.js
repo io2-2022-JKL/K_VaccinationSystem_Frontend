@@ -59,7 +59,6 @@ export default function PatientDashboard() {
         {Header: "Nazwa szczepionki", accessor: "vaccineName", width: "20%"},
         {Header: "Wirus", accessor: "vaccineVirus", width: "20%"},
         {Header: "Data", accessor: "windowBegin", width: "20%"},
-        {Header: "Status", accessor: "visitState", width: "20%"},
         {Header: "Szczegóły", accessor: "detailsButton", width: "20%"},
     ]
 

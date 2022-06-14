@@ -32,6 +32,7 @@ export default function DoctorConfirmModal(props) {
             })
         handleClose()
         props.f()
+        props.o(true)
     }
 
     return (

@@ -27,27 +27,69 @@ export default function DoctorAvalibility() {
     const [tableData, setTableData] = useState([]);
     const [patientData, setPatientData] = useState([]);
     const [timeExist, setExist] = useState(true)
-    const [open, setOpen] = useState(false);
+    const [openAdd, setOpenAdd] = useState(false);
+    const [openEdit, setOpenEdit] = useState(false);
+    const [openDelete, setOpenDelete] = useState(false);
 
     useEffect(async () => {
         updateData()
     }, [])
 
-    const handleSnackbarClose = (event, reason) => {
+    const handleAddSnackbarClose = (event, reason) => {
         if (reason === 'clickaway') {
           return;
         }
     
-        setOpen(false);
+        setOpenAdd(false);
       };
 
-    const action = (
+    const handleEditSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpenEdit(false);
+      };
+
+    const handleDeleteSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpenDelete(false);
+      };
+
+    const actionAdd = (
         <>
           <IconButton
             size="small"
-            aria-label="close"
+
             color="inherit"
-            onClick={handleSnackbarClose}
+            onClick={handleAddSnackbarClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </>
+      );
+
+    const actionEdit = (
+        <>
+          <IconButton
+            size="small"
+            color="inherit"
+            onClick={handleEditSnackbarClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </>
+      );
+
+    const actionDelete = (
+        <>
+          <IconButton
+            size="small"
+            color="inherit"
+            onClick={handleDeleteSnackbarClose}
           >
             <CloseIcon fontSize="small" />
           </IconButton>
@@ -70,7 +112,7 @@ export default function DoctorAvalibility() {
             for (let i = 0; i < r.data.length; i++)
             {
                 r.data[i].deleteButton = <Button onClick={() => handleCancellation(GetId(), r.data[i].id)} color={"error"}>Usuń</Button>
-                r.data[i].editButton = <DoctorEditTimeSlotsModal data={r.data[i]} f={updateData}/>
+                r.data[i].editButton = <DoctorEditTimeSlotsModal data={r.data[i]} f={updateData} o={setOpenEdit}/>
             }
             setTableData(r.data)
         }
@@ -82,14 +124,13 @@ export default function DoctorAvalibility() {
         const deleteInstance = ApiConnection("/doctor/timeSlot/delete")
         setLoading(true)
         setExist(true)
-        const url = "/doctor/timeSlot/delete/" + id
+        const url = "/doctor/timeSlots/delete/" + id
         await deleteInstance.post(
-            url, {
-                "slots": [slotId]
-            }
+            url, [{"id":slotId}]
         )
         updateData()
         setLoading(false)
+        setOpenDelete(true)
     }
 
     const tableColumns = [
@@ -128,16 +169,35 @@ export default function DoctorAvalibility() {
                         </Typography>
                     </Grid>
             }
-            <DoctorAddTimeSlotsModal f={updateData} o={setOpen}/>
+            <DoctorAddTimeSlotsModal f={updateData} o={setOpenAdd}/>
             <Snackbar
-                open={open}
+                open={openAdd}
                 autoHideDuration={6000}
-                onClose={handleSnackbarClose}
-                action={action}
+                action={actionAdd}
                 severity="success"
             >
-                <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
-                    This is a success message!
+                <Alert onClose={handleAddSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                    Nowe wizyty zostały dodane
+                </Alert>
+            </Snackbar>
+            <Snackbar
+                open={openEdit}
+                autoHideDuration={6000}
+                action={actionEdit}
+                severity="success"
+            >
+                <Alert onClose={handleEditSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                    Termin wizyty został zmieniony
+                </Alert>
+            </Snackbar>
+            <Snackbar
+                open={openDelete}
+                autoHideDuration={6000}
+                action={actionDelete}
+                severity="success"
+            >
+                <Alert onClose={handleDeleteSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                    Wizyta została usunięta
                 </Alert>
             </Snackbar>
             </Header>

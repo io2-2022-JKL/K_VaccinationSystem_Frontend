@@ -17,7 +17,7 @@ export function PatientVisitSignUpModal(props) {
 
     const {GetId, isLoggedIn} = useLogin();
     const [open, setOpen] = useState(false);
-    const [vaccine, setVaccine] = useState(props.data.availableVaccines[0].vaccineId)
+    const [vaccine, setVaccine] = useState("")
     const func = props.func
 
     const handleClose = () => {
@@ -46,6 +46,7 @@ export function PatientVisitSignUpModal(props) {
             })
             handleClose()
             props.f()
+            props.o(true)
     }
 
     return (
