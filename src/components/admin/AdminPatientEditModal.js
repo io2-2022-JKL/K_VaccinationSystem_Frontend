@@ -52,7 +52,7 @@ export default function AdminPatientEditModal(props) {
                 "active": active,
             })
         handleClose()
-        //window.location.reload(false);
+        window.location.reload(false);
     }
 
     return (

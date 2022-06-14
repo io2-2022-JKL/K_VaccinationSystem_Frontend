@@ -55,7 +55,6 @@ export default function AdminVaccinesList() {
             url
         )
         updateData()
-        //setLoading(false)
     }
 
     const tableColumns = [

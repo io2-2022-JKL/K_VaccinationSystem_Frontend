@@ -51,8 +51,6 @@ export default function PatientDashboard() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    //const patient = new Patient(patientData);
-
     const tableColumns = [
         {Header: "Szczepionka", accessor: "vaccineName", width: "25%"},
         {Header: "Wirus", accessor: "virusType", width: "25%"},
