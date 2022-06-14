@@ -18,9 +18,11 @@ import AdminVaccineAddModal from './AdminVaccineAddModal';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import useLogin from 'logic/useLogin';
 
 export default function AdminVaccinesList() {
 
+    const {LogOut} = useLogin
     const [loading, setLoading] = useState(true)
     const [tableData, setTableData] = useState([])
     const [vaccinesExist, setExistance] = useState(true)
@@ -99,7 +101,10 @@ export default function AdminVaccinesList() {
         const instance = ApiConnection("/admin/vaccines/")
         const virusInstance = ApiConnection("/viruses")
         const c = await virusInstance.get("/viruses")
-        const r = await instance.get("/admin/vaccines")
+        const r = await instance.get("/admin/vaccines").catch((error) => {
+          if(error.response.status === 401)
+              LogOut()
+        })
         r.data = await r.data.filter(function(el,index,arr){
             return el.active;
         })

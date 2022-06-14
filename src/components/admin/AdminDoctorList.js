@@ -19,9 +19,11 @@ import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import {Alert } from '@mui/material'
+import useLogin from 'logic/useLogin';
 
 export default function AdminDoctorList() {
 
+    const {LogOut} = useLogin
     const [loading, setLoading] = useState(true)
     const [doctorsExist, setExistance] = useState(true)
     const [tableData, setTableData] = useState([])
@@ -98,8 +100,9 @@ export default function AdminDoctorList() {
         ).catch((error) => {
             if(error.response.status === 404)
                 setExistance(false)
-        }
-        )
+            if(error.response.status === 401)
+                LogOut()
+        })
         if (typeof r !== 'undefined')
         {
             r.data.forEach(element => {

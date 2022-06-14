@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import '../../styles/patient/patient.css';
-import Patient from '../../models/Patient'
 import '../../models/User';
 import MDBox from "../MDBox";
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
@@ -22,7 +21,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 export default function DoctorAvalibility() {
 
-    const {GetId} = useLogin();
+    const {GetId, LogOut} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
     const [patientData, setPatientData] = useState([]);
@@ -100,7 +99,10 @@ export default function DoctorAvalibility() {
         const instance = ApiConnection("/doctor/timeSlots/");
         const instancePatient = ApiConnection("/patient/info/");
         const instanceDoctor = ApiConnection("/doctor/info")
-        const d = await instanceDoctor.get("/doctor/info/" + GetId())
+        const d = await instanceDoctor.get("/doctor/info/" + GetId()).catch((error) => {
+          if(error.response.status === 401)
+              LogOut()
+        })
         const c = await instancePatient.get("/patient/info/" + d.data.patientAccountId)
         setPatientData(c.data)
         const r = await instance.get("/doctor/timeSlots/" + GetId()).catch((error) =>{

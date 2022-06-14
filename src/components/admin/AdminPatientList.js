@@ -19,9 +19,11 @@ import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Alert } from '@mui/material';
+import useLogin from 'logic/useLogin';
 
 export default function AdminPatientList() {
 
+    const {LogOut} = useLogin
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
     const [openAdd, setOpenAdd] = useState(false);
@@ -101,7 +103,10 @@ export default function AdminPatientList() {
     const updateData = async () => {
         const  r = await instance.get(
             "/admin/patients"
-        )
+        ).catch((error) => {
+          if(error.response.status === 401)
+              LogOut()
+        })
         const c = await centerInstance.get(
             "/admin/vaccinationCenters"
         )

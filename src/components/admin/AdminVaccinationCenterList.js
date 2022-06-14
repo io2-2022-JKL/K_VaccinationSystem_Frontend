@@ -17,9 +17,11 @@ import AdminVaccinationCenterEditModal from './AdminVaccinationCenterEditModal';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import useLogin from 'logic/useLogin';
 
 export default function AdminVaccinationCenterList() {
 
+    const {LogOut} = useLogin
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
     const [openAdd, setOpenAdd] = useState(false);
@@ -94,7 +96,10 @@ export default function AdminVaccinationCenterList() {
     const updateData = async () =>
     {
         const instance = ApiConnection("/admin/vaccinationCenters/")
-        const r = await instance.get("/admin/vaccinationCenters")
+        const r = await instance.get("/admin/vaccinationCenters").catch((error) => {
+          if(error.response.status === 401)
+              LogOut()
+        })
         r.data = await r.data.filter(function(el, index, arr){
             return el.active;
         })

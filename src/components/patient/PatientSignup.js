@@ -25,7 +25,7 @@ import {Alert} from '@mui/material'
 
 export default function PatientSignup() {
 
-    const {GetId, isLoggedIn} = useLogin();
+    const {GetId, isLoggedIn, LogOut} = useLogin();
     const [loading, setLoading] = useState(true);
     const [loading2, setLoading2] = useState(true);
     const [tableData, setTableData] = useState([]);
@@ -106,7 +106,10 @@ export default function PatientSignup() {
         }
         const r = await instance2.get(
             "/patient/info/" + id
-        )
+        ).catch((error) => {
+            if(error.response.status === 401)
+                LogOut()
+          })
         setPatientData(r.data)
         setLoading2(false)
         const v = await instanceViruses.get(

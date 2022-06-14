@@ -18,7 +18,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 export default function DoctorUnconfirmed() {
 
-    const {GetId} = useLogin();
+    const {GetId, LogOut} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
     const [patientData, setPatientData] = useState([]);
@@ -69,7 +69,10 @@ export default function DoctorUnconfirmed() {
         const instance = ApiConnection("/doctor/incomingAppointments/");
         const instancePatient = ApiConnection("/patient/info/");
         const instanceDoctor = ApiConnection("/doctor/info")
-        const d = await instanceDoctor.get("/doctor/info/" + GetId())
+        const d = await instanceDoctor.get("/doctor/info/" + GetId()).catch((error) => {
+            if(error.response.status === 401)
+                LogOut()
+          })
         const c = await instancePatient.get("/patient/info/" + d.data.patientAccountId)
         setPatientData(c.data)
         const r = await instance.get("/doctor/incomingAppointments/" + GetId()).catch((error) =>{
