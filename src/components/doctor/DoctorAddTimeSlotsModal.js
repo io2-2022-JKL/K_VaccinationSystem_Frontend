@@ -54,6 +54,7 @@ export default function DoctorAddTimeSlotsModal(props) {
                 "timeSlotDurationInMinutes": parseInt(minutes)
             })
         handleClose()
+        props.o(true)
         props.f()
     }
 

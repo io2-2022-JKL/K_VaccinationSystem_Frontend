@@ -39,6 +39,7 @@ export default function DoctorDashboard() {
             for (let i = 0; i < r.data.length; i++)
             {
                 if(r.data[i].state === 'Finished') r.data[i].certifyButton = <Button onClick={()=>{handleCertification(r.data[i].appointmentId)}}>Certyfikuj</Button>
+                if(r.data[i].state === 'Cancelled') r.data[i].batchNumber = ""
             }
             setTableData(r.data) 
         }
@@ -64,7 +65,6 @@ export default function DoctorDashboard() {
         {Header: "Dawka", accessor: "vaccineDose", width: "6%"},
         {Header: "Imię", accessor: "patientFirstName", width: "10%"},
         {Header: "Nazwisko", accessor: "patientLastName", width: "10%"},
-        {Header: "Pesel", accessor: "pesel", width: "10%"},
         {Header: "Data", accessor: "from", width: "10%"},
         {Header: "Status", accessor: "state", width: "10%"},
         {Header: "Partia", accessor: "batchNumber", width: "10%"},

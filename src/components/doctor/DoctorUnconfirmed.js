@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import '../../styles/patient/patient.css';
-import Patient from '../../models/Patient'
 import '../../models/User';
-import MDBox from "../MDBox";
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
 import Grid from "@mui/material/Grid";
@@ -11,8 +9,7 @@ import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
 import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
-import { Button, Typography } from '@mui/material';
-
+import { Button, Table, TableRow, TableCell, TableBody, Typography, Box } from '@mui/material';
 import Loader from "react-loader";
 import DoctorConfirmModal from './DoctorConfirmModal';
 
@@ -61,19 +58,25 @@ export default function DoctorUnconfirmed() {
     }
 
     const tableColumns = [
-        {Header: "Nazwa szczepionki", accessor: "vaccineName", width: "20%"},
-        {Header: "Wirus", accessor: "vaccineVirus", width: "20%"},
+        {Header: "Imię", accessor: "patientFirstName", width: "12%"},
+        {Header: "Nazwisko", accessor: "patientLastName", width: "12%"},
+        {Header: "Nazwa szczepionki", accessor: "vaccineName", width: "15%"},
+        {Header: "Wirus", accessor: "vaccineVirus", width: "15%"},
         {Header: "Data", accessor: "from", width: "20%"},
-        {Header: "Zaszczepiono", accessor: "confirmButton", width: "20%"},
-        {Header: "Nie zaszczepiono", accessor: "deleteButton", width: "20%"},
+        {Header: "Zaszczepiono", accessor: "confirmButton", width: "15%"},
+        {Header: "Nie zaszczepiono", accessor: "deleteButton", width: "15%"},
     ]
+
+    const options = {
+        wordWarp: true,
+    }
 
     return (
         <DashboardLayout>
             <DashboardNavbar/>
-            <MDBox mb={10}/>
+            <Box mb={10}/>
             <Header name={patientData.firstName + " " + patientData.lastName} position={"Doktor"}>
-                <MDBox mt={5} mb={3}>
+                <Box mt={5} mb={3}>
                     <Grid container spacing={1}>
                         {
                             visitsExist?
@@ -82,9 +85,9 @@ export default function DoctorUnconfirmed() {
                                     <Loader /> 
                                 </Grid> 
                                 :
-                                    <MDBox mt={5} mb={3}>
-                                        <DataTable table={{columns: tableColumns, rows: tableData}}/>
-                                    </MDBox>
+                                <Box mt={5} mb={3}>
+                                    <DataTable table={{columns: tableColumns, rows: tableData}}/>
+                                </Box>
                             :
                             <Grid
                                 container
@@ -100,12 +103,9 @@ export default function DoctorUnconfirmed() {
                             </Grid>
                         }
                     </Grid>
-                </MDBox>
+                </Box>
             </Header>
             <Footer/>
         </DashboardLayout>
     )
 }
-
-
-

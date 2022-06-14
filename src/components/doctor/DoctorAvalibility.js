@@ -12,10 +12,13 @@ import DataTable from "../../examples/Tables/DataTable";
 import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
 import DoctorAddTimeSlotsModal from './DoctorAddTimeSlotsModal';
-import { Button } from '@mui/material';
+import { Alert, Button } from '@mui/material';
 import Loader from "react-loader";
 import DoctorEditTimeSlotsModal from './DoctorEditTimeSlotModal';
 import { Typography } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function DoctorAvalibility() {
 
@@ -24,10 +27,32 @@ export default function DoctorAvalibility() {
     const [tableData, setTableData] = useState([]);
     const [patientData, setPatientData] = useState([]);
     const [timeExist, setExist] = useState(true)
+    const [open, setOpen] = useState(false);
 
     useEffect(async () => {
         updateData()
     }, [])
+
+    const handleSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpen(false);
+      };
+
+    const action = (
+        <>
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleSnackbarClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </>
+      );
 
     const updateData = async () => {
         const instance = ApiConnection("/doctor/timeSlots/");
@@ -103,7 +128,18 @@ export default function DoctorAvalibility() {
                         </Typography>
                     </Grid>
             }
-            <DoctorAddTimeSlotsModal f={updateData}/>
+            <DoctorAddTimeSlotsModal f={updateData} o={setOpen}/>
+            <Snackbar
+                open={open}
+                autoHideDuration={6000}
+                onClose={handleSnackbarClose}
+                action={action}
+                severity="success"
+            >
+                <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                    This is a success message!
+                </Alert>
+            </Snackbar>
             </Header>
             <Footer/>
         </DashboardLayout>

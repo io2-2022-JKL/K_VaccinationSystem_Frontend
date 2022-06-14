@@ -6,19 +6,12 @@ import DoctorUnconfirmed from "components/doctor/DoctorUnconfirmed";
 
 const doctorRoutes = [
     {
+        type: "collapse",
         name: "Moje konto",
         key: "dashboard",
         icon: <Icon fontSize="small">dashboard</Icon>,
-        route: "/doctor/",
+        route: "/doctor",
         component: <DoctorDashboard />,
-    },
-    {
-        type: "collapse",
-        name: "Historia",
-        key: "history",
-        icon: <Icon fontSize="small">history</Icon>,
-        route: "/doctor/history",
-        component: <DoctorHistory />,
     },
     {
         type: "collapse",
@@ -30,11 +23,19 @@ const doctorRoutes = [
     },
     {
         type: "collapse",
-        name: "Szczepienia",
+        name: "Nadchodzące szczepienia",
         key: "vaccinations",
         icon: <Icon fontSize="small">assignment_ind_icon</Icon>,
         route: "/doctor/vaccinations",
         component: <DoctorUnconfirmed />,
+    },
+    {
+        type: "collapse",
+        name: "Zakończone szczepienia",
+        key: "history",
+        icon: <Icon fontSize="small">history</Icon>,
+        route: "/doctor/history",
+        component: <DoctorHistory />,
     },
 ];
 
