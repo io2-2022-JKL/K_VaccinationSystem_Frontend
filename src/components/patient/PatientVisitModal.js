@@ -42,7 +42,7 @@ export function PatientSignupVisitModal(props) {
                     <div>Doktor: {props.data.doctorFirstName} {props.data.doctorLastName}</div>
                     <div>Możliwe szczepienia: </div>
                     {props.data.availableVaccines.map((record) => (
-                                    <div>
+                                    <div key={record.id}>
                                         {record.name}
                                     </div>
                                     ))}

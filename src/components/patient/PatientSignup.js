@@ -49,22 +49,19 @@ export default function PatientSignup() {
         return url;
     }
 
-    const handleFilter = () => {
+    const handleFilter = async () => {
         const instance = ApiConnection("/patient/timeSlots/filter");
-        instance.get(
+        const r = await instance.get(
             createURL()
-        ).then(r => {
-            configureTableData(r.data)
-        })
-            .finally(() => {
-                setLoading2(false)
-            });
+        )
+        configureTableData(r.data)
+        setLoading2(false)
         handleClose()
     }
 
     const configureTableData = (data) => {
         for (let i = 0; i < data.length; i++) {
-            data[i].signInButton = <PatientVisitSignUpModal data={data[i]}/>;
+            data[i].signInButton = <PatientVisitSignUpModal data={data[i]} f={handleFilter}/>
             data[i].detailsButton = <PatientSignupVisitModal data={data[i]}/>
         }
         setTableData(data);

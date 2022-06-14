@@ -37,7 +37,7 @@ export default function AdminDoctorList() {
             r.data.forEach(element => {
                 if(element.PESEL===undefined) element.PESEL = element.pesel
             });
-            r.data.filter(function(el,index,arr){
+            r.data = r.data.filter(function(el,index,arr){
                 return el.active;
             })
             const c = await centerInstance.get(
@@ -46,8 +46,8 @@ export default function AdminDoctorList() {
             for (let i = 0; i < r.data.length; i++) {
                 r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].id)} color={"error"}>Usuń</Button>
                 r.data[i].detailsButton = <AdminDoctorInfoModal data={r.data[i]}/>
-                r.data[i].timeSlotButton = <AdminDoctorTimeSlotsModal data={r.data[i]}/>
-                r.data[i].editButton = <AdminDoctorModificationModal data={r.data[i]} centers={c.data}/>
+                r.data[i].timeSlotButton = <AdminDoctorTimeSlotsModal data={r.data[i]} f={updateData}/>
+                r.data[i].editButton = <AdminDoctorModificationModal data={r.data[i]} centers={c.data} f={updateData}/>
             }
             setTableData(r.data)
             setLoading(false)

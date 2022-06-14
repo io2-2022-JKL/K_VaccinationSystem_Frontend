@@ -33,7 +33,7 @@ export default function AdminVaccinationCenterList() {
         })
         for (let i = 0; i < r.data.length; i++) {
             r.data[i].detailsButton = <AdminVaccinationCenterInfoModal data={r.data[i]}/>
-            r.data[i].editButton = <AdminVaccinationCenterEditModal data={r.data[i]}/>
+            r.data[i].editButton = <AdminVaccinationCenterEditModal data={r.data[i]} f={updateData}/>
             r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].id)}>Usuń</Button>
         }
         setTableData(r.data)
@@ -75,7 +75,7 @@ export default function AdminVaccinationCenterList() {
                 </MDBox>
             }
             <Box>
-                <AdminVaccinationCenterAddModal />
+                <AdminVaccinationCenterAddModal f={updateData}/>
             </Box>
             </Header>
             <Footer/>

@@ -39,7 +39,7 @@ export default function AdminVaccinesList() {
         for (let i = 0; i < r.data.length; i++) {
             r.data[i].deleteButton = <Button onClick={() => handleCancellation(r.data[i].vaccineId)} color={"error"}>Usuń</Button>
             r.data[i].detailsButton = <AdminVaccineInfoModal data={r.data[i]}/>
-            r.data[i].editButton = <AdminVaccineEditModal data={r.data[i]} viruses={c.data}/>
+            r.data[i].editButton = <AdminVaccineEditModal data={r.data[i]} viruses={c.data} f={updateData}/>
         }
         setTableData(r.data)
         setViruses(c.data)
@@ -101,7 +101,7 @@ export default function AdminVaccinesList() {
                 </Grid>
             }
             <Grid>
-                <AdminVaccineAddModal viruses={viruses}/>
+                <AdminVaccineAddModal viruses={viruses} f={updateData}/>
             </Grid>
             </Header>
             <Footer/>

@@ -38,7 +38,7 @@ export function AdminAddDoctorModal(props) {
                 "vaccinationCenterId": center
             })
         handleClose()
-        window.location.reload(false);
+        props.f()
     }
 
     return (

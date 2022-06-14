@@ -24,7 +24,7 @@ export default function DoctorUnconfirmed() {
     const [patientData, setPatientData] = useState([]);
     const [visitsExist, setExist] = useState(true);
 
-    useEffect(async () => {
+    const updateData = async () => {
         const instance = ApiConnection("/doctor/incomingAppointments/");
         const instancePatient = ApiConnection("/patient/info/");
         const instanceDoctor = ApiConnection("/doctor/info")
@@ -40,11 +40,15 @@ export default function DoctorUnconfirmed() {
             for (let i = 0; i < r.data.length; i++)
             {
                 r.data[i].deleteButton = <Button onClick={()=>{handleCancellation(r.data[i].appointmentId)}}>Odowołaj</Button>
-                r.data[i].confirmButton = <DoctorConfirmModal data={r.data[i]}/>
+                r.data[i].confirmButton = <DoctorConfirmModal data={r.data[i]} f={updateData}/>
             }
             setTableData(r.data) 
         }
         setLoading(false)
+    }
+
+    useEffect(async () => {
+        updateData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -53,7 +57,7 @@ export default function DoctorUnconfirmed() {
         await instance.post(
             "/doctor/vaccinate/vaccinationDidNotHappen/"+GetId()+"/"+id, {
             })
-        window.location.reload(false);
+        updateData()
     }
 
     const tableColumns = [

@@ -45,7 +45,7 @@ export default function DoctorAvalibility() {
             for (let i = 0; i < r.data.length; i++)
             {
                 r.data[i].deleteButton = <Button onClick={() => handleCancellation(GetId(), r.data[i].id)} color={"error"}>Usuń</Button>
-                r.data[i].editButton = <DoctorEditTimeSlotsModal data={r.data[i]}/>
+                r.data[i].editButton = <DoctorEditTimeSlotsModal data={r.data[i]} f={updateData}/>
             }
             setTableData(r.data)
         }
@@ -99,11 +99,11 @@ export default function DoctorAvalibility() {
                         justify="center"
                         style={{ minHeight: 30 }}>
                         <Typography>
-                            404 nie ma slotów
+                            Nie ustawiłeś swojej dostępności. Kliknij poniżej, aby dodać terminy.
                         </Typography>
                     </Grid>
             }
-            <DoctorAddTimeSlotsModal/>
+            <DoctorAddTimeSlotsModal f={updateData}/>
             </Header>
             <Footer/>
         </DashboardLayout>

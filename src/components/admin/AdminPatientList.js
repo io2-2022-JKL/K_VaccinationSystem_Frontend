@@ -48,23 +48,20 @@ export default function AdminPatientList() {
         for (let i = 0; i < patients.length; i++) {
             patients[i].deleteButton = <Button onClick={() => handleCancellation(patients[i].id)} color={"error"}>Usuń</Button>
             patients[i].detailsButton = <AdminPatientInfoModal data={patients[i]}/>
-            patients[i].doctorButton = <AdminAddDoctorModal data={patients[i]} centers={c.data}/>
-            patients[i].modifyButton = <AdminPatientEditModal data={patients[i]}/>
+            patients[i].doctorButton = <AdminAddDoctorModal data={patients[i]} centers={c.data} f={updateData}/>
+            patients[i].modifyButton = <AdminPatientEditModal data={patients[i]} f={updateData}/>
         }
         setTableData(patients)
         setLoading(false)
     }
 
-    const handleCancellation = (id) => {
+    const handleCancellation = async (id) => {
         const url = "/admin/patients/deletePatient/" + id
-        deleteInstance.delete(
+        await deleteInstance.delete(
             url
-        ).then(r => {
-            updateData()
-        })
-            .finally(() => {
-                setLoading(false)
-            });
+        )
+        updateData()
+        setLoading(false)
     }
 
     const tableColumns = [

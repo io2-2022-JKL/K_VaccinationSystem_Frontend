@@ -18,12 +18,12 @@ import { Button } from '@mui/material';
 export default function DoctorDashboard() {
 
     const {GetId} = useLogin();
-    const [loading, setLoading] = useState(true);
-    const [tableData, setTableData] = useState([]);
-    const [patientData, setPatientData] = useState([]);
-    const [visitsExist, setExist] = useState(true);
+    const [loading, setLoading] = useState(true)
+    const [tableData, setTableData] = useState([])
+    const [patientData, setPatientData] = useState([])
+    const [visitsExist, setExist] = useState(true)
 
-    useEffect(async () => {
+    const updateData = async () => {
         const instance = ApiConnection("/doctor/formerAppointments/");
         const instancePatient = ApiConnection("/patient/info/");
         const instanceDoctor = ApiConnection("/doctor/info")
@@ -38,11 +38,15 @@ export default function DoctorDashboard() {
         {
             for (let i = 0; i < r.data.length; i++)
             {
-                r.data[i].certifyButton = <Button onClick={()=>{handleCertification(r.data[i].appointmentId)}}>Certyfikuj</Button>
+                if(r.data[i].state === 'Finished') r.data[i].certifyButton = <Button onClick={()=>{handleCertification(r.data[i].appointmentId)}}>Certyfikuj</Button>
             }
             setTableData(r.data) 
         }
         setLoading(false)
+    }
+
+    useEffect(async () => {
+        updateData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -51,7 +55,7 @@ export default function DoctorDashboard() {
         await instance.post(
             "/doctor/vaccinate/certify/"+GetId()+"/"+id, {
             })
-        window.location.reload(false);
+        updateData()
     }
 
     const tableColumns = [

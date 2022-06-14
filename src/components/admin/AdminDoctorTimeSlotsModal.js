@@ -46,7 +46,7 @@ export default function AdminDoctorTimeSlotsModal(props) {
             url, [slots[0]]
         )
         handleClose()
-        window.location.reload(false);
+        props.f()
     }
 
     const tableColumns = [

@@ -50,7 +50,7 @@ export default function DoctorEditTimeSlotsModal(props) {
                 "timeTo": t,
             })
         handleClose()
-        window.location.reload(false);
+        props.f()
     }
 
     return (
