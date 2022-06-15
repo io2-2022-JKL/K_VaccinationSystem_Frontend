@@ -13,9 +13,10 @@ import MDButton from "components/MDButton";
 // Authentication layout components
 import CoverLayout from "layouts/authentication/components/CoverLayout";
 
-import {TextField} from "@mui/material";
+import {TextField, Button, Modal, Box, Typography} from "@mui/material";
 import {useState} from "react";
 import ApiConnection from "../logic/api/ApiConnection";
+import { modalStyle } from "styles/modal.css";
 
 function RegisterComponent(props) {
   const [name, setName] = useState("");
@@ -28,10 +29,8 @@ function RegisterComponent(props) {
 
   const conn = ApiConnection("/register");
 
-  const navigate = useNavigate();
-
-  const SubmitData = () => {
-    conn.post(
+  const SubmitData = async () => {
+    await conn.post(
         "/register",
         {
           PESEL: pesel,
@@ -41,13 +40,9 @@ function RegisterComponent(props) {
           lastName: surname,
           dateOfBirth: birthday.slice(8,10)+birthday.slice(4,8)+birthday.slice(0,4),
           phoneNumber: phone,
-        }).then(r => {
-      if (r.status === 200) {
-        navigate("/login")
-      }
-    }).finally(() => {
-    })
+        })
   }
+
   return (
     <CoverLayout>
       <Card>
@@ -100,9 +95,7 @@ function RegisterComponent(props) {
               <MDInput type="password" label="Password" variant="standard" onChange={e => setPassword(e.target.value)} fullWidth />
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" onClick={SubmitData} fullWidth>
-                Zarejestruj
-              </MDButton>
+              <RegisterModal f={SubmitData}/>
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
@@ -124,6 +117,43 @@ function RegisterComponent(props) {
       </Card>
     </CoverLayout>
   );
+}
+
+export function RegisterModal(props) {
+
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => setOpen(false);
+  const navigate = useNavigate();
+
+  const style = modalStyle()
+
+  const handleOpen = async () => {
+    await props.f()
+    setOpen(true)
+  }
+
+  return (
+      <>
+      <Button onClick={handleOpen}>Zarejestruj</Button>
+      <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+      >
+          <Box sx={style}>
+              <Typography id="modal-modal-title" variant="h2" component="h2">
+                Konto zostało założone poprawnie
+              </Typography>
+              <Typography id="modal-modal-description" sx={{ mt: 2 }} variant="subtitle2">
+                Możesz teraz przejść do logowania klikając przycisk poniżej
+              </Typography>
+              <Button onClick={()=>navigate("/login")}>Przejdź do logowania</Button>
+          </Box>
+      </Modal>
+      </>
+  )
 }
 
 export default RegisterComponent;
