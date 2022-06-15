@@ -11,9 +11,9 @@ const backends = {
     }
     let id = localStorage.getItem("backend");
     if(id === null)
-        localStorage.setItem("backend", "k");
+        localStorage.setItem("backend", "");
     const url = backends[localStorage.getItem("backend")];
-
+//    const url = "https://vaccinationsystemteaml.azurewebsites.net";
     if(token === null)
     {
         return axios.create({

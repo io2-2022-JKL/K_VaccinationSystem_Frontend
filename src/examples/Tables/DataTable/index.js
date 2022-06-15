@@ -188,9 +188,11 @@ function DataTable({
           {headerGroups.map((headerGroup) => (
             <TableRow {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
+
                 <DataTableHeadCell
                   {...column.getHeaderProps(isSorted && column.getSortByToggleProps())}
-                  width={column.width ? column.width : "auto"}
+                  // width={column.width ? column.width : "auto"}
+                    width={"auto"}
                   align={column.align ? column.align : "left"}
                   sorted={setSortedValue(column)}
                 >
@@ -211,7 +213,10 @@ function DataTable({
                     align={cell.column.align ? cell.column.align : "left"}
                     {...cell.getCellProps()}
                   >
-                    {cell.render("Cell")}
+                    <div style={{overflow: "hidden", overflowWrap: "break-word", textOverflow: "ellipsis", width: "10em"}}>
+                      {cell.render("Cell")}
+                    </div>
+
                   </DataTableBodyCell>
                 ))}
               </TableRow>
@@ -270,7 +275,7 @@ function DataTable({
 // Setting default values for the props of DataTable
 DataTable.defaultProps = {
   entriesPerPage: { defaultValue: 10, entries: [5, 10, 15, 20, 25] },
-  canSearch: false,
+  canSearch: true,
   showTotalEntries: false,
   pagination: { variant: "gradient", color: "info" },
   isSorted: true,
