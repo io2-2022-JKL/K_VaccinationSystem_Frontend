@@ -58,6 +58,9 @@ export default function DoctorAvalibility() {
         setLoading(true)
         setExist(true)
         const url = "/doctor/timeSlot/delete/" + id
+        console.log({
+            "slots": [slotId]
+        })
         await deleteInstance.post(
             url, {
                 "slots": [slotId]
