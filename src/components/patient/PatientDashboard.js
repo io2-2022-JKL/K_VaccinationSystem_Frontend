@@ -26,7 +26,7 @@ export default function PatientDashboard() {
         {Header: "Szczegóły", accessor: "detailsButton", width: "25%"},
     ]
 
-    const {GetId} = useLogin();
+    const {GetId, LogOut} = useLogin();
     const {isLoggedIn} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
@@ -43,7 +43,10 @@ export default function PatientDashboard() {
             const d = await instanceDoctor.get("doctor/info/" + GetId())
             id = d.data.patientAccountId;
         }
-        const p = await instance2.get("/patient/info/" + id)
+        const p = await instance2.get("/patient/info/" + id).catch((error) => {
+            if(error.response.status === 401)
+                LogOut()
+          })
         const patient = new Patient(p.data)
         setPatientData(patient.toTableData())
         const v = await instance.get("/patient/appointments/incomingAppointments/" + id).catch((error) =>{

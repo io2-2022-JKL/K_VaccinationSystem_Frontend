@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import '../../styles/patient/patient.css';
-import Patient from '../../models/Patient'
 import '../../models/User';
-import MDBox from "../MDBox";
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "../../examples/Navbars/DashboardNavbar";
 import Grid from "@mui/material/Grid";
@@ -11,24 +9,70 @@ import Footer from "../../examples/Footer";
 import DataTable from "../../examples/Tables/DataTable";
 import useLogin from "../../logic/useLogin";
 import ApiConnection from "../../logic/api/ApiConnection";
-import { Button, Typography } from '@mui/material';
-
+import { Button, Alert, Typography, Box } from '@mui/material';
 import Loader from "react-loader";
 import DoctorConfirmModal from './DoctorConfirmModal';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function DoctorUnconfirmed() {
 
-    const {GetId} = useLogin();
+    const {GetId, LogOut} = useLogin();
     const [loading, setLoading] = useState(true);
     const [tableData, setTableData] = useState([]);
     const [patientData, setPatientData] = useState([]);
     const [visitsExist, setExist] = useState(true);
+    const [openDelete, setOpenDelete] = useState(false);
+    const [openAdd, setOpenAdd] = useState(false);
 
-    useEffect(async () => {
+    const handleDeleteSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setOpenDelete(false);
+      };
+
+    const handleAddSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAdd(false);
+    };
+
+    const actionDelete = (
+        <>
+            <IconButton
+                size="small"
+                color="inherit"
+                onClick={handleDeleteSnackbarClose}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </>
+      );
+
+    const actionAdd = (
+        <>
+            <IconButton
+                size="small"
+                color="inherit"
+                onClick={handleAddSnackbarClose}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </>
+      );
+
+
+    const updateData = async () => {
         const instance = ApiConnection("/doctor/incomingAppointments/");
         const instancePatient = ApiConnection("/patient/info/");
         const instanceDoctor = ApiConnection("/doctor/info")
-        const d = await instanceDoctor.get("/doctor/info/" + GetId())
+        const d = await instanceDoctor.get("/doctor/info/" + GetId()).catch((error) => {
+            if(error.response.status === 401)
+                LogOut()
+          })
         const c = await instancePatient.get("/patient/info/" + d.data.patientAccountId)
         setPatientData(c.data)
         const r = await instance.get("/doctor/incomingAppointments/" + GetId()).catch((error) =>{
@@ -40,11 +84,15 @@ export default function DoctorUnconfirmed() {
             for (let i = 0; i < r.data.length; i++)
             {
                 r.data[i].deleteButton = <Button onClick={()=>{handleCancellation(r.data[i].appointmentId)}}>Odowołaj</Button>
-                r.data[i].confirmButton = <DoctorConfirmModal data={r.data[i]}/>
+                r.data[i].confirmButton = <DoctorConfirmModal data={r.data[i]} f={updateData} o={setOpenAdd}/>
             }
             setTableData(r.data) 
         }
         setLoading(false)
+    }
+
+    useEffect(async () => {
+        updateData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -53,23 +101,30 @@ export default function DoctorUnconfirmed() {
         await instance.post(
             "/doctor/vaccinate/vaccinationDidNotHappen/"+GetId()+"/"+id, {
             })
-        window.location.reload(false);
+        updateData()
+        setOpenDelete(true)
     }
 
     const tableColumns = [
-        {Header: "Nazwa szczepionki", accessor: "vaccineName", width: "20%"},
-        {Header: "Wirus", accessor: "vaccineVirus", width: "20%"},
+        {Header: "Imię", accessor: "patientFirstName", width: "12%"},
+        {Header: "Nazwisko", accessor: "patientLastName", width: "12%"},
+        {Header: "Nazwa szczepionki", accessor: "vaccineName", width: "15%"},
+        {Header: "Wirus", accessor: "vaccineVirus", width: "15%"},
         {Header: "Data", accessor: "from", width: "20%"},
-        {Header: "Zaszczepiono", accessor: "confirmButton", width: "20%"},
-        {Header: "Nie zaszczepiono", accessor: "deleteButton", width: "20%"},
+        {Header: "Zaszczepiono", accessor: "confirmButton", width: "15%"},
+        {Header: "Nie zaszczepiono", accessor: "deleteButton", width: "15%"},
     ]
+
+    const options = {
+        wordWarp: true,
+    }
 
     return (
         <DashboardLayout>
             <DashboardNavbar/>
-            <MDBox mb={10}/>
+            <Box mb={10}/>
             <Header name={patientData.firstName + " " + patientData.lastName} position={"Doktor"}>
-                <MDBox mt={5} mb={3}>
+                <Box mt={5} mb={3}>
                     <Grid container spacing={1}>
                         {
                             visitsExist?
@@ -78,9 +133,9 @@ export default function DoctorUnconfirmed() {
                                     <Loader /> 
                                 </Grid> 
                                 :
-                                    <MDBox mt={5} mb={3}>
-                                        <DataTable table={{columns: tableColumns, rows: tableData}}/>
-                                    </MDBox>
+                                <Box mt={5} mb={3}>
+                                    <DataTable table={{columns: tableColumns, rows: tableData}}/>
+                                </Box>
                             :
                             <Grid
                                 container
@@ -96,12 +151,29 @@ export default function DoctorUnconfirmed() {
                             </Grid>
                         }
                     </Grid>
-                </MDBox>
+                </Box>
+                <Snackbar
+                open={openDelete}
+                autoHideDuration={6000}
+                action={actionDelete}
+                severity="success"
+            >
+                <Alert onClose={handleDeleteSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                    Wizyta została odwołana
+                </Alert>
+            </Snackbar>
+            <Snackbar
+                open={openAdd}
+                autoHideDuration={6000}
+                action={actionAdd}
+                severity="success"
+            >
+                <Alert onClose={handleAddSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                    Wizyta została potwierdzona
+                </Alert>
+            </Snackbar>
             </Header>
             <Footer/>
         </DashboardLayout>
     )
 }
-
-
-

@@ -31,7 +31,8 @@ export default function DoctorConfirmModal(props) {
             "/doctor/vaccinate/confirmVaccination/"+GetId()+"/"+props.data.appointmentId+"/"+batchId, {
             })
         handleClose()
-        window.location.reload(false);
+        props.f()
+        props.o(true)
     }
 
     return (

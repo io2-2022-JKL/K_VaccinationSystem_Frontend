@@ -18,10 +18,14 @@ import { PatientSignupVisitModal } from "./PatientVisitModal";
 import { Select } from '@mui/material';
 import { MenuItem } from '@mui/material';
 import { PatientVisitSignUpModal } from './PatientVisitSignUpModal';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import {Alert} from '@mui/material'
 
 export default function PatientSignup() {
 
-    const {GetId, isLoggedIn} = useLogin();
+    const {GetId, isLoggedIn, LogOut} = useLogin();
     const [loading, setLoading] = useState(true);
     const [loading2, setLoading2] = useState(true);
     const [tableData, setTableData] = useState([]);
@@ -33,6 +37,7 @@ export default function PatientSignup() {
     const [patientData, setPatientData] = useState([]);
     const [viruses, setViruses] = useState([])
     const [cities, setCities] = useState([])
+    const [openAdd, setOpenAdd] = useState(false);
 
     const handleClose = () => {
         setOpen(false);
@@ -49,26 +54,44 @@ export default function PatientSignup() {
         return url;
     }
 
-    const handleFilter = () => {
+    const handleFilter = async () => {
         const instance = ApiConnection("/patient/timeSlots/filter");
-        instance.get(
+        const r = await instance.get(
             createURL()
-        ).then(r => {
-            configureTableData(r.data)
-        })
-            .finally(() => {
-                setLoading2(false)
-            });
+        )
+        configureTableData(r.data)
+        setLoading2(false)
         handleClose()
     }
 
     const configureTableData = (data) => {
         for (let i = 0; i < data.length; i++) {
-            data[i].signInButton = <PatientVisitSignUpModal data={data[i]}/>;
+            data[i].signInButton = <PatientVisitSignUpModal data={data[i]} f={handleFilter} o={setOpenAdd}/>
             data[i].detailsButton = <PatientSignupVisitModal data={data[i]}/>
         }
         setTableData(data);
     }
+
+    const handleAddSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpenAdd(false);
+      };
+
+    const actionAdd = (
+        <>
+          <IconButton
+            size="small"
+
+            color="inherit"
+            onClick={handleAddSnackbarClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </>
+      );
 
     useEffect(async () => {
         const instance2 = ApiConnection("/patient/info/")
@@ -83,7 +106,12 @@ export default function PatientSignup() {
         }
         const r = await instance2.get(
             "/patient/info/" + id
-        )
+        ).catch((error) => {
+            if(error.response.status === 401)
+                LogOut()
+          })
+        setPatientData(r.data)
+        setLoading2(false)
         const v = await instanceViruses.get(
             "/viruses"
         )
@@ -92,7 +120,6 @@ export default function PatientSignup() {
         )
         setCities(c.data)
         setViruses(v.data)
-        setPatientData(r.data)
         setLoading(false)
         setCityFilter(c.data[0].city)
         setVirusFilter(v.data[0].virus)
@@ -210,6 +237,16 @@ export default function PatientSignup() {
                 </MDBox>
             </Header>
             }
+            <Snackbar
+                open={openAdd}
+                autoHideDuration={6000}
+                action={actionAdd}
+                severity="success"
+            >
+                <Alert onClose={handleAddSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                    Zapisałeś się na wizytę
+                </Alert>
+            </Snackbar>
             <Footer/>
         </DashboardLayout>
     )

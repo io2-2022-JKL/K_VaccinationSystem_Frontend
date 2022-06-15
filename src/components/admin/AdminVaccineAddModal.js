@@ -67,7 +67,8 @@ export default function AdminVaccineAddModal(props) {
                 "active": active,
             })
         handleClose()
-        window.location.reload(false);
+        props.f()
+        props.o(true)
     }
 
     return (

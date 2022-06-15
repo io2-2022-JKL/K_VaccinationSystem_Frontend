@@ -49,7 +49,8 @@ export default function AdminVaccinationCenterEditModal(props) {
                 "active": active,
             })
         handleClose()
-        window.location.reload(false);
+        props.f()
+        props.o(true)
     }
 
     const instanceVaccines = ApiConnection("/admin/vaccines")

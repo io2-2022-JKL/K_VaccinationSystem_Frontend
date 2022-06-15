@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import '../../styles/patient/patient.css';
-import Patient from '../../models/Patient'
 import '../../models/User';
 import MDBox from "../MDBox";
 import DashboardLayout from "../../examples/LayoutContainers/DashboardLayout";
@@ -14,20 +13,45 @@ import ApiConnection from "../../logic/api/ApiConnection";
 import { Typography } from '@mui/material';
 import Loader from "react-loader";
 import { Button } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import {Alert} from '@mui/material';
 
 export default function DoctorDashboard() {
 
-    const {GetId} = useLogin();
-    const [loading, setLoading] = useState(true);
-    const [tableData, setTableData] = useState([]);
-    const [patientData, setPatientData] = useState([]);
-    const [visitsExist, setExist] = useState(true);
+    const {GetId, LogOut} = useLogin();
+    const [loading, setLoading] = useState(true)
+    const [tableData, setTableData] = useState([])
+    const [patientData, setPatientData] = useState([])
+    const [visitsExist, setExist] = useState(true)
+    const [openAdd, setOpenAdd] = useState(false);
+    const handleAddSnackbarClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenAdd(false);
+    };
+    const actionAdd = (
+        <>
+            <IconButton
+                size="small"
+                color="inherit"
+                onClick={handleAddSnackbarClose}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </>
+      );
 
-    useEffect(async () => {
+    const updateData = async () => {
         const instance = ApiConnection("/doctor/formerAppointments/");
         const instancePatient = ApiConnection("/patient/info/");
         const instanceDoctor = ApiConnection("/doctor/info")
-        const d = await instanceDoctor.get("/doctor/info/" + GetId())
+        const d = await instanceDoctor.get("/doctor/info/" + GetId()).catch((error) => {
+            if(error.response.status === 401)
+                LogOut()
+          })
         const c = await instancePatient.get("/patient/info/" + d.data.patientAccountId)
         setPatientData(c.data)
         const r = await instance.get("/doctor/formerAppointments/" + GetId()).catch((error) =>{
@@ -38,11 +62,16 @@ export default function DoctorDashboard() {
         {
             for (let i = 0; i < r.data.length; i++)
             {
-                r.data[i].certifyButton = <Button onClick={()=>{handleCertification(r.data[i].appointmentId)}}>Certyfikuj</Button>
+                if(r.data[i].state === 'Finished') r.data[i].certifyButton = <Button onClick={()=>{handleCertification(r.data[i].appointmentId)}}>Certyfikuj</Button>
+                if(r.data[i].state === 'Cancelled') r.data[i].batchNumber = ""
             }
             setTableData(r.data) 
         }
         setLoading(false)
+    }
+
+    useEffect(async () => {
+        updateData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -51,7 +80,8 @@ export default function DoctorDashboard() {
         await instance.post(
             "/doctor/vaccinate/certify/"+GetId()+"/"+id, {
             })
-        window.location.reload(false);
+        updateData()
+        setOpenAdd(true)
     }
 
     const tableColumns = [
@@ -60,7 +90,6 @@ export default function DoctorDashboard() {
         {Header: "Dawka", accessor: "vaccineDose", width: "6%"},
         {Header: "Imię", accessor: "patientFirstName", width: "10%"},
         {Header: "Nazwisko", accessor: "patientLastName", width: "10%"},
-        {Header: "Pesel", accessor: "pesel", width: "10%"},
         {Header: "Data", accessor: "from", width: "10%"},
         {Header: "Status", accessor: "state", width: "10%"},
         {Header: "Partia", accessor: "batchNumber", width: "10%"},
@@ -100,6 +129,16 @@ export default function DoctorDashboard() {
                         }
                     </Grid>
                 </MDBox>
+                <Snackbar
+                open={openAdd}
+                autoHideDuration={6000}
+                action={actionAdd}
+                severity="success"
+            >
+                <Alert onClose={handleAddSnackbarClose} severity="success" sx={{ width: '100%' }}>
+                   Certyfikat został wystawiony
+                </Alert>
+            </Snackbar>
             </Header>
             <Footer/>
         </DashboardLayout>

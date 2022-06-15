@@ -56,7 +56,8 @@ export function AdminDoctorModificationModal(props) {
                 "vaccinationCenterID": vaccinationCenterID
             })
         handleClose()
-        window.location.reload(false);
+        props.f()
+        props.o(true)
     }
 
     return (

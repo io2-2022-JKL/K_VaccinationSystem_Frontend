@@ -8,10 +8,11 @@ import PatientDashboard from "../components/patient/PatientDashboard";
 
 const routes = [
   {
+    type: "collapse",
     name: "Moje konto",
     key: "dashboard",
     icon: <Icon fontSize="small">dashboard</Icon>,
-    route: "/patient/",
+    route: "/patient",
     component: <PatientDashboard />,
   },
   {

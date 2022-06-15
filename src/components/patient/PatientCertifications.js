@@ -15,7 +15,7 @@ import {Link} from '@mui/material';
 
 export default function PatientDashboard() {
 
-    const {isLoggedIn, GetId} = useLogin()
+    const {isLoggedIn, GetId, LogOut} = useLogin()
     const [loading, setLoading] = useState(true)
     const [tableData, setTableData] = useState([])
     const [patientData, setPatientData] = useState([])
@@ -31,7 +31,10 @@ export default function PatientDashboard() {
             const d = await instanceDoctor.get("doctor/info/" + GetId())
             id = d.data.patientAccountId;
         }
-        const p = await instance2.get("/patient/info/" + id)
+        const p = await instance2.get("/patient/info/" + id).catch((error) => {
+            if(error.response.status === 401)
+                LogOut()
+          })
         const patient = new Patient(p.data)
         setPatientData(patient)
         const r = await instance.get(
@@ -50,8 +53,6 @@ export default function PatientDashboard() {
         setLoading(false)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
-    //const patient = new Patient(patientData);
 
     const tableColumns = [
         {Header: "Szczepionka", accessor: "vaccineName", width: "25%"},

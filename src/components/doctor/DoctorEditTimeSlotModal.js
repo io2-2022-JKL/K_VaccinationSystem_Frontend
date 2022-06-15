@@ -50,7 +50,8 @@ export default function DoctorEditTimeSlotsModal(props) {
                 "timeTo": t,
             })
         handleClose()
-        //window.location.reload(false);
+        props.f()
+        props.o(true)
     }
 
     return (
@@ -64,7 +65,7 @@ export default function DoctorEditTimeSlotsModal(props) {
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h2" component="h2">
-                    Dodaj nowe TimeSloty
+                    Zmień termin wizyty
                 </Typography>
                 <Box fullWidth>
                     <TextField
