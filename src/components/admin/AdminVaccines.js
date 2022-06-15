@@ -168,7 +168,7 @@ export default function AdminVaccinesList() {
                     justify="center"
                     style={{ minHeight: 30 }}>
                     <Typography>
-                        404 nie ma doktorów
+                        Nie ma żadnych doktorów, dodaj nowych z listy pacjentów
                     </Typography>
                 </Grid>
             }
